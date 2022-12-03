@@ -1,0 +1,19 @@
+.textButton {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-inline: 1rem;
+  max-width: 38rem;
+  width: 100%;
+  height: 2.7rem;
+  margin: auto ;
+  border: 0.2rem solid  #2563eb85;
+  border-radius: 0.5rem;
+  margin-top: 1rem;
+  font-size: 1.5rem;
+
+}
+
+.textButton:first-child {
+  margin-top: 0;
+}
