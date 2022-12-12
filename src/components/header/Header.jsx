@@ -1,5 +1,5 @@
 import BurgerButton from "components/buttons/BurgerButton";
-import Search from "icons/Search";
+import MiniButton from "components/buttons/mini-button/MiniButton";
 import styles from './Header.module.scss';
 
 const Header = ({props}) => {
@@ -7,9 +7,7 @@ const Header = ({props}) => {
     <div className={styles.wrapper}>
         <BurgerButton additionalClasses={styles.burgerButton}/>
         <h2>{props}</h2>
-        <button>
-          <Search additionalClasses={styles.searchIcon}/>
-        </button>
+        <MiniButton type={'searchIcon'}/>
       </div>
   )
 }

@@ -1,8 +1,8 @@
-import AddWordPage from 'pages/add-word';
 import Footer from 'components/footer/Footer';
 import Header from 'components/header/Header';
 import MetaTags from 'common/MetaTags';
-import TextButton from 'components/buttons/textButton/TextButton';
+import React from 'react'
+import TextButton from 'components/buttons/text-button/TextButton';
 import { fakeData } from 'data/fake-data';
 import styles from './MainPage.module.scss';
 
@@ -18,7 +18,8 @@ function MainPage() {
         })}
       </div>
 
-      {/* <AddWordPage /> */}
+
+      
       <Footer />
     </div>
   );

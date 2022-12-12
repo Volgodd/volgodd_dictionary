@@ -1,18 +1,15 @@
 .footerWrapper {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
-  margin-top: 2rem;
-  flex-shrink: 0;
-  // justify-self: flex-end
-  margin-top: auto;
+  justify-content: space-around;
+  align-items: center;
 }
 
-.navButton {
-  width: 8rem;
-  height: 4rem;
-  border: 0.2rem solid  #c4c4c4;
-  border-radius: 0.5rem;
-  // margin-top: 1rem;
-  font-size: 1.3rem;
-}
+// .navButton {
+//   width: 8rem;
+//   height: 4rem;
+//   border: 0.2rem solid  #c4c4c4;
+//   border-radius: 0.5rem;
+//   // margin-top: 1rem;
+//   font-size: 1.3rem;
+// }

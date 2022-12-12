@@ -1,0 +1,85 @@
+.overlayWrapper {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.overlayFrame {
+  position: absolute;
+  width: calc(100% - 3rem);
+  background-color: #a5c2ff;
+  z-index: 10;
+}
+
+.overlayShade {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.571);
+  top: 0;
+  left: 0;
+}
+
+.overlayHeader {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-block: 1rem;
+  padding-inline: 3rem;
+}
+
+.addWord {
+  display: grid;
+  position: absolute;
+  padding-left: 1rem;
+  padding-top: 1rem;
+  column-gap: 0.5rem;
+  border-radius: 1rem;
+  z-index: 1;
+  grid-template-columns: auto 10% 10% ;
+  max-width: 40rem;
+  width: 100%;
+  height: 20rem;
+  background-color: #a5c2ff;
+
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.inputButtonFlex {
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 2rem
+}
+
+.inputField {
+  height: 3rem;
+  width: 25rem;
+  border-radius: 0.5rem;
+}
+
+.dropdown {
+  margin: auto;
+  WIDTH: fit-content;
+}
+
+.saveButton {
+  width: 5rem;
+  margin: auto;
+  display: block;
+  float: none;
+
+  margin-block: 1rem;  
+}
+
+.closeButton {
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin: 1rem;
+}
