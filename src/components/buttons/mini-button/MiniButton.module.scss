@@ -1,6 +1,10 @@
+@import '../../../css/variables.scss';
+
 .miniButton {
-  width: 3rem;
-  height: 3rem;
+  width: $clusterSizeX4;
+  height: $clusterSizeX4;
   border: none;
-  border-radius: 0.5rem;
+  border-radius: $borderRadius05;
+  background-color: transparent;
+  fill: $colorWhite;
 }

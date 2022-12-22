@@ -1,0 +1,68 @@
+@import '../../../css/variables.scss';
+
+.wrapper {
+  margin-bottom: $clusterSize;
+  border-radius: $borderRadius1;
+  background-color: $colorGray75;
+}
+
+.textButton {
+  position: relative;
+  width: 100%;
+  height: $clusterSizeX7;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: $borderRadius1;
+  background-color: $colorGray75;
+  color: $colorWhite;
+  font-family: $fontRoboto;
+  padding: $clusterSize * 1.5;
+  padding-inline: $clusterSizeX3;
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(125%);
+  }
+  // &:last-child {
+  //   margin-bottom: 0px;
+  // }
+
+  &::before {
+    top: $clusterSize;
+    left: $clusterSize;
+    display: block;
+    content: '';
+    position: absolute;
+    width: $clusterSize / 2;
+    height: calc(100% - #{$clusterSizeX2});
+    background-color: $colorWhite;
+    border-radius: $borderRadius05;
+  }
+}
+
+.mainCell {
+  font-size: $fontSize20;
+  font-weight: $fontWeightBold;
+}
+
+.secondaryCell {
+  font-size: $fontSize14;
+  opacity: $opacity60;
+}
+
+.wordUi {
+  padding: $clusterSizeX2;
+}
+
+.buttonContainer {
+  border-top: solid 1px $colorGray25;
+  margin-bottom: $clusterSizeX2;
+}
+
+.description {
+  color: $colorGray25;
+  font-size: $fontSize14;
+  line-height: $fontLineHeight14;
+}

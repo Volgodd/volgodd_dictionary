@@ -1,14 +1,15 @@
+@import '../../css/variables.scss';
+
 .wrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding-inline: 1rem;
 
   > h2 {
-    font-size: 2rem;
-    font-weight: 600;
-    color: rgb(82, 82, 82);
+    font-size: $fontSize24;
+    font-weight: $fontWeightBold;
+    color: $colorWhite;
   }
 }
 
@@ -16,38 +17,30 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  width: 3rem;
-  height: 2.5rem;
+  width: $clusterSizeX3;
+  height: $clusterSize * 2.5;
   border: none;
   background: transparent;
   padding: 0;
 
   span {
-    content: "";
-    background-color: #8daef5;
+    content: '';
+    background-color: $colorWhite;
     width: 100%;
-    width: 3rem;
-    height: 0.4rem;
-    border-radius: 0.4rem;
+    width: $clusterSizeX3;
+    height: $clusterSize * 0.4;
+    border-radius: $clusterSize * 0.4;
     transition: 0.3s ease-in-out;
   }
 
   &:before,
   &:after {
-    content: "";
-    background-color: #8daef5;
+    content: '';
+    background-color: $colorWhite;
     width: 100%;
-    width: 3rem;
-    height: 0.4rem;
-    border-radius: 0.4rem;
+    width: $clusterSizeX3;
+    height: $clusterSize * 0.4;
+    border-radius: $clusterSize * 0.4;
     transition: 0.3s ease-in-out;
   }
 }
-
-// .searchIcon {
-//   fill: #8daef5;
-//   width: 3rem;
-//   height: 3rem;
-//   stroke: #8daef5;
-//   stroke-width: 1;
-// }

@@ -1,19 +1,29 @@
 .textButton {
   display: flex;
   justify-content: space-between;
+  flex-direction: column;
   align-items: center;
   padding-inline: 1rem;
   max-width: 38rem;
   width: 100%;
-  height: 2.7rem;
-  margin: auto ;
-  border: 0.2rem solid  #2563eb85;
+  height: 5rem;
+  margin: auto;
+  border: 0.2rem solid #2563eb85;
   border-radius: 0.5rem;
   margin-top: 1rem;
   font-size: 1.5rem;
-
+  font-weight: 700;
 }
 
 .textButton:first-child {
   margin-top: 0;
+}
+
+span:last-child {
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+span {
+  align-self: flex-start;
 }

@@ -1,3 +1,5 @@
+@import '../css/variables.scss';
+
 .overlayWrapper {
   position: absolute;
   width: 100%;
@@ -12,7 +14,7 @@
 .overlayFrame {
   position: absolute;
   width: calc(100% - 3rem);
-  background-color: #a5c2ff;
+  background-color: $colorGray50;
   z-index: 10;
 }
 
@@ -27,25 +29,24 @@
 
 .overlayHeader {
   text-align: center;
-  font-size: 1.5rem;
-  margin-block: 1rem;
-  padding-inline: 3rem;
+  font-size: $fontSize20;
+  margin-block: $clusterSize;
+  padding-inline: $clusterSizeX3;
+  color: $colorWhite;
 }
 
 .addWord {
   display: grid;
   position: absolute;
-  padding-left: 1rem;
-  padding-top: 1rem;
-  column-gap: 0.5rem;
-  border-radius: 1rem;
+  padding-left: $clusterSize;
+  padding-top: $clusterSize;
+  column-gap: $clusterSize * 0.5;
+  border-radius: $clusterSize;
   z-index: 1;
-  grid-template-columns: auto 10% 10% ;
-  max-width: 40rem;
+  grid-template-columns: auto 10% 10%;
+  max-width: $clusterSizeX10 * 4;
   width: 100%;
-  height: 20rem;
-  background-color: #a5c2ff;
-
+  height: $clusterSizeX10 * 2;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -54,32 +55,35 @@
 .inputButtonFlex {
   display: flex;
   justify-content: space-evenly;
-  margin-bottom: 2rem
+  margin-bottom: $clusterSizeX2;
 }
 
 .inputField {
-  height: 3rem;
-  width: 25rem;
-  border-radius: 0.5rem;
+  height: $clusterSizeX3;
+  width: $clusterSize * 25;
+  border-radius: $clusterSize * 0.5;
 }
 
 .dropdown {
   margin: auto;
-  WIDTH: fit-content;
+  width: fit-content;
 }
 
 .saveButton {
-  width: 5rem;
+  width: $clusterSizeX5;
   margin: auto;
   display: block;
   float: none;
+  margin-block: $clusterSize;
+}
 
-  margin-block: 1rem;  
+.addWordButton {
+  width: $clusterSizeX8;
 }
 
 .closeButton {
   position: absolute;
   right: 0;
   top: 0;
-  margin: 1rem;
+  margin: $clusterSize;
 }

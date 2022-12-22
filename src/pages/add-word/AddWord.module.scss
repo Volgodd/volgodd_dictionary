@@ -1,15 +1,16 @@
+@import '../../css/variables.scss';
+
 .addWordPage {
   display: grid;
   position: absolute;
-  padding-left: 1rem;
-  padding-top: 1rem;
+  padding-left: $clusterSizeX2;
+  padding-top: $clusterSizeX2;
   column-gap: 0.5rem;
-  border-radius: 1rem;
 
-  grid-template-columns: auto 10% 10% ;
+  grid-template-columns: auto 10% 10%;
   // grid-template-rows: repeat(5, 1fr);
 
-  // grid-template-areas: 
+  // grid-template-areas:
   // "add-word color-icon color-icon"
   // "input dic-icon buffer-icon"
   // "input ";
@@ -36,5 +37,4 @@
 
 .inputField {
   height: 2rem;
-
 }

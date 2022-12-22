@@ -1,9 +1,10 @@
 import NavButton from 'components/footer/nav-button/NavButton';
 import React from 'react';
+import clsx from 'clsx';
 import styles from './Overlay.module.scss';
 import { useState } from 'react';
 
-const AddThemeOverlay = () => {
+const SearchOverlay = () => {
   const [theme, setTheme] = useState('');
 
   const submitHandler = (e) => {
@@ -27,15 +28,15 @@ const AddThemeOverlay = () => {
       <div className={styles.inputButtonFlex}>
         <input
           type="text"
-          placeholder="Theme name"
+          placeholder=""
           className={styles.inputField}
           onChange={(e) => setTheme(e.target.value)}
           value={theme}
           required
         />
       </div>
-      <NavButton name="Save" styles={styles.saveButton} />
+      <NavButton name="Add word" styles={clsx(styles.saveButton, styles.addWordButton)} />
     </form>
   );
 };
-export default AddThemeOverlay;
+export default SearchOverlay;

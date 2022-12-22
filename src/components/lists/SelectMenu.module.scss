@@ -1,6 +1,13 @@
+@import '../../css/variables.scss';
+
 .selectMenuForm {
   font-size: 1.5rem;
-  
+
+  > label {
+    color: $colorWhite;
+    margin-right: $clusterSize;
+  }
+
   > select {
     width: 15rem;
     border-radius: 0.5rem;

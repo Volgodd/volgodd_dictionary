@@ -9,22 +9,27 @@ import styles from './MiniButton.module.scss';
 
 const getButtonIcon = (type) => {
   switch (type) {
-    case 'buffer': return <BufferIcon/>;
-    case 'dictionary': return <RemoteDictionaryIcon/>;
-    case 'changeColor': return <ChangeColorIcon/>;
-    case 'searchIcon': return <SearchIcon/>;
-    case 'closeIcon': return <CloseIcon/>
-    default: return <PenIcon/>
+    case 'buffer':
+      return <BufferIcon />;
+    case 'dictionary':
+      return <RemoteDictionaryIcon />;
+    case 'changeColor':
+      return <ChangeColorIcon />;
+    case 'searchIcon':
+      return <SearchIcon />;
+    case 'closeIcon':
+      return <CloseIcon />;
+    default:
+      return <PenIcon />;
   }
-}
+};
 
-const MiniButton = ({type, additionalStyles, onClick}) => {
-
+const MiniButton = ({ type, additionalStyles, onClickF }) => {
   return (
-    <button className={clsx(styles.miniButton, additionalStyles)} onClick={onClick}>
+    <button className={clsx(styles.miniButton, additionalStyles)} onClick={() => onClickF()}>
       {getButtonIcon(type)}
     </button>
-  )
-}
+  );
+};
 
 export default MiniButton;

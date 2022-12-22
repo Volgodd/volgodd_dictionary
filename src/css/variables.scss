@@ -1,0 +1,61 @@
+// Design Tokens
+
+// Colors
+
+$colorWhite: #eaedf2;
+$colorGray25: #727379;
+$colorGray50: #3d3d49;
+$colorGray75: #222228;
+$colorBlack: #111112;
+
+$colorAccent1: #3068df;
+$colorAccent2: #fe7348;
+$colorAccent3: #63f4f7;
+
+// Fonts
+$fontRoboto: 'Roboto', sans-serif;
+
+$fontWeightNormal: 400;
+$fontWeightBold: 700;
+
+$fontSize12: 1rem;
+$fontSize14: 1.1666rem;
+$fontSize16: 1.3333rem;
+$fontSize20: 1.6666rem;
+$fontSize24: 2rem;
+
+$fontLineHeight12: $fontSize12 + 0.5rem;
+$fontLineHeight14: $fontSize14 + 0.5rem;
+$fontLineHeight16: $fontSize16 + 0.5rem;
+$fontLineHeight20: $fontSize20 + 0.5rem;
+$fontLineHeight24: $fontSize24 + 0.5rem;
+
+// Space and grid
+
+$clusterSize: 1rem;
+$clusterSizeX2: $clusterSize * 2;
+$clusterSizeX3: $clusterSize * 3;
+$clusterSizeX4: $clusterSize * 4;
+$clusterSizeX5: $clusterSize * 5;
+$clusterSizeX6: $clusterSize * 6;
+$clusterSizeX7: $clusterSize * 7;
+$clusterSizeX8: $clusterSize * 8;
+$clusterSizeX9: $clusterSize * 9;
+$clusterSizeX10: $clusterSize * 10;
+
+// Border radiuses
+
+$borderRadius05: 0.5rem;
+$borderRadius1: 1rem;
+$borderRadius2: 2rem;
+
+// Opacity
+$opacity90: 0.9;
+$opacity80: 0.8;
+$opacity70: 0.7;
+$opacity60: 0.6;
+$opacity50: 0.5;
+$opacity40: 0.4;
+$opacity30: 0.3;
+$opacity20: 0.2;
+$opacity10: 0.1;

@@ -1,3 +1,4 @@
+@import '../../css/variables.scss';
 
 .main {
   display: grid;
@@ -5,6 +6,7 @@
   // padding: 1rem;
   grid-template-rows: 10% auto 8%;
   position: relative;
+  padding-inline: $clusterSizeX2;
 }
 
 .mainContent {
@@ -14,22 +16,20 @@
 
 ::-webkit-scrollbar {
   width: 0.8rem;
-
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
   background: #f1f1f1;
-
 }
- 
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #a5c2ff; 
+  background: #a5c2ff;
   border-radius: 1rem;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #6797ff; 
+  background: #6797ff;
 }

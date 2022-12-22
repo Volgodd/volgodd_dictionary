@@ -1,14 +1,10 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+@import './css/variables.scss';
 
 body,
 html {
   font-size: 12px;
-  font-weight: 500;
-  font-family: "Leckerli One", cursive;
-  font-family: "Roboto", sans-serif;
-  color: #525252;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: $colorGray50;
 }
 
 #root {
