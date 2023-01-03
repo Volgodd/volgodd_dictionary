@@ -16,6 +16,14 @@
   width: calc(100% - 3rem);
   background-color: $colorGray50;
   z-index: 10;
+  border-radius: $borderRadius05;
+  overflow: hidden;
+}
+
+.overlayContent {
+  position: relative;
+  width: 100%;
+  padding: $clusterSizeX2;
 }
 
 .overlayShade {
@@ -28,62 +36,22 @@
 }
 
 .overlayHeader {
-  text-align: center;
+  height: $clusterSizeX4;
+  width: 100%;
   font-size: $fontSize20;
-  margin-block: $clusterSize;
   padding-inline: $clusterSizeX3;
   color: $colorWhite;
-}
-
-.addWord {
-  display: grid;
-  position: absolute;
-  padding-left: $clusterSize;
-  padding-top: $clusterSize;
-  column-gap: $clusterSize * 0.5;
-  border-radius: $clusterSize;
-  z-index: 1;
-  grid-template-columns: auto 10% 10%;
-  max-width: $clusterSizeX10 * 4;
-  width: 100%;
-  height: $clusterSizeX10 * 2;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.inputButtonFlex {
+  background-color: $colorGray75;
   display: flex;
-  justify-content: space-evenly;
-  margin-bottom: $clusterSizeX2;
-}
-
-.inputField {
-  height: $clusterSizeX3;
-  width: $clusterSize * 25;
-  border-radius: $clusterSize * 0.5;
-}
-
-.dropdown {
-  margin: auto;
-  width: fit-content;
-}
-
-.saveButton {
-  width: $clusterSizeX5;
-  margin: auto;
-  display: block;
-  float: none;
-  margin-block: $clusterSize;
-}
-
-.addWordButton {
-  width: $clusterSizeX8;
+  flex-direction: column;
+  justify-content: center;
+  font-family: $fontRoboto;
+  font-weight: $fontWeightBold;
 }
 
 .closeButton {
   position: absolute;
   right: 0;
   top: 0;
-  margin: $clusterSize;
+  cursor: pointer;
 }

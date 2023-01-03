@@ -1,0 +1,20 @@
+@import '../css/variables.scss';
+
+.addWordInterface {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(2, $clusterSizeX4) auto $clusterSizeX4;
+  grid-gap: $clusterSize;
+  margin-bottom: $clusterSize;
+}
+
+.addWordInterfaceRow {
+  height: $clusterSizeX4;
+  width: 100%;
+  display: grid;
+
+  &_withButton {
+    grid-template-columns: 1fr $clusterSizeX4;
+    grid-gap: $clusterSize;
+  }
+}

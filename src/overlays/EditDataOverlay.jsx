@@ -1,11 +1,10 @@
-import { copyFromClipboard, copyFromClipboardOld } from 'common/utils';
-
-import MiniButton from 'components/buttons/mini-button/MiniButton';
 import NavButton from 'components/footer/nav-button/NavButton';
 import React from 'react';
 import SelectMenu from 'components/selectMenu/SelectMenu';
-import clsx from 'clsx';
-import styles from './AddWordOverlay.module.scss';
+import { copyFromClipboard } from 'common/utils';
+import { findObjectIndex } from 'components/buttons/utils';
+import styles from './EditDataOverlay.module.scss';
+import useGlobalContext from 'hooks/useGlobalContext';
 import { useState } from 'react';
 
 const selectMenuData = [
@@ -14,10 +13,12 @@ const selectMenuData = [
   { value: 'kat3', text: 'Katya 3' }
 ];
 
-const AddWordOverlay = () => {
+const EditDataOverlay = () => {
   const [text, setText] = useState('');
   const [translation, setTranslation] = useState('');
   const [theme, setTheme] = useState(selectMenuData[0]);
+
+  const { overlay, wordData } = useGlobalContext();
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -54,46 +55,50 @@ const AddWordOverlay = () => {
     }
   };
 
-  const handleBufferButtonClickOld = () => {
-    const callbackFunctionMyaff = (clipboardValue) => {
-      setText(clipboardValue);
-    };
+  const wordArrayIndex = findObjectIndex(wordData, overlay.metadata);
 
-    copyFromClipboardOld(callbackFunctionMyaff);
-  };
   //ф handleSelectMenu получает от select menu значение из инпута
 
   //написать утилиту, кот будет возвращать список тем
 
   return (
-    <form onSubmit={submitHandler} className={styles.addWordInterface}>
-      <div className={clsx(styles.addWordInterfaceRow, styles.addWordInterfaceRow_withButton)}>
+    <form onSubmit={submitHandler} className={styles.editWordInterface}>
+      <div className={styles.editWordInterfaceRow}>
         <input
+          value={wordData[wordArrayIndex].native}
           type="text"
           placeholder="Word"
           className="inputElement"
-          value={text}
+          // value={text}
           onChange={(e) => setText(e.target.value)}
           required
         />
-        <MiniButton type="buffer" onClickF={(e) => handleBufferButtonClick('word')} />
       </div>
-      <div className={clsx(styles.addWordInterfaceRow, styles.addWordInterfaceRow_withButton)}>
+      <div className={styles.editWordInterfaceRow}>
         <input
+          value={wordData[wordArrayIndex].foreign}
           type="text"
           placeholder="Tanslation / meaning"
           className="inputElement"
-          value={translation}
+          // value={translation}
           onChange={(e) => setTranslation(e.target.value)}
           required
         />
-        <MiniButton type="buffer" onClickF={(e) => handleBufferButtonClick('translation')} />
       </div>
-
-      <SelectMenu additionalStyles={''} data={selectMenuData} onSelect={handleSelectMenu} />
-
-      <NavButton name={'Save'} styles={''} />
+      <div className={styles.textareaContainer}>
+        <textarea
+          className="inputElement inputElement_textArea"
+          defaultValue={wordData[wordArrayIndex].examples}></textarea>
+      </div>
+      <div>
+        <SelectMenu
+          additionalStyles={styles.dropdown}
+          data={selectMenuData}
+          onSelect={handleSelectMenu}
+        />
+      </div>
+      <NavButton name={'Save'} styles={styles.saveButton} />
     </form>
   );
 };
-export default AddWordOverlay;
+export default EditDataOverlay;

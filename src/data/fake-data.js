@@ -13,7 +13,7 @@ export const fakeWordData = [
   },
   {
     id: 'word2',
-    examples: ' ',
+    examples: '            ',
     themeIdList: ['theme3', 'theme1'],
     native: 'Pellentesque',
     foreign: 'Quisque',

@@ -1,6 +1,7 @@
 import BufferIcon from 'icons/BufferIcon';
 import ChangeColorIcon from 'icons/ChangeColorIcon';
 import CloseIcon from 'icons/CloseIcon';
+import DeleteIcon from 'icons/DeleteIcon';
 import PenIcon from 'icons/PenIcon';
 import RemoteDictionaryIcon from 'icons/RemoteDictionaryIcon';
 import SearchIcon from 'icons/SearchIcon';
@@ -19,16 +20,22 @@ const getButtonIcon = (type) => {
       return <SearchIcon />;
     case 'closeIcon':
       return <CloseIcon />;
+    case 'deleteIcon':
+      return <DeleteIcon />;
     default:
       return <PenIcon />;
   }
 };
 
-const MiniButton = ({ type, additionalStyles, onClickF }) => {
+const MiniButton = ({ type, additionalStyles, onClickF, transparent = false }) => {
   return (
-    <button className={clsx(styles.miniButton, additionalStyles)} onClick={() => onClickF()}>
-      {getButtonIcon(type)}
-    </button>
+    <div className={clsx(styles.miniButtonContainer, additionalStyles)}>
+      <button
+        className={clsx(styles.miniButton, transparent && styles.miniButton_transparent)}
+        onClick={() => onClickF()}>
+        {getButtonIcon(type)}
+      </button>
+    </div>
   );
 };
 

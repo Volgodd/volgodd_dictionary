@@ -3,9 +3,12 @@
 // Colors
 
 $colorWhite: #eaedf2;
+$colorGray20: #aeafb9;
 $colorGray25: #727379;
+$colorGray45: #4d4d59;
 $colorGray50: #3d3d49;
 $colorGray75: #222228;
+$colorGray85: #1a1a1d;
 $colorBlack: #111112;
 
 $colorAccent1: #3068df;
@@ -59,3 +62,5 @@ $opacity40: 0.4;
 $opacity30: 0.3;
 $opacity20: 0.2;
 $opacity10: 0.1;
+
+$inputInnerShadow: inset 0 0 $clusterSize/3 rgba(0, 0, 0, 0.5);

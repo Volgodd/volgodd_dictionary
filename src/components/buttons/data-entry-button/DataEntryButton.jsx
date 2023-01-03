@@ -1,8 +1,21 @@
+import MiniButton from '../mini-button/MiniButton';
+import { deleteLocalDataFromArray } from 'components/buttons/utils';
 import styles from './DataEntryButton.module.scss';
+import useGlobalContext from 'hooks/useGlobalContext';
 import { useState } from 'react';
 
-const DataEntryButton = ({ mainCellData, secondaryCellData, color, onClickF, expandAreaText }) => {
+const DataEntryButton = ({
+  mainCellData,
+  secondaryCellData,
+  color,
+  onClickF,
+  expandAreaText,
+  wordId,
+  dataArray
+}) => {
   const [isExpanded, setIsExpanded] = useState(false);
+
+  const { overlay, setOverlay } = useGlobalContext();
 
   const onClickHandler = () => {
     if (onClickF) {
@@ -11,11 +24,20 @@ const DataEntryButton = ({ mainCellData, secondaryCellData, color, onClickF, exp
       setIsExpanded(!isExpanded);
     }
   };
-
-  const textAreaIsNotEmpty = () => {};
-
   //else здесь нужен потому, что в if нет return, следовательно, выполнение ф не прерывается, если if false, и isExpanded менялось бы всегда
   // запись !isExpanded означает возьми значение isExpanded и поменяй на противоположное
+
+  const examplesExist = () => {
+    if (expandAreaText && expandAreaText.split(' ').join('').length > 0) {
+      return true;
+    } else return false;
+  };
+
+  // console.log(expandAreaText.length);
+
+  const deleteWord = () => {
+    deleteLocalDataFromArray(dataArray, wordId);
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -25,8 +47,13 @@ const DataEntryButton = ({ mainCellData, secondaryCellData, color, onClickF, exp
       </button>
       {isExpanded && (
         <div className={styles.wordUi}>
-          <div className={styles.buttonContainer}></div>
-          <div className={styles.description}>{expandAreaText || 'No word usage examples'}</div>
+          <div className={styles.buttonContainer}>
+            <MiniButton onClickF={() => setOverlay({ type: 'editWord', metadata: wordId })} />
+            <MiniButton type="deleteIcon" onClickF={deleteWord} />
+          </div>
+          <div className={styles.description}>
+            {examplesExist() ? expandAreaText : 'Examples not found'}
+          </div>
         </div>
       )}
     </div>

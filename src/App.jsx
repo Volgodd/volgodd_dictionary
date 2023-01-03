@@ -3,7 +3,6 @@ import './index.scss';
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
-import AddWordPage from './pages/add-word/AddWord';
 import { GlobalContextProvider } from 'providers/GlobalContext';
 import Overlay from './overlays/Overlay';
 import { ROUTES } from './common/constants';
@@ -12,14 +11,17 @@ import ThemePage from 'pages/theme-page/ThemePage';
 import WordsPage from 'pages/words-page/WordsPage';
 import { getData } from './data/api';
 
-const { MAIN_PAGE, ADD_WORD_PAGE, WORDS } = ROUTES;
+const { MAIN_PAGE, WORDS } = ROUTES;
 
 // navigator.clipboard.readText().then((clipText) => console.log(clipText));
 
 function App() {
-  const [overlayType, setOverlayType] = useState();
+  const [overlay, setOverlay] = useState({ type: undefined, metadata: undefined });
+  const [overlayMetaData, setOverlayMetaData] = useState();
   const [wordData, setWordData] = useState();
   const [themeData, setThemeData] = useState();
+
+  console.log(overlay.type);
 
   useEffect(() => {
     console.log('APP LOADED. Data call');
@@ -37,8 +39,10 @@ function App() {
   const globalContextData = {
     wordData,
     themeData,
-    overlayType,
-    setOverlayType,
+    overlay,
+    setOverlay,
+    overlayMetaData,
+    setOverlayMetaData,
     murmur: '!!!!!!!!!!!!'
 
     // createTheme,
@@ -54,10 +58,9 @@ function App() {
       <GlobalContextProvider data={globalContextData}>
         {/* <Link to={MAIN_PAGE}>Main Page</Link>
         <Link to={ADD_WORD_PAGE}>Add word</Link> */}
-        {overlayType && <Overlay />}
+        {overlay.type && <Overlay />}
         <Routes>
           <Route path={MAIN_PAGE} element={<ThemePage />} />
-          <Route path={ADD_WORD_PAGE} element={<AddWordPage />} />
           <Route path={`${WORDS}/:themeIdUrlParam`} element={<WordsPage />} />
           <Route path={WORDS} element={<WordsPage />} />
           {/* <Route path="*" element={<div>404</div>} /> */}

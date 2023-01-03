@@ -59,6 +59,8 @@
 .buttonContainer {
   border-top: solid 1px $colorGray25;
   margin-bottom: $clusterSizeX2;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .description {

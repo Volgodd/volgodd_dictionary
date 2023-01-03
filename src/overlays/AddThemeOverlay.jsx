@@ -1,6 +1,6 @@
 import NavButton from 'components/footer/nav-button/NavButton';
 import React from 'react';
-import styles from './Overlay.module.scss';
+import styles from './AddThemeOverlay.module.scss';
 import { useState } from 'react';
 
 const AddThemeOverlay = () => {
@@ -23,12 +23,12 @@ const AddThemeOverlay = () => {
   };
 
   return (
-    <form onSubmit={submitHandler}>
-      <div className={styles.inputButtonFlex}>
+    <form onSubmit={submitHandler} className={styles.addThemeInterface}>
+      <div className={styles.addThemeInterfaceRow}>
         <input
           type="text"
           placeholder="Theme name"
-          className={styles.inputField}
+          className="inputElement"
           onChange={(e) => setTheme(e.target.value)}
           value={theme}
           required

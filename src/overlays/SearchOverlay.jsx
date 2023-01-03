@@ -1,7 +1,7 @@
 import NavButton from 'components/footer/nav-button/NavButton';
 import React from 'react';
 import clsx from 'clsx';
-import styles from './Overlay.module.scss';
+import styles from './SearchOverlay.module.scss';
 import { useState } from 'react';
 
 const SearchOverlay = () => {
@@ -24,12 +24,12 @@ const SearchOverlay = () => {
   };
 
   return (
-    <form onSubmit={submitHandler}>
-      <div className={styles.inputButtonFlex}>
+    <form onSubmit={submitHandler} className={styles.searchInterface}>
+      <div className={styles.searchInterfaceRow}>
         <input
           type="text"
           placeholder=""
-          className={styles.inputField}
+          className="inputElement"
           onChange={(e) => setTheme(e.target.value)}
           value={theme}
           required

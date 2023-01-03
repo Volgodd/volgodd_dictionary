@@ -5,7 +5,6 @@ import clsx from 'clsx';
 import styles from './WordsPage.module.scss';
 import useGlobalContext from 'hooks/useGlobalContext';
 import { useParams } from 'react-router-dom';
-import { useState } from 'react';
 
 const WordsPage = () => {
   const { themeIdUrlParam } = useParams();
@@ -34,27 +33,16 @@ const WordsPage = () => {
           .map((wordObject) => {
             const { native, foreign, id, examples } = wordObject;
 
-            const exapmlesExist = () => {
-              let exampleText;
-
-              if (examples && examples.length > 0) {
-                exampleText = examples;
-              } else exampleText = 'No examples';
-            };
-
-            if (examples && examples.length > 0)
-              return (
-                // <div key={wordData.id}>
-                //   {native} === {foreign}
-                // </div>
-
-                <DataEntryButton
-                  key={id}
-                  mainCellData={foreign}
-                  secondaryCellData={native}
-                  expandAreaText={examples}
-                />
-              );
+            return (
+              <DataEntryButton
+                dataArray={wordData}
+                key={id}
+                wordId={id}
+                mainCellData={foreign}
+                secondaryCellData={native}
+                expandAreaText={examples}
+              />
+            );
           })}
       </div>
     </div>

@@ -1,0 +1,26 @@
+@import '../../css/variables.scss';
+
+.selectMenu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: $colorGray75;
+  border-radius: $borderRadius05;
+
+  > label {
+    width: 100%;
+    padding-inline: $clusterSize;
+    font-size: $fontSize12;
+    line-height: $clusterSizeX2;
+    height: $clusterSizeX2;
+    text-transform: uppercase;
+    color: $colorGray45;
+    font-weight: bold;
+  }
+
+  > select {
+    font-size: $fontSize14;
+    flex-grow: 1;
+    width: 100%;
+  }
+}

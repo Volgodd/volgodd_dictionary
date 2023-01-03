@@ -1,5 +1,9 @@
+/* eslint-disable no-restricted-globals */
+
 import AddThemeOverlay from './AddThemeOverlay';
 import AddWordOverlay from './AddWordOverlay';
+import BurgerOverlay from './BurgerOverlay';
+import EditDataOverlay from './EditDataOverlay';
 import MiniButton from 'components/buttons/mini-button/MiniButton';
 import { OVERLAY_TYPES } from './constants';
 import SearchOverlay from './SearchOverlay';
@@ -9,21 +13,25 @@ import useGlobalContext from 'hooks/useGlobalContext';
 const getOverlayType = (overlayType) => {
   switch (overlayType) {
     case OVERLAY_TYPES.ADD_WORD:
-      return <AddWordOverlay heading={'Add a word'} />;
+      return <AddWordOverlay />;
     case OVERLAY_TYPES.ADD_THEME:
-      return <AddThemeOverlay heading={'Add a word'} />;
+      return <AddThemeOverlay />;
     case OVERLAY_TYPES.SEARCH:
-      return <SearchOverlay heading={'Search'} />;
+      return <SearchOverlay />;
+    case OVERLAY_TYPES.EDIT_WORD:
+      return <EditDataOverlay />;
+    case OVERLAY_TYPES.MENU:
+      return <BurgerOverlay />;
     default:
       return <></>;
   }
 };
 
 const Overlay = () => {
-  const { overlayType, setOverlayType } = useGlobalContext();
+  const { overlay, setOverlay, wordData, themeData } = useGlobalContext();
   let headerString = 'Overlay header text';
 
-  switch (overlayType) {
+  switch (overlay.type) {
     case OVERLAY_TYPES.ADD_WORD:
       headerString = 'Add a word';
       break;
@@ -33,9 +41,24 @@ const Overlay = () => {
     case OVERLAY_TYPES.SEARCH:
       headerString = 'Search';
       break;
+    case OVERLAY_TYPES.EDIT_WORD:
+      headerString = 'Edit the word';
+      break;
+    case OVERLAY_TYPES.MENU:
+      headerString = 'Menu';
+      break;
     default:
-      <></>;
+      headerString = 'Edit the theme';
   }
+
+  const closeSafeguard = () => {
+    const alertMessage = 'Are your sure you want to close? All unsave data will be missing';
+
+    // if (wordData || themeData || )
+    if (confirm(alertMessage) === true) {
+      setOverlay({ type: undefined });
+    } else return;
+  };
 
   return (
     <div className={styles.overlayWrapper}>
@@ -44,19 +67,19 @@ const Overlay = () => {
           {headerString}
           <MiniButton
             type={'closeIcon'}
-            onClickF={setOverlayType}
+            onClickF={() => setOverlay({ type: undefined })}
             additionalStyles={styles.closeButton}
+            transparent={true}
           />
         </div>
-
-        {getOverlayType(overlayType)}
+        <div className={styles.overlayContent}>{getOverlayType(overlay.type)}</div>
 
         <div className="overlayFooter">
           {/* <NavButton name={'Close'} styles={styles.closeButton}/> */}
           {/* <button onClick={() => setOverlayType()}>Close</button> */}
         </div>
       </div>
-      <div className={styles.overlayShade} onClick={() => setOverlayType()} />
+      <div className={styles.overlayShade} onClick={() => setOverlay({ type: undefined })} />
     </div>
   );
 };

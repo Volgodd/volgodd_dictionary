@@ -1,10 +1,33 @@
 @import '../../../css/variables.scss';
 
-.miniButton {
+.miniButtonContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: $clusterSizeX4;
   height: $clusterSizeX4;
-  border: none;
-  border-radius: $borderRadius05;
-  background-color: transparent;
-  fill: $colorWhite;
+}
+
+.miniButton {
+  background-color: $colorGray75;
+  width: $clusterSizeX3;
+  height: $clusterSizeX3;
+  border: none; //1px solid $colorGray45;
+  border-radius: $borderRadius1;
+  padding: $clusterSize / 1.5;
+  fill: $colorWhite; //$colorGray20;
+
+  margin: 0;
+  cursor: pointer;
+  transition: fill 0.3s ease-in-out;
+
+  &:hover {
+    fill: $colorAccent1;
+  }
+
+  &_transparent {
+    background-color: transparent;
+    fill: $colorWhite;
+  }
 }

@@ -7,9 +7,13 @@ const SelectMenu = ({ data, onSelect, additionalStyles }) => {
   }
 
   return (
-    <div className={clsx(styles.selectMenuForm, additionalStyles)}>
+    <div className={clsx(styles.selectMenu, additionalStyles)}>
       <label htmlFor="theme">Theme:</label>
-      <select name="theme" id="theme" onChange={(e) => onSelect(e.target.value)}>
+      <select
+        name="theme"
+        id="theme"
+        onChange={(e) => onSelect(e.target.value)}
+        className="inputElement">
         {data.map((entry, index) => {
           const { value, text } = entry;
 
