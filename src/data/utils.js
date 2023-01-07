@@ -20,7 +20,7 @@ export const countThemeWords = ({ themeData, wordData }) => {
     });
   });
 
-  console.log('++++++++++++', dump);
+  // console.log('++++++++++++', dump);
 
   const themeDataWithEnjections = themeData.map((theme) => {
     //safeguard для случая, если тема отсутствует (в нашем случае нет темы 8)

@@ -1,0 +1,33 @@
+@import 'css/variables.scss';
+
+.burgerButton {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: $clusterSizeX3;
+  height: $clusterSize * 2.5;
+  border: none;
+  background: transparent;
+  padding: 0;
+
+  span {
+    content: '';
+    background-color: $colorWhite;
+    width: 100%;
+    width: $clusterSizeX3;
+    height: $clusterSize * 0.4;
+    border-radius: $clusterSize * 0.4;
+    transition: 0.3s ease-in-out;
+  }
+
+  &:before,
+  &:after {
+    content: '';
+    background-color: $colorWhite;
+    width: 100%;
+    width: $clusterSizeX3;
+    height: $clusterSize * 0.4;
+    border-radius: $clusterSize * 0.4;
+    transition: 0.3s ease-in-out;
+  }
+}

@@ -1,5 +1,5 @@
 import NavButton from './nav-button/NavButton';
-import { OVERLAY_TYPES } from 'overlays/constants';
+import { OVERLAY_TYPES } from 'common/constants';
 import styles from './Footer.module.scss';
 import useGlobalContext from 'hooks/useGlobalContext';
 

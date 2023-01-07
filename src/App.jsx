@@ -1,40 +1,53 @@
 import './index.scss';
 
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
+import { DEFAULT_OVERLAY_STATE, OVERLAY_TYPES, ROUTES } from './common/constants';
+import { getData, getThemesAction, getWordsAction } from './data/api';
+import { getLocalJWT, setLocalJWT } from 'common/local-storage';
 import { useEffect, useState } from 'react';
 
 import { GlobalContextProvider } from 'providers/GlobalContext';
 import Overlay from './overlays/Overlay';
-import { ROUTES } from './common/constants';
 import React from 'react';
 import ThemePage from 'pages/theme-page/ThemePage';
 import WordsPage from 'pages/words-page/WordsPage';
-import { getData } from './data/api';
 
 const { MAIN_PAGE, WORDS } = ROUTES;
 
 // navigator.clipboard.readText().then((clipText) => console.log(clipText));
 
+// katjazubova@gmail.com
+// U9qWxNHd9uiHodsQx1gy
+
 function App() {
-  const [overlay, setOverlay] = useState({ type: undefined, metadata: undefined });
+  const [jwt, setJWT] = useState(getLocalJWT());
+  const [overlay, setOverlay] = useState(DEFAULT_OVERLAY_STATE);
   const [overlayMetaData, setOverlayMetaData] = useState();
   const [wordData, setWordData] = useState();
   const [themeData, setThemeData] = useState();
 
-  console.log(overlay.type);
+  useEffect(() => {
+    // LOGIN CHECK
+    console.log('GLOBAL JWT OBJECT', jwt);
+    if (!jwt) {
+      setOverlay({ type: OVERLAY_TYPES.LOGIN });
+    } else {
+      setLocalJWT(jwt);
+    }
+  }, [jwt]);
 
   useEffect(() => {
-    console.log('APP LOADED. Data call');
+    // FETCH DATA
 
-    getData().then((data) => {
-      const { wordData, themeData } = data;
-      setWordData(wordData);
-      setThemeData(themeData);
-    });
-  }, []);
+    if (jwt) {
+      getData(jwt).then(({ wordData, themeData }) => {
+        setWordData(wordData);
+        setThemeData(themeData);
+      });
+    }
+  }, [jwt]);
 
-  console.log('ROOT RENDER', { wordData, themeData });
-  // const [createTheme, setCreateTheme] = useState({native:'', foreign: '', level:''});
+  console.log('GLOBAL STATE', { wordData, themeData });
 
   const globalContextData = {
     wordData,
@@ -43,13 +56,11 @@ function App() {
     setOverlay,
     overlayMetaData,
     setOverlayMetaData,
-    murmur: '!!!!!!!!!!!!'
-
-    // createTheme,
-    // setCreateTheme,
+    setJWT,
+    jwt
   };
 
-  if (!wordData || !themeData) {
+  if (jwt && (!wordData || !themeData)) {
     return <div>Loading data</div>;
   }
 
@@ -59,12 +70,14 @@ function App() {
         {/* <Link to={MAIN_PAGE}>Main Page</Link>
         <Link to={ADD_WORD_PAGE}>Add word</Link> */}
         {overlay.type && <Overlay />}
-        <Routes>
-          <Route path={MAIN_PAGE} element={<ThemePage />} />
-          <Route path={`${WORDS}/:themeIdUrlParam`} element={<WordsPage />} />
-          <Route path={WORDS} element={<WordsPage />} />
-          {/* <Route path="*" element={<div>404</div>} /> */}
-        </Routes>
+        {jwt && (
+          <Routes>
+            <Route path={MAIN_PAGE} element={<ThemePage />} />
+            <Route path={`${WORDS}/:themeIdUrlParam`} element={<WordsPage />} />
+            <Route path={WORDS} element={<WordsPage />} />
+            {/* <Route path="*" element={<div>404</div>} /> */}
+          </Routes>
+        )}
       </GlobalContextProvider>
     </BrowserRouter>
   );

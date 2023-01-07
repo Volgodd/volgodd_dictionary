@@ -1,0 +1,22 @@
+@import '../css/variables.scss';
+
+.loginInterface {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-auto-columns: $clusterSizeX4;
+  grid-gap: $clusterSize;
+  margin-bottom: $clusterSize;
+}
+
+.loginInterfaceRow {
+  height: $clusterSizeX4;
+  width: 100%;
+  display: grid;
+
+  &_error {
+    font-size: $fontSize16;
+    color: red;
+    font-weight: $fontWeightBold;
+    text-align: center;
+  }
+}

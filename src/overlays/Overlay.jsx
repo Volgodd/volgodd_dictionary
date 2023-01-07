@@ -1,11 +1,13 @@
 /* eslint-disable no-restricted-globals */
 
+import { DEFAULT_OVERLAY_STATE, OVERLAY_TYPES } from 'common/constants';
+
 import AddThemeOverlay from './AddThemeOverlay';
 import AddWordOverlay from './AddWordOverlay';
 import BurgerOverlay from './BurgerOverlay';
 import EditDataOverlay from './EditDataOverlay';
+import Login from './Login';
 import MiniButton from 'components/buttons/mini-button/MiniButton';
-import { OVERLAY_TYPES } from './constants';
 import SearchOverlay from './SearchOverlay';
 import styles from './Overlay.module.scss';
 import useGlobalContext from 'hooks/useGlobalContext';
@@ -22,6 +24,8 @@ const getOverlayType = (overlayType) => {
       return <EditDataOverlay />;
     case OVERLAY_TYPES.MENU:
       return <BurgerOverlay />;
+    case OVERLAY_TYPES.LOGIN:
+      return <Login />;
     default:
       return <></>;
   }
@@ -42,13 +46,16 @@ const Overlay = () => {
       headerString = 'Search';
       break;
     case OVERLAY_TYPES.EDIT_WORD:
-      headerString = 'Edit the word';
+      headerString = 'Edit word';
       break;
     case OVERLAY_TYPES.MENU:
       headerString = 'Menu';
       break;
+    case OVERLAY_TYPES.LOGIN:
+      headerString = 'Login';
+      break;
     default:
-      headerString = 'Edit the theme';
+      headerString = 'Edit theme';
   }
 
   const closeSafeguard = () => {
@@ -56,7 +63,7 @@ const Overlay = () => {
 
     // if (wordData || themeData || )
     if (confirm(alertMessage) === true) {
-      setOverlay({ type: undefined });
+      setOverlay(DEFAULT_OVERLAY_STATE);
     } else return;
   };
 
@@ -67,7 +74,7 @@ const Overlay = () => {
           {headerString}
           <MiniButton
             type={'closeIcon'}
-            onClickF={() => setOverlay({ type: undefined })}
+            onClickF={() => setOverlay(DEFAULT_OVERLAY_STATE)}
             additionalStyles={styles.closeButton}
             transparent={true}
           />
@@ -79,7 +86,7 @@ const Overlay = () => {
           {/* <button onClick={() => setOverlayType()}>Close</button> */}
         </div>
       </div>
-      <div className={styles.overlayShade} onClick={() => setOverlay({ type: undefined })} />
+      <div className={styles.overlayShade} onClick={() => setOverlay(DEFAULT_OVERLAY_STATE)} />
     </div>
   );
 };
