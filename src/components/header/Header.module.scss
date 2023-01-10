@@ -1,46 +1,32 @@
 @import '../../css/variables.scss';
 
 .wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  // display: flex;
+  // justify-content: space-between;
+  // align-items: center;
+
+  display: inline-grid;
+  grid-template-columns: 1fr 5fr 1fr 1fr;
   width: 100%;
+  align-items: center;
 
   > h2 {
     font-size: $fontSize24;
     font-weight: $fontWeightBold;
     color: $colorWhite;
+    margin-left: $clusterSize;
+  }
+
+  > div,
+  button {
+    justify-self: center;
   }
 }
 
-// .burgerButton {
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: space-around;
-//   width: $clusterSizeX3;
-//   height: $clusterSize * 2.5;
-//   border: none;
-//   background: transparent;
-//   padding: 0;
+.backButton {
+  // display: none;
+}
 
-//   span {
-//     content: '';
-//     background-color: $colorWhite;
-//     width: 100%;
-//     width: $clusterSizeX3;
-//     height: $clusterSize * 0.4;
-//     border-radius: $clusterSize * 0.4;
-//     transition: 0.3s ease-in-out;
-//   }
-
-//   &:before,
-//   &:after {
-//     content: '';
-//     background-color: $colorWhite;
-//     width: 100%;
-//     width: $clusterSizeX3;
-//     height: $clusterSize * 0.4;
-//     border-radius: $clusterSize * 0.4;
-//     transition: 0.3s ease-in-out;
-//   }
-// }
+.backButton.active {
+  display: block;
+}

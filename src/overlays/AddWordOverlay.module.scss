@@ -3,7 +3,7 @@
 .addWordInterface {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: repeat(2, $clusterSizeX4) auto $clusterSizeX4;
+  grid-template-rows: repeat(2, $clusterSizeX4) $clusterSizeX6 auto $clusterSizeX4;
   grid-gap: $clusterSize;
   margin-bottom: $clusterSize;
 }
@@ -17,4 +17,9 @@
     grid-template-columns: 1fr $clusterSizeX4;
     grid-gap: $clusterSize;
   }
+}
+
+.addWordTextarea {
+  height: 6rem;
+  padding: $clusterSize;
 }

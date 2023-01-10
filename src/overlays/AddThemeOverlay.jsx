@@ -9,7 +9,7 @@ import { useState } from 'react';
 const AddThemeOverlay = () => {
   const [theme, setTheme] = useState('');
 
-  const { jwt, setOverlay } = useGlobalContext();
+  const { jwt, setOverlay, themeData, setRawThemeData } = useGlobalContext();
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -19,22 +19,14 @@ const AddThemeOverlay = () => {
     };
 
     console.log({ jwt, data: newThemeData });
+
     addThemeAction(jwt, newThemeData).then(({ data }) => {
       console.log('theme added', data);
+
+      const newRawThemeData = [...themeData, newThemeData];
+      setRawThemeData(newRawThemeData);
       setOverlay(DEFAULT_OVERLAY_STATE);
     });
-    // if (!text) {
-    //   alert('please fill in foreign language field');
-    //   return;
-    // }
-
-    // if (!translation) {
-    //   alert('please fill in native language field');
-    //   return;
-    // }
-
-    console.log({ theme });
-    //здесь будет ф по отправке данных на сервер
   };
 
   return (

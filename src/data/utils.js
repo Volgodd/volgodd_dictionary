@@ -1,4 +1,8 @@
 export const countThemeWords = ({ themeData, wordData }) => {
+  if (!themeData || !wordData) {
+    return undefined;
+  }
+
   let dump = {};
 
   wordData.forEach(({ themeIdList }) => {

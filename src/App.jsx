@@ -1,8 +1,7 @@
 import './index.scss';
 
-import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { DEFAULT_OVERLAY_STATE, OVERLAY_TYPES, ROUTES } from './common/constants';
-import { getData, getThemesAction, getWordsAction } from './data/api';
 import { getLocalJWT, setLocalJWT } from 'common/local-storage';
 import { useEffect, useState } from 'react';
 
@@ -11,6 +10,8 @@ import Overlay from './overlays/Overlay';
 import React from 'react';
 import ThemePage from 'pages/theme-page/ThemePage';
 import WordsPage from 'pages/words-page/WordsPage';
+import { countThemeWords } from 'data/utils';
+import { getData } from './data/api';
 
 const { MAIN_PAGE, WORDS } = ROUTES;
 
@@ -24,7 +25,16 @@ function App() {
   const [overlay, setOverlay] = useState(DEFAULT_OVERLAY_STATE);
   const [overlayMetaData, setOverlayMetaData] = useState();
   const [wordData, setWordData] = useState();
+  const [rawThemeData, setRawThemeData] = useState();
   const [themeData, setThemeData] = useState();
+
+  useEffect(() => {
+    // LOGIN CHECK
+
+    if (rawThemeData) {
+      setThemeData(countThemeWords({ wordData, themeData: rawThemeData }));
+    }
+  }, [rawThemeData, wordData]);
 
   useEffect(() => {
     // LOGIN CHECK
@@ -42,7 +52,7 @@ function App() {
     if (jwt) {
       getData(jwt).then(({ wordData, themeData }) => {
         setWordData(wordData);
-        setThemeData(themeData);
+        setRawThemeData(themeData);
       });
     }
   }, [jwt]);
@@ -51,6 +61,9 @@ function App() {
 
   const globalContextData = {
     wordData,
+    setWordData,
+    rawThemeData,
+    setRawThemeData,
     themeData,
     overlay,
     setOverlay,

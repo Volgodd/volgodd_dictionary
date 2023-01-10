@@ -3,7 +3,6 @@
 import { SERVER_URL, THEME_ENDPOINT, WORD_ENDPOINT } from 'common/constants';
 
 import axios from 'axios';
-import { countThemeWords } from './utils';
 
 export const loginAction = ({ login, password }) => {
   return axios.post(`${SERVER_URL}/auth/local`, {
@@ -35,13 +34,17 @@ export const getData = async (jwt) => {
   const { data: themeData } = await getThemesAction(jwt);
   const { data: wordData } = await getWordsAction(jwt);
 
-  const processedThemeData = countThemeWords({ wordData, themeData });
-
-  return { wordData, themeData: processedThemeData };
+  return { wordData, themeData };
 };
 
 export const addThemeAction = (jwt, data) => {
   return axios.post(`${SERVER_URL}${THEME_ENDPOINT}`, data, {
+    headers: getRequestHeaders(jwt)
+  });
+};
+
+export const addWordAction = (jwt, data) => {
+  return axios.post(`${SERVER_URL}${WORD_ENDPOINT}`, data, {
     headers: getRequestHeaders(jwt)
   });
 };
