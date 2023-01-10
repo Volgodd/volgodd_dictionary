@@ -1,0 +1,33 @@
+@import '../css/variables.scss';
+
+.editWordInterface {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(2, $clusterSizeX4) auto $clusterSizeX4;
+  grid-gap: $clusterSize;
+  margin-bottom: $clusterSize;
+}
+
+.editWordInterfaceRow {
+  height: $clusterSizeX4;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.textareaDom {
+  width: calc(100% - 2rem);
+  height: $clusterSizeX10;
+  padding: $clusterSize;
+  border: none;
+  resize: none;
+  border-radius: $borderRadius05;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.textareaContainer {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: $clusterSize;
+}

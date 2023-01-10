@@ -1,0 +1,32 @@
+@import '../../css/variables.scss';
+
+.wrapper {
+  // display: flex;
+  // justify-content: space-between;
+  // align-items: center;
+
+  display: inline-grid;
+  grid-template-columns: 1fr 5fr 1fr 1fr;
+  width: 100%;
+  align-items: center;
+
+  > h2 {
+    font-size: $fontSize24;
+    font-weight: $fontWeightBold;
+    color: $colorWhite;
+    margin-left: $clusterSize;
+  }
+
+  > div,
+  button {
+    justify-self: center;
+  }
+}
+
+.backButton {
+  // display: none;
+}
+
+.backButton.active {
+  display: block;
+}

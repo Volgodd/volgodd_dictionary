@@ -1,0 +1,50 @@
+@import './css/variables.scss';
+
+body,
+html {
+  font-size: 12px;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: $colorGray50;
+}
+
+#root {
+  position: relative;
+  max-width: 100%;
+  max-height: 100vh;
+  margin: auto;
+  aspect-ratio: 9/16;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.inputElement {
+  height: $clusterSizeX4;
+  padding-inline: $clusterSize;
+  border-radius: $borderRadius05;
+  border: 1px solid $colorGray75;
+  font-size: $fontSize14;
+  background-color: $colorGray85;
+  box-shadow: $inputInnerShadow;
+  color: $colorGray20;
+  resize: none;
+  font-family: Arial, Helvetica, sans-serif;
+
+  &::placeholder {
+    color: $colorGray20;
+    opacity: 0.6;
+  }
+
+  &:active,
+  &:focus {
+    box-shadow: 0 0 $clusterSize/2 $colorAccent1;
+    outline: solid 1px $colorAccent1;
+  }
+
+  &_textArea {
+    height: $clusterSizeX4 * 4;
+    line-height: $fontLineHeight14;
+    width: 100%;
+  }
+}

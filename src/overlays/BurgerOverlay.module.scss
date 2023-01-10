@@ -1,0 +1,12 @@
+@import '../css/variables.scss';
+
+.burgerOverlayWrapper {
+  display: block;
+
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: $clusterSizeX10 * 2;
+
+  z-index: 10;
+}

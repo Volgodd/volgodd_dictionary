@@ -1,0 +1,17 @@
+@import '../../../css/variables.scss';
+
+.button {
+  font-family: $fontRoboto;
+  background-color: $colorAccent1;
+  height: $clusterSizeX3;
+  padding-inline: $clusterSizeX2;
+  color: $colorWhite;
+  border-radius: $borderRadius2;
+  text-transform: uppercase;
+  font-weight: $fontWeightBold;
+  font-size: $fontSize12;
+  border: none;
+  margin: auto;
+  display: block;
+  cursor: pointer;
+}

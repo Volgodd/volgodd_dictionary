@@ -1,0 +1,57 @@
+@import '../css/variables.scss';
+
+.overlayWrapper {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.overlayFrame {
+  position: absolute;
+  width: calc(100% - 3rem);
+  background-color: $colorGray50;
+  z-index: 10;
+  border-radius: $borderRadius05;
+  overflow: hidden;
+}
+
+.overlayContent {
+  position: relative;
+  width: 100%;
+  padding: $clusterSizeX2;
+}
+
+.overlayShade {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.571);
+  top: 0;
+  left: 0;
+}
+
+.overlayHeader {
+  height: $clusterSizeX4;
+  width: 100%;
+  font-size: $fontSize20;
+  padding-inline: $clusterSizeX3;
+  color: $colorWhite;
+  background-color: $colorGray75;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-family: $fontRoboto;
+  font-weight: $fontWeightBold;
+}
+
+.closeButton {
+  position: absolute;
+  right: 0;
+  top: 0;
+  cursor: pointer;
+}
