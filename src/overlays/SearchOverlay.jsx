@@ -35,7 +35,7 @@ const SearchOverlay = () => {
           required
         />
       </div>
-      <NavButton name="Add word" styles={clsx(styles.saveButton, styles.addWordButton)} />
+      <NavButton name="Search" styles={clsx(styles.saveButton, styles.addWordButton)} />
     </form>
   );
 };
