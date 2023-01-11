@@ -48,3 +48,9 @@ export const addWordAction = (jwt, data) => {
     headers: getRequestHeaders(jwt)
   });
 };
+
+export const editWordAction = (jwt, data, id) => {
+  return axios.put(`${SERVER_URL}${WORD_ENDPOINT}/${id}`, data, {
+    headers: getRequestHeaders(jwt)
+  });
+};

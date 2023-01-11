@@ -3,7 +3,7 @@
 .editWordInterface {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: repeat(2, $clusterSizeX4) auto $clusterSizeX4;
+  grid-template-rows: repeat(2, $clusterSizeX4) auto $clusterSizeX5 $clusterSizeX5;
   grid-gap: $clusterSize;
   margin-bottom: $clusterSize;
 }
@@ -29,5 +29,4 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  margin-bottom: $clusterSize;
 }

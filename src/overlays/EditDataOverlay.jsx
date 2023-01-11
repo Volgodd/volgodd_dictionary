@@ -1,61 +1,56 @@
+import { DEFAULT_OVERLAY_STATE } from 'common/constants';
 import NavButton from 'components/footer/nav-button/NavButton';
 import React from 'react';
 import SelectMenu from 'components/selectMenu/SelectMenu';
 import { copyFromClipboard } from 'common/utils';
+import { editWordAction } from 'data/api';
 import { findObjectIndex } from 'components/buttons/utils';
 import styles from './EditDataOverlay.module.scss';
 import useGlobalContext from 'hooks/useGlobalContext';
 import { useState } from 'react';
 
-const selectMenuData = [
-  { value: 'kat1', text: 'Katya 1' },
-  { value: 'kat2', text: 'Katya 2' },
-  { value: 'kat3', text: 'Katya 3' }
-];
-
 const EditDataOverlay = () => {
-  const [text, setText] = useState('');
-  const [translation, setTranslation] = useState('');
-  const [theme, setTheme] = useState(selectMenuData[0]);
+  const { jwt, overlay, setOverlay, wordData, setWordData, themeData } = useGlobalContext();
+  const wordArrayIndex = findObjectIndex(wordData, overlay.metadata);
+  const [text, setText] = useState(wordData[wordArrayIndex].foreign);
+  const [translation, setTranslation] = useState(wordData[wordArrayIndex].native);
+  const [theme, setTheme] = useState(themeData[0].id);
+  const [examples, setExamples] = useState(wordData[wordArrayIndex].examples);
 
-  const { overlay, wordData } = useGlobalContext();
+  const selectMenuData = themeData.map((themeDataEntry) => {
+    return { value: themeDataEntry.id, text: themeDataEntry.name };
+  });
 
   const submitHandler = (e) => {
     e.preventDefault();
-    // if (!text) {
-    //   alert('please fill in foreign language field');
-    //   return;
-    // }
-
-    // if (!translation) {
-    //   alert('please fill in native language field');
-    //   return;
-    // }
 
     console.log({ text, translation, theme });
     //здесь будет ф по отправке данных на сервер
+
+    const newWordData = {
+      foreign: text,
+      native: translation,
+      examples: examples,
+      themeIdList: wordData[wordArrayIndex].themeIdList
+    };
+
+    console.log(wordData[wordArrayIndex], wordData[wordArrayIndex].id);
+
+    console.log(newWordData.themeIdList);
+
+    //найти newWordDatd по id и заменить значение на новую дейту
+
+    editWordAction(jwt, newWordData, wordData[wordArrayIndex].id).then(({ data }) => {
+      console.log('word edited', data);
+      wordData[wordArrayIndex] = newWordData;
+      setWordData(newWordData);
+      setOverlay(DEFAULT_OVERLAY_STATE);
+    });
   };
 
   const handleSelectMenu = (value) => {
     setTheme(value);
   };
-
-  const handleBufferButtonClick = async (inputType) => {
-    const buffer = await copyFromClipboard();
-
-    switch (inputType) {
-      case 'word':
-        setText(buffer);
-        break;
-      case 'translation':
-        setTranslation(buffer);
-        break;
-      default:
-        <></>;
-    }
-  };
-
-  const wordArrayIndex = findObjectIndex(wordData, overlay.metadata);
 
   //ф handleSelectMenu получает от select menu значение из инпута
 
@@ -65,22 +60,22 @@ const EditDataOverlay = () => {
     <form onSubmit={submitHandler} className={styles.editWordInterface}>
       <div className={styles.editWordInterfaceRow}>
         <input
-          value={wordData[wordArrayIndex].native}
+          // value={wordData[wordArrayIndex].foreign}
           type="text"
           placeholder="Word"
           className="inputElement"
-          // value={text}
+          value={text}
           onChange={(e) => setText(e.target.value)}
           required
         />
       </div>
       <div className={styles.editWordInterfaceRow}>
         <input
-          value={wordData[wordArrayIndex].foreign}
+          // value={wordData[wordArrayIndex].native}
           type="text"
           placeholder="Tanslation / meaning"
           className="inputElement"
-          // value={translation}
+          value={translation}
           onChange={(e) => setTranslation(e.target.value)}
           required
         />
@@ -88,7 +83,9 @@ const EditDataOverlay = () => {
       <div className={styles.textareaContainer}>
         <textarea
           className="inputElement inputElement_textArea"
-          defaultValue={wordData[wordArrayIndex].examples}></textarea>
+          // defaultValue={wordData[wordArrayIndex].examples}
+          defaultValue={examples}
+          onChange={(e) => setExamples(e.target.value)}></textarea>
       </div>
       <div>
         <SelectMenu
