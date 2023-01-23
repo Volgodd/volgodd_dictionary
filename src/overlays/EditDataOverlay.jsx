@@ -24,10 +24,7 @@ const EditDataOverlay = () => {
   const submitHandler = (e) => {
     e.preventDefault();
 
-const {id, themeIdList} = wordData[wordArrayIndex]
-
-    console.log({ text, translation, theme });
-    //здесь будет ф по отправке данных на сервер
+    const {id, themeIdList} = wordData[wordArrayIndex]
 
     const newWordData = {
       foreign: text,
@@ -43,8 +40,6 @@ const {id, themeIdList} = wordData[wordArrayIndex]
     console.log(newWordData.themeIdList);
 
     //найти newWordDatd по id и заменить значение на новую дейту 
-
-   
 
     editWordAction(jwt, newWordData, id).then(({ data }) => {
       console.log('word edited', data);

@@ -58,10 +58,10 @@ export const editWordAction = (jwt, data, id) => {
   });
 };
 
-export const deleteWordAction = (jwt, data) => {
+export const deleteWordAction = (jwt, id) => {
   const alertMessage = 'Are your sure you want to delete item?';
   if (confirm (alertMessage) === true) {
-    return axios.delete(`${SERVER_URL}${WORD_ENDPOINT}s`, data, {
+    return axios.delete(`${SERVER_URL}${WORD_ENDPOINT}/${id}`, {
       headers: getRequestHeaders(jwt)
     });
   }

@@ -4,6 +4,7 @@ import styles from './DataEntryButton.module.scss';
 import useGlobalContext from 'hooks/useGlobalContext';
 import { useState } from 'react';
 import { deleteWordAction } from 'data/api';
+import { findObjectIndex } from 'components/buttons/utils';
 
 const DataEntryButton = ({
   mainCellData,
@@ -16,9 +17,7 @@ const DataEntryButton = ({
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const { jwt, setOverlay, wordData } = useGlobalContext();
-
-  const {themeIdList, examples, id} = wordData;
+  const { jwt, setOverlay, wordData, setWordData } = useGlobalContext();
 
   const onClickHandler = () => {
     if (onClickF) {
@@ -36,22 +35,22 @@ const DataEntryButton = ({
     } else return false;
   };
 
-  // console.log(expandAreaText.length);
-
-  const wordDataForDeleting = {
-    foreign: mainCellData,
-    native: secondaryCellData,
-    examples,
-    themeIdList
-  }
-
-  const deleteWord = () => {
+  const deleteWord = (wordId) => {
     // deleteLocalDataFromArray(dataArray, wordId);
-    console.log('word deleted')
+    console.log('word deleted', wordId)
 
+    deleteWordAction(jwt, wordId).then(() => {
+      console.log('+++++++++++')
 
+      const wordArrayIndex = findObjectIndex(wordData, wordId);
+  
+      const modifiedWordData = [...wordData];
 
-    deleteWordAction(jwt, wordDataForDeleting)
+     
+      modifiedWordData.splice(wordArrayIndex, 1);
+
+      setWordData(modifiedWordData);
+    })
   };
 
   return (
@@ -64,7 +63,7 @@ const DataEntryButton = ({
         <div className={styles.wordUi}>
           <div className={styles.buttonContainer}>
             <MiniButton onClickF={() => setOverlay({ type: 'editWord', metadata: wordId })} />
-            <MiniButton type="deleteIcon" onClickF={deleteWord} />
+            <MiniButton type="deleteIcon" onClickF={() => deleteWord(wordId)} />
           </div>
           <div className={styles.description}>
             {examplesExist() ? expandAreaText : 'Examples not found'}
