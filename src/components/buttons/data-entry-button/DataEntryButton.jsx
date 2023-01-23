@@ -3,6 +3,7 @@ import { deleteLocalDataFromArray } from 'components/buttons/utils';
 import styles from './DataEntryButton.module.scss';
 import useGlobalContext from 'hooks/useGlobalContext';
 import { useState } from 'react';
+import { deleteWordAction } from 'data/api';
 
 const DataEntryButton = ({
   mainCellData,
@@ -15,7 +16,9 @@ const DataEntryButton = ({
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const { overlay, setOverlay } = useGlobalContext();
+  const { jwt, setOverlay, wordData } = useGlobalContext();
+
+  const {themeIdList, examples, id} = wordData;
 
   const onClickHandler = () => {
     if (onClickF) {
@@ -35,8 +38,20 @@ const DataEntryButton = ({
 
   // console.log(expandAreaText.length);
 
+  const wordDataForDeleting = {
+    foreign: mainCellData,
+    native: secondaryCellData,
+    examples,
+    themeIdList
+  }
+
   const deleteWord = () => {
-    deleteLocalDataFromArray(dataArray, wordId);
+    // deleteLocalDataFromArray(dataArray, wordId);
+    console.log('word deleted')
+
+
+
+    deleteWordAction(jwt, wordDataForDeleting)
   };
 
   return (

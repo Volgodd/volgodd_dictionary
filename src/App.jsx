@@ -15,11 +15,6 @@ import { getData } from './data/api';
 
 const { MAIN_PAGE, WORDS } = ROUTES;
 
-// navigator.clipboard.readText().then((clipText) => console.log(clipText));
-
-// katjazubova@gmail.com
-// U9qWxNHd9uiHodsQx1gy
-
 function App() {
   const [jwt, setJWT] = useState(getLocalJWT());
   const [overlay, setOverlay] = useState(DEFAULT_OVERLAY_STATE);
@@ -38,7 +33,6 @@ function App() {
 
   useEffect(() => {
     // LOGIN CHECK
-    console.log('GLOBAL JWT OBJECT', jwt);
     if (!jwt) {
       setOverlay({ type: OVERLAY_TYPES.LOGIN });
     } else {

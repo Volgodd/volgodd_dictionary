@@ -35,13 +35,14 @@ const AddWordOverlay = () => {
       themeIdList: [theme]
     };
 
-    console.log({ newWordData });
-    // addWordAction(jwt, newWordData).then(({ data }) => {
-    //   console.log('word added', data);
-    //   const newWordData = [data, ...wordData];
-    //   setWordData(newWordData);
-    //   setOverlay(DEFAULT_OVERLAY_STATE);
-    // });
+    // console.log({ newWordData });
+    
+    addWordAction(jwt, newWordData).then(({ data }) => {
+      console.log('word added', data);
+      const newWordData = [data, ...wordData];
+      setWordData(newWordData);
+      setOverlay(DEFAULT_OVERLAY_STATE);
+    });
 
     console.log(theme, newWordData.themeIdList);
   };
