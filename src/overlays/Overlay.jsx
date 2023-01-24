@@ -22,8 +22,8 @@ const getOverlayType = (overlayType) => {
       return <SearchOverlay />;
     case OVERLAY_TYPES.EDIT_WORD:
       return <EditDataOverlay />;
-    case OVERLAY_TYPES.MENU:
-      return <BurgerOverlay />;
+    // case OVERLAY_TYPES.MENU:
+    //   return <BurgerOverlay />;
     case OVERLAY_TYPES.LOGIN:
       return <Login />;
     default:
@@ -32,7 +32,7 @@ const getOverlayType = (overlayType) => {
 };
 
 const Overlay = () => {
-  const { overlay, setOverlay, wordData, themeData } = useGlobalContext();
+  const { overlay, setOverlay } = useGlobalContext();
   let headerString = 'Overlay header text';
 
   switch (overlay.type) {
