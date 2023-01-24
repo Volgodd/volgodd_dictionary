@@ -9,7 +9,7 @@ import { useNavigate } from '../../../node_modules/react-router-dom/dist/index';
 const { SEARCH, MENU } = OVERLAY_TYPES;
 
 const Header = ({ props }) => {
-  const { setOverlay } = useGlobalContext();
+  const { setOverlay, burgerOverlay, setBurgerOverlay } = useGlobalContext();
 
   let navigate = useNavigate();
   const urlLocation = useLocation();
@@ -28,7 +28,7 @@ const Header = ({ props }) => {
       </div>
       <h2>{props}</h2>
       <MiniButton onClickF={() => setOverlay({ type: SEARCH })} type={'searchIcon'} />
-      <BurgerButton onClickF={() => setOverlay({ type: MENU })} />
+      <BurgerButton onClickF={() => setBurgerOverlay(true)} />
     </div>
   );
 };

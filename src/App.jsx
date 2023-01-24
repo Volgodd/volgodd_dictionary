@@ -12,6 +12,7 @@ import ThemePage from 'pages/theme-page/ThemePage';
 import WordsPage from 'pages/words-page/WordsPage';
 import { countThemeWords } from 'data/utils';
 import { getData } from './data/api';
+import BurgerOverlay from 'overlays/BurgerOverlay';
 
 const { MAIN_PAGE, WORDS } = ROUTES;
 
@@ -22,6 +23,7 @@ function App() {
   const [wordData, setWordData] = useState();
   const [rawThemeData, setRawThemeData] = useState();
   const [themeData, setThemeData] = useState();
+  const [burgerOverlay, setBurgerOverlay] = useState(false);
 
   useEffect(() => {
     // LOGIN CHECK
@@ -61,6 +63,7 @@ function App() {
     themeData,
     overlay,
     setOverlay,
+    burgerOverlay, setBurgerOverlay,
     overlayMetaData,
     setOverlayMetaData,
     setJWT,
@@ -77,6 +80,7 @@ function App() {
         {/* <Link to={MAIN_PAGE}>Main Page</Link>
         <Link to={ADD_WORD_PAGE}>Add word</Link> */}
         {overlay.type && <Overlay />}
+        {burgerOverlay && <BurgerOverlay/>}
         {jwt && (
           <Routes>
             <Route path={MAIN_PAGE} element={<ThemePage />} />
