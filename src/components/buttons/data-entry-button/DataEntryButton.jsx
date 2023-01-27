@@ -13,7 +13,8 @@ const DataEntryButton = ({
   onClickF,
   expandAreaText,
   wordId,
-  dataArray
+  dataArray, 
+  type
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 

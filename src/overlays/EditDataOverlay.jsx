@@ -2,7 +2,6 @@ import { DEFAULT_OVERLAY_STATE } from 'common/constants';
 import NavButton from 'components/footer/nav-button/NavButton';
 import React from 'react';
 import SelectMenu from 'components/selectMenu/SelectMenu';
-import { copyFromClipboard } from 'common/utils';
 import { editWordAction } from 'data/api';
 import { findObjectIndex } from 'components/buttons/utils';
 import styles from './EditDataOverlay.module.scss';

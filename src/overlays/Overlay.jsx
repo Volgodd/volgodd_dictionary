@@ -80,11 +80,6 @@ const Overlay = () => {
           />
         </div>
         <div className={styles.overlayContent}>{getOverlayType(overlay.type)}</div>
-
-        <div className="overlayFooter">
-          {/* <NavButton name={'Close'} styles={styles.closeButton}/> */}
-          {/* <button onClick={() => setOverlayType()}>Close</button> */}
-        </div>
       </div>
       <div className={styles.overlayShade} onClick={() => overlay.type !== 'login' && setOverlay(DEFAULT_OVERLAY_STATE)} />
     </div>
