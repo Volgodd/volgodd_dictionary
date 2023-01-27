@@ -128,3 +128,9 @@ export const fakeThemeData = [
     level: 1
   }
 ];
+
+export const fakeDictionaryNamesData = [
+  'Suomen - venäjän',
+  'English - Russian',
+  'Suomen suosituin'
+]

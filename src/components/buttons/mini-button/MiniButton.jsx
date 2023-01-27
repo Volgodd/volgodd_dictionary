@@ -4,7 +4,7 @@ import ChangeColorIcon from 'icons/ChangeColorIcon';
 import CloseIcon from 'icons/CloseIcon';
 import DeleteIcon from 'icons/DeleteIcon';
 import PenIcon from 'icons/PenIcon';
-import RemoteDictionaryIcon from 'icons/RemoteDictionaryIcon';
+import DictionaryIcon from 'icons/DictionaryIcon';
 import SearchIcon from 'icons/SearchIcon';
 import clsx from 'clsx';
 import styles from './MiniButton.module.scss';
@@ -14,7 +14,7 @@ const getButtonIcon = (type) => {
     case 'buffer':
       return <BufferIcon />;
     case 'dictionary':
-      return <RemoteDictionaryIcon />;
+      return <DictionaryIcon />;
     case 'changeColor':
       return <ChangeColorIcon />;
     case 'searchIcon':
