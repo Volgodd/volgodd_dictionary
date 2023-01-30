@@ -16,7 +16,8 @@ export const OVERLAY_TYPES = {
   EDIT_WORD: 'editWord',
   EDIT_THEME: 'editTheme',
   MENU: 'menu',
-  LOGIN: 'login'
+  LOGIN: 'login',
+  EDIT_THEME: 'editTheme',
 };
 
 export const DEFAULT_OVERLAY_STATE = { type: undefined, metadata: undefined };

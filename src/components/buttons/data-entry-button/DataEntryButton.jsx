@@ -55,10 +55,12 @@ const DataEntryButton = ({
   };
 
   return (
+    
     <div className={styles.wrapper}>
       <button className={styles.textButton} onClick={onClickHandler}>
         <span className={styles.mainCell}>{mainCellData}</span>
         <span className={styles.secondaryCell}>{secondaryCellData}</span>
+        {/* {type = 'themes' && (<span>hgjklhgjk</span>)} */}
       </button>
       {isExpanded && (
         <div className={styles.wordUi}>
@@ -72,6 +74,7 @@ const DataEntryButton = ({
         </div>
       )}
     </div>
+    
   );
 };
 

@@ -5,11 +5,12 @@ import clsx from 'clsx';
 import styles from './WordsPage.module.scss';
 import useGlobalContext from 'hooks/useGlobalContext';
 import { useParams } from 'react-router-dom';
+import Footer from 'components/footer/Footer';
 
 const WordsPage = () => {
   const { themeIdUrlParam } = useParams();
   const { wordData } = useGlobalContext();
-
+  
   return (
     <div className={clsx(styles.main, 'dark:bg-slate-800')}>
       <Header props="Words" />
@@ -45,6 +46,7 @@ const WordsPage = () => {
             );
           })}
       </div>
+      <Footer wordPage={true}/>
     </div>
   );
 };

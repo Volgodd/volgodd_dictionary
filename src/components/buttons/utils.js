@@ -30,3 +30,9 @@ export const modifyLocalData = (dataArray, dataId) => {
 export const findObjectIndex = (array, dataId) => {
   return array.findIndex((x) => x.id === dataId);
 };
+
+export const  stringToSubstring = (rawString, word, index) => {
+  if (rawString.includes(word)) { 
+   return rawString.substring(index) 
+ }
+ } 
