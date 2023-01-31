@@ -1,10 +1,11 @@
 import MiniButton from '../mini-button/MiniButton';
-import { deleteLocalDataFromArray } from 'components/buttons/utils';
+import { deleteLocalDataFromArray } from 'components/utils';
 import styles from './DataEntryButton.module.scss';
 import useGlobalContext from 'hooks/useGlobalContext';
 import { useState } from 'react';
 import { deleteWordAction } from 'data/api';
-import { findObjectIndex } from 'components/buttons/utils';
+import { findObjectIndex } from 'components/utils';
+import { OVERLAY_TYPES } from 'common/constants';
 
 const DataEntryButton = ({
   mainCellData,
@@ -17,6 +18,8 @@ const DataEntryButton = ({
   type
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+
+  const {EDIT_WORD} = OVERLAY_TYPES;
 
   const { jwt, setOverlay, wordData, setWordData } = useGlobalContext();
 
@@ -65,7 +68,7 @@ const DataEntryButton = ({
       {isExpanded && (
         <div className={styles.wordUi}>
           <div className={styles.buttonContainer}>
-            <MiniButton onClickF={() => setOverlay({ type: 'editWord', metadata: wordId })} />
+            <MiniButton onClickF={() => setOverlay({ type: EDIT_WORD, metadata: wordId })} />
             <MiniButton type="deleteIcon" onClickF={() => deleteWord(wordId)} />
           </div>
           <div className={styles.description}>

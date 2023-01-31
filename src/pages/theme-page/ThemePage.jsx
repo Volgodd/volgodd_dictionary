@@ -17,7 +17,7 @@ const ThemePage = () => {
   return (
     <div className={styles.main}>
       <MetaTags />
-      <Header props="Suomen - venäjän"/>
+      <Header title="Suomen - venäjän"/>
       <div className={styles.mainContent}>
         {themeData.map((theme, index) => {
           const { name, wordCount, id } = theme;

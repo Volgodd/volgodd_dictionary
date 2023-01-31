@@ -5,8 +5,8 @@ import clsx from 'clsx';
 import DictionaryButton from 'components/buttons/dictionary-button/DictionaryButton';
 import { fakeDictionaryNamesData } from 'data/fake-data';
 import { useLocation } from '../../node_modules/react-router-dom/dist/index';
-import { findObjectIndex } from 'components/buttons/utils';
-import { stringToSubstring } from 'components/buttons/utils';
+import { findObjectIndex } from 'components/utils';
+import { stringToSubstring } from 'components/utils';
 
 const BurgerOverlay = () => {
   const { burgerOverlay, setBurgerOverlay, wordData, themeData } = useGlobalContext();

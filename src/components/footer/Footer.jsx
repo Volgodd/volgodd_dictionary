@@ -3,7 +3,7 @@ import { OVERLAY_TYPES } from 'common/constants';
 import styles from './Footer.module.scss';
 import useGlobalContext from 'hooks/useGlobalContext';
 
-const { ADD_WORD, ADD_THEME } = OVERLAY_TYPES;
+const { ADD_WORD, ADD_THEME, EDIT_THEME } = OVERLAY_TYPES;
 
 const Footer = ({themePage, wordPage}) => {
   const { setOverlay } = useGlobalContext();
@@ -19,7 +19,7 @@ const Footer = ({themePage, wordPage}) => {
 
         {wordPage &&
         <div className={styles.footerContent}>
-        <NavButton name='Edit theme'/>
+        <NavButton name='Edit theme' onClickF={() => setOverlay({ type: EDIT_THEME })}/>
          <NavButton name='Learn mode' />
          <NavButton name='Delete theme' additionalStyles={styles.deleteButton} />
        </div>

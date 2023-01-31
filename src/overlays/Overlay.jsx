@@ -4,13 +4,13 @@ import { DEFAULT_OVERLAY_STATE, OVERLAY_TYPES } from 'common/constants';
 
 import AddThemeOverlay from './AddThemeOverlay';
 import AddWordOverlay from './AddWordOverlay';
-import BurgerOverlay from './BurgerOverlay';
 import EditDataOverlay from './EditDataOverlay';
 import Login from './Login';
 import MiniButton from 'components/buttons/mini-button/MiniButton';
 import SearchOverlay from './SearchOverlay';
 import styles from './Overlay.module.scss';
 import useGlobalContext from 'hooks/useGlobalContext';
+import EditThemeOverlay from './EditThemeOverlay';
 
 const getOverlayType = (overlayType) => {
   switch (overlayType) {
@@ -26,6 +26,8 @@ const getOverlayType = (overlayType) => {
     //   return <BurgerOverlay />;
     case OVERLAY_TYPES.LOGIN:
       return <Login />;
+    case OVERLAY_TYPES.EDIT_THEME:
+      return <EditThemeOverlay />;
     default:
       return <></>;
   }
@@ -54,8 +56,11 @@ const Overlay = () => {
     case OVERLAY_TYPES.LOGIN:
       headerString = 'Login';
       break;
-    default:
+    case OVERLAY_TYPES.EDIT_THEME:
       headerString = 'Edit theme';
+      break;
+    default:
+      headerString = '';
   }
 
   const closeSafeguard = () => {

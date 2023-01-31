@@ -1,0 +1,34 @@
+@import '../css/variables.scss';
+
+.addThemeInterface {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-auto-columns: $clusterSizeX4;
+  grid-gap: $clusterSize;
+  margin-bottom: $clusterSize;
+}
+
+.addThemeInterfaceRow {
+  height: $clusterSizeX4;
+  width: 100%;
+  display: grid;
+
+  &_withButton {
+    grid-template-columns: 1fr $clusterSizeX4;
+    grid-gap: $clusterSize;
+  }
+}
+
+.deleteButton {
+  background-color: #df3030;
+  margin: 0;
+}
+
+.button {
+  margin: 0;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: space-evenly;
+}

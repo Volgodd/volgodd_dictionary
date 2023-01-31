@@ -66,3 +66,9 @@ export const deleteWordAction = (jwt, id) => {
     });
   }
 };
+
+export const editThemeAction = (jwt, data, id) => {
+  return axios.put(`${SERVER_URL}${THEME_ENDPOINT}/${id}`, data, {
+    headers: getRequestHeaders(jwt)
+  });
+};
