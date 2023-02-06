@@ -3,7 +3,7 @@ import NavButton from 'components/footer/nav-button/NavButton';
 import React from 'react';
 import SelectMenu from 'components/selectMenu/SelectMenu';
 import { editWordAction } from 'data/api';
-import { findObjectIndex } from 'components/utils';
+import { findObjectIndex } from 'common/utils';
 import styles from './EditDataOverlay.module.scss';
 import useGlobalContext from 'hooks/useGlobalContext';
 import { useState } from 'react';

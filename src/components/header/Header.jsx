@@ -4,7 +4,6 @@ import styles from './Header.module.scss';
 import useGlobalContext from 'hooks/useGlobalContext';
 import { useLocation } from '../../../node_modules/react-router-dom/dist/index';
 import { useNavigate } from '../../../node_modules/react-router-dom/dist/index';
-import { findObjectIndex } from 'components/utils';
 
 const { SEARCH, EDIT_THEME } = OVERLAY_TYPES;
 
@@ -14,8 +13,6 @@ const Header = ({ title, themeId }) => {
   let navigate = useNavigate();
   const urlLocation = useLocation();
   const { pathname } = urlLocation;
-
-  const themeIndex = findObjectIndex(themeData, );
 
   return (
     <div className={styles.wrapper}>

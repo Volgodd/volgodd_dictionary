@@ -26,9 +26,15 @@
 
 .button {
   margin: 0;
+  padding-inline: 2.4rem;
 }
 
 .buttonContainer {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
+}
+
+.deleteButtonWrapper {
+  display: flex;
+  justify-content: center;
 }

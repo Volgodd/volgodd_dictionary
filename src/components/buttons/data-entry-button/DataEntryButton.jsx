@@ -1,10 +1,10 @@
 import MiniButton from '../mini-button/MiniButton';
-import { deleteLocalDataFromArray } from 'components/utils';
+import { deleteLocalDataFromArray } from 'common/utils';
 import styles from './DataEntryButton.module.scss';
 import useGlobalContext from 'hooks/useGlobalContext';
 import { useState } from 'react';
 import { deleteWordAction } from 'data/api';
-import { findObjectIndex } from 'components/utils';
+import { findObjectIndex } from 'common/utils';
 import { OVERLAY_TYPES } from 'common/constants';
 
 const DataEntryButton = ({

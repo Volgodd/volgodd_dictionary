@@ -5,13 +5,14 @@ import clsx from 'clsx';
 import styles from './WordsPage.module.scss';
 import useGlobalContext from 'hooks/useGlobalContext';
 import { useParams } from 'react-router-dom';
-import { findObjectIndex } from 'components/utils';
+import { findObjectIndex } from 'common/utils';
 
 const WordsPage = () => {
   const { themeIdUrlParam } = useParams();
   const { wordData, themeData } = useGlobalContext();
   
   const themeIndex = findObjectIndex(themeData, themeIdUrlParam);
+
 
   return (
     <div className={clsx(styles.main, 'dark:bg-slate-800')}>

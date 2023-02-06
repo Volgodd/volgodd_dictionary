@@ -59,7 +59,7 @@ export const editWordAction = (jwt, data, id) => {
 };
 
 export const deleteWordAction = (jwt, id) => {
-  const alertMessage = 'Are your sure you want to delete item?';
+  const alertMessage = 'Are your sure you want to delete word?';
   if (confirm (alertMessage) === true) {
     return axios.delete(`${SERVER_URL}${WORD_ENDPOINT}/${id}`, {
       headers: getRequestHeaders(jwt)
@@ -71,4 +71,13 @@ export const editThemeAction = (jwt, data, id) => {
   return axios.put(`${SERVER_URL}${THEME_ENDPOINT}/${id}`, data, {
     headers: getRequestHeaders(jwt)
   });
+};
+
+export const deleteThemeAction = (jwt, id) => {
+  const alertMessage = 'Are your sure you want to delete theme? All words in current theme will be deleted';
+  if (confirm (alertMessage) === true) {
+    return axios.delete(`${SERVER_URL}${THEME_ENDPOINT}/${id}`, {
+      headers: getRequestHeaders(jwt)
+    });
+  }
 };

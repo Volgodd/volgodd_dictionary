@@ -34,7 +34,8 @@ const ThemePage = () => {
              
             />
           );
-        })}
+        })
+        }
       </div>
 
       <Footer themePage={true}/>
