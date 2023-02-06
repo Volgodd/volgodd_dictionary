@@ -5,17 +5,20 @@ import clsx from 'clsx';
 import styles from './WordsPage.module.scss';
 import useGlobalContext from 'hooks/useGlobalContext';
 import { useParams } from 'react-router-dom';
+import { findObjectIndex } from 'common/utils';
 
 const WordsPage = () => {
   const { themeIdUrlParam } = useParams();
-  const { wordData } = useGlobalContext();
+  const { wordData, themeData } = useGlobalContext();
+  
+  const themeIndex = findObjectIndex(themeData, themeIdUrlParam);
+
 
   return (
     <div className={clsx(styles.main, 'dark:bg-slate-800')}>
-      <Header props="Words" />
+      <Header title={themeData[themeIndex].name} themeId={themeIdUrlParam}/>
 
       <div className={styles.mainContent}>
-        {/* {test} */}
         {wordData
           .filter((wordObject) => {
             const { themeIdList } = wordObject;

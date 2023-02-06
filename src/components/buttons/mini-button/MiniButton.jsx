@@ -8,6 +8,7 @@ import DictionaryIcon from 'icons/DictionaryIcon';
 import SearchIcon from 'icons/SearchIcon';
 import clsx from 'clsx';
 import styles from './MiniButton.module.scss';
+import SettingsIcon from 'icons/SettingsIcon';
 
 const getButtonIcon = (type) => {
   switch (type) {
@@ -25,6 +26,8 @@ const getButtonIcon = (type) => {
       return <DeleteIcon />;
     case 'backIcon':
       return <BackArrowIcon />;
+    case 'settingsIcon':
+      return <SettingsIcon />;
     default:
       return <PenIcon />;
   }

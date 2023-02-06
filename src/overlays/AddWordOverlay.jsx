@@ -1,5 +1,4 @@
 import { copyFromClipboard, copyFromClipboardOld } from 'common/utils';
-
 import { DEFAULT_OVERLAY_STATE } from 'common/constants';
 import MiniButton from 'components/buttons/mini-button/MiniButton';
 import NavButton from 'components/footer/nav-button/NavButton';

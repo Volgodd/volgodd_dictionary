@@ -17,7 +17,7 @@ const ThemePage = () => {
   return (
     <div className={styles.main}>
       <MetaTags />
-      <Header props="Suomen - venäjän" />
+      <Header title="Suomen - venäjän"/>
       <div className={styles.mainContent}>
         {themeData.map((theme, index) => {
           const { name, wordCount, id } = theme;
@@ -26,17 +26,19 @@ const ThemePage = () => {
 
           return (
             <DataEntryButton
-              // type={themes}
+              type='themes'
               key={index}
               mainCellData={name}
               secondaryCellData={wordCount}
               onClickF={btnFunction}
+             
             />
           );
-        })}
+        })
+        }
       </div>
 
-      <Footer />
+      <Footer themePage={true}/>
     </div>
   );
 };

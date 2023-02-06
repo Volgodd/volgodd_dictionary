@@ -1,4 +1,3 @@
-import BurgerButton from 'components/buttons/burger-button/BurgerButton';
 import MiniButton from 'components/buttons/mini-button/MiniButton';
 import { OVERLAY_TYPES } from 'common/constants';
 import styles from './Header.module.scss';
@@ -6,10 +5,10 @@ import useGlobalContext from 'hooks/useGlobalContext';
 import { useLocation } from '../../../node_modules/react-router-dom/dist/index';
 import { useNavigate } from '../../../node_modules/react-router-dom/dist/index';
 
-const { SEARCH, MENU } = OVERLAY_TYPES;
+const { SEARCH, EDIT_THEME } = OVERLAY_TYPES;
 
-const Header = ({ props }) => {
-  const { setOverlay, burgerOverlay, setBurgerOverlay } = useGlobalContext();
+const Header = ({ title, themeId }) => {
+  const { setOverlay, themeData } = useGlobalContext();
 
   let navigate = useNavigate();
   const urlLocation = useLocation();
@@ -26,9 +25,13 @@ const Header = ({ props }) => {
           />
         )}
       </div>
-      <h2>{props}</h2>
+      <h2>{title}</h2>
+      <div>
+        {pathname !== '/' && 
+        <MiniButton onClickF={()=> setOverlay({type: EDIT_THEME, metadata: themeId })} type={'settingsIcon'}/>
+        }
+      </div>
       <MiniButton onClickF={() => setOverlay({ type: SEARCH })} type={'searchIcon'} />
-      <BurgerButton onClickF={() => setBurgerOverlay(true)} />
     </div>
   );
 };
