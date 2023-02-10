@@ -48,3 +48,24 @@ html {
     width: 100%;
   }
 }
+
+
+::-webkit-scrollbar {
+  width: $clusterSize / 2;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: $colorGray75;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: $colorWhite;
+  border-radius: $clusterSize;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: $colorWhite;
+}
