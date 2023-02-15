@@ -23,35 +23,26 @@ const EditDataOverlay = () => {
   const submitHandler = (e) => {
     e.preventDefault();
 
-    const {id, themeIdList} = wordData[wordArrayIndex]
+    console.log({ text, translation, theme });
+    //здесь будет ф по отправке данных на сервер
 
     const newWordData = {
       foreign: text,
       native: translation,
-      examples,
-      themeIdList
+      examples: examples,
+      themeIdList: wordData[wordArrayIndex].themeIdList
     };
 
-    // ранее было examples: examples, themeIdList: themeIdList, если ключ и значение совпадают по названию, JS пойдет выше по скоупу и найдет значение для ключа
-
-    console.log(wordData[wordArrayIndex], id, '========================', wordArrayIndex);
+    console.log(wordData[wordArrayIndex], wordData[wordArrayIndex].id);
 
     console.log(newWordData.themeIdList);
 
-    //найти newWordDatd по id и заменить значение на новую дейту 
+    //найти newWordDatd по id и заменить значение на новую дейту
 
-    editWordAction(jwt, newWordData, id).then(({ data }) => {
+    editWordAction(jwt, newWordData, wordData[wordArrayIndex].id).then(({ data }) => {
       console.log('word edited', data);
-
-      const newWordDataWithId = {...newWordData, id};
-      //id сдесь существует для локального стейта, чтобы консоль не ругалась на неуникальный key
- 
-      const wordDataCopy = [...wordData];
-
-      wordDataCopy.splice(wordArrayIndex, 1, newWordDataWithId)
-   
-      setWordData(wordDataCopy);
-
+      wordData[wordArrayIndex] = newWordData;
+      setWordData(newWordData);
       setOverlay(DEFAULT_OVERLAY_STATE);
     });
   };
