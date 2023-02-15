@@ -11,6 +11,7 @@ import SearchOverlay from './SearchOverlay';
 import styles from './Overlay.module.scss';
 import useGlobalContext from 'hooks/useGlobalContext';
 import EditThemeOverlay from './EditThemeOverlay';
+import LearnModeOverlay from './LearnModeOverlay';
 
 const getOverlayType = (overlayType) => {
   switch (overlayType) {
@@ -28,6 +29,8 @@ const getOverlayType = (overlayType) => {
       return <Login />;
     case OVERLAY_TYPES.EDIT_THEME:
       return <EditThemeOverlay />;
+    case OVERLAY_TYPES.LEARN_MODE:
+      return <LearnModeOverlay />;
     default:
       return <></>;
   }
@@ -58,6 +61,9 @@ const Overlay = () => {
       break;
     case OVERLAY_TYPES.EDIT_THEME:
       headerString = 'Edit theme';
+      break;
+    case OVERLAY_TYPES.LEARN_MODE:
+      headerString = 'Learn mode';
       break;
     default:
       headerString = '';

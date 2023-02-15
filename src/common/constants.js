@@ -18,6 +18,7 @@ export const OVERLAY_TYPES = {
   MENU: 'menu',
   LOGIN: 'login',
   EDIT_THEME: 'editTheme',
+  LEARN_MODE: 'learnMode', 
 };
 
 export const DEFAULT_OVERLAY_STATE = { type: undefined, metadata: undefined };

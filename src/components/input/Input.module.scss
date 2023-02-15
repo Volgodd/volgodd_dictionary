@@ -1,0 +1,39 @@
+@import 'css/variables.scss';
+
+.inputWrapper {
+  display: flex;
+  align-items: center;
+  height: $clusterSizeX3;
+  font-size: $fontSize14;
+  color: $colorWhite;
+  background-color: $colorGray75;
+  margin-block: $clusterSize / 2;
+
+  > label {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    margin-left: $clusterSize;
+  }
+}
+
+
+.addThemeInterface {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-auto-columns: $clusterSizeX4;
+  grid-gap: $clusterSize;
+  margin-bottom: $clusterSize;
+}
+
+.addThemeInterfaceRow {
+  height: $clusterSizeX4;
+  width: 100%;
+  display: grid;
+
+  &_withButton {
+    grid-template-columns: 1fr $clusterSizeX4;
+    grid-gap: $clusterSize;
+  }
+}
