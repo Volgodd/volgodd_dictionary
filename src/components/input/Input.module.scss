@@ -8,6 +8,14 @@
   color: $colorWhite;
   background-color: $colorGray75;
   margin-block: $clusterSize / 2;
+
+  > label {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    margin-left: $clusterSize;
+  }
 }
 
 

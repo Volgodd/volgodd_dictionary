@@ -3,38 +3,69 @@ import NavButton from 'components/footer/nav-button/NavButton';
 import React from 'react';
 import styles from './LearnModeOverlay.module.scss';
 import useGlobalContext from 'hooks/useGlobalContext';
-import { useState } from 'react';
 import { findObjectIndex, findObjectIndexByIdList} from 'common/utils';
-import InputLearnMode from 'components/input/InputLearnMode';
+import Input from 'components/input/Input';
+import LearnButton from 'components/buttons/learn-button/LearnButton';
+import { useNavigate } from '../../node_modules/react-router-dom/dist/index';
 
 const LearnModeOverlay = () => {
-  const { jwt, setOverlay, themeData, overlay, setRawThemeData, wordData, setWordData } = useGlobalContext()
-
-
-
+  const { jwt, setOverlay, themeData, overlay, setRawThemeData, wordData, setWordData } = useGlobalContext();
 
   const { themeIdList } = wordData;
+
+  const { name } = themeData;
 
   const submitHandler = (e) => {
     e.preventDefault();
 
-    
   };
 
- 
+  const checkedThemesArray = [];
+
+  const testThemeArr = [];
+
+  testThemeArr.push(themeData[2])
+
+  console.log(testThemeArr)
+
+
+  const addThemesIfChecked = ({checked, index}) => {
+    if (checked) {
+      checkedThemesArray.push(themeData[index])
+    } 
+
+    console.log(checked, index)
+    // console.log(checkedThemesArray)
+  }
 
   return (
     <>
-    <form onSubmit={submitHandler} className={styles.wrapper}>
-       <span>Select themes to learn:</span>
-       <div className={styles.inputWrapper}>
-        <InputLearnMode value={'test theme'} themeName={'theme 1'}/>
-        <InputLearnMode value={'test theme'} themeName={'theme 2'}/>
-        <InputLearnMode value={'test theme'} themeName={'theme 3'}/>
-        <InputLearnMode value={'test theme'} themeName={'theme 4'}/>
+    <form onSubmit={submitHandler} className={styles.formWrapper}>
+       <span className={styles.headerSpan}>Select themes to learn:</span>
+       <div className={styles.inputContainer}>
+
+        {themeData.map((theme) => {
+          const { name, id } = theme;
+
+          const themeIndex = findObjectIndex(themeData, id)
+          
+          console.log(name, id, themeIndex)
+
+          return (
+            <Input 
+              value={name}
+              key={id}
+              id={id}
+              onChangeF={(e)=> addThemesIfChecked({checked: e.target.checked}, themeIndex)}
+              // onChangeF={(e)=> console.log(e.target.checked)}
+              />
+          )
+         }
+        )
+        }
       </div>
       <div className={styles.buttonContainer}>
-      <NavButton name="Save" additionalStyles={styles.button}/>
+      <LearnButton name={'Flashcards'} onClickF={() => submitHandler()}/>
       </div>
     </form>
     </>

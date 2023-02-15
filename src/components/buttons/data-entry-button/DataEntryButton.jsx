@@ -44,8 +44,6 @@ const DataEntryButton = ({
     console.log('word deleted', wordId)
 
     deleteWordAction(jwt, wordId).then(() => {
-      console.log('+++++++++++')
-
       const wordArrayIndex = findObjectIndex(wordData, wordId);
   
       const modifiedWordData = [...wordData];
