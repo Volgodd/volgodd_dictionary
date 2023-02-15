@@ -1,0 +1,8 @@
+@import '../../css/variables.scss';
+
+.flashcardWrapper {
+  margin-bottom: $clusterSize;
+  border-radius: $borderRadius1;
+  background-color: $colorGray75;
+  margin-inline: $clusterSize;
+}

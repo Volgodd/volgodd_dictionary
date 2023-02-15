@@ -6,7 +6,8 @@ export const ROUTES = {
   MAIN_PAGE: '/',
   WORDS: '/words',
   ADD_WORD_PAGE: '/add-word',
-  ADD_THEME_PAGE: '/ad-theme'
+  ADD_THEME_PAGE: '/ad-theme',
+  FLASHCARDS: '/flashcards'
 };
 
 export const OVERLAY_TYPES = {
@@ -18,7 +19,7 @@ export const OVERLAY_TYPES = {
   MENU: 'menu',
   LOGIN: 'login',
   EDIT_THEME: 'editTheme',
-  LEARN_MODE: 'learnMode', 
+  LEARN_MODE: 'learnMode'
 };
 
 export const DEFAULT_OVERLAY_STATE = { type: undefined, metadata: undefined };
