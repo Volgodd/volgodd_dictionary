@@ -7,6 +7,11 @@
   align-items: center;
   width: $clusterSizeX4;
   height: $clusterSizeX4;
+
+  &:global(.active) {
+    opacity: 0.5;
+    display: none;
+  }
 }
 
 .miniButton {
@@ -30,4 +35,9 @@
     background-color: transparent;
     fill: $colorWhite;
   }
+}
+
+.bigger {
+  width: $clusterSizeX5;
+  height: $clusterSizeX5;
 }

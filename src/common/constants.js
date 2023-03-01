@@ -7,7 +7,11 @@ export const ROUTES = {
   WORDS: '/words',
   ADD_WORD_PAGE: '/add-word',
   ADD_THEME_PAGE: '/ad-theme',
-  FLASHCARDS: '/flashcards'
+  LEARN_MODE: '/learn-mode'
+};
+
+export const LEARN_MODES = {
+  FLASH_CARDS: 'flash-cards'
 };
 
 export const OVERLAY_TYPES = {

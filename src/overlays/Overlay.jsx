@@ -5,13 +5,13 @@ import { DEFAULT_OVERLAY_STATE, OVERLAY_TYPES } from 'common/constants';
 import AddThemeOverlay from './AddThemeOverlay';
 import AddWordOverlay from './AddWordOverlay';
 import EditDataOverlay from './EditDataOverlay';
+import EditThemeOverlay from './EditThemeOverlay';
+import LearnModeOverlay from './LearnModeOverlay';
 import Login from './Login';
 import MiniButton from 'components/buttons/mini-button/MiniButton';
 import SearchOverlay from './SearchOverlay';
 import styles from './Overlay.module.scss';
 import useGlobalContext from 'hooks/useGlobalContext';
-import EditThemeOverlay from './EditThemeOverlay';
-import LearnModeOverlay from './LearnModeOverlay';
 
 const getOverlayType = (overlayType) => {
   switch (overlayType) {
@@ -70,7 +70,7 @@ const Overlay = () => {
   }
 
   const closeSafeguard = () => {
-    const alertMessage = 'Are your sure you want to close? All unsave data will be missing';
+    const alertMessage = 'Are your sure you want to close? All unsaved data will be lost';
 
     // if (wordData || themeData || )
     if (confirm(alertMessage) === true) {
@@ -83,16 +83,21 @@ const Overlay = () => {
       <div className={styles.overlayFrame}>
         <div className={styles.overlayHeader}>
           {headerString}
-          <MiniButton
-            type={'closeIcon'}
-            onClickF={() => setOverlay(DEFAULT_OVERLAY_STATE)}
-            additionalStyles={styles.closeButton}
-            transparent={true}
-          />
+          {!OVERLAY_TYPES.LOGIN && (
+            <MiniButton
+              type={'closeIcon'}
+              onClickF={() => setOverlay(DEFAULT_OVERLAY_STATE)}
+              additionalStyles={styles.closeButton}
+              transparent={true}
+            />
+          )}
         </div>
         <div className={styles.overlayContent}>{getOverlayType(overlay.type)}</div>
       </div>
-      <div className={styles.overlayShade} onClick={() => overlay.type !== 'login' && setOverlay(DEFAULT_OVERLAY_STATE)} />
+      <div
+        className={styles.overlayShade}
+        onClick={() => overlay.type !== 'login' && setOverlay(DEFAULT_OVERLAY_STATE)}
+      />
     </div>
   );
 };

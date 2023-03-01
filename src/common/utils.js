@@ -1,4 +1,7 @@
 /* eslint-disable no-restricted-globals */
+
+import jwtDecode from 'jwt-decode';
+
 export const copyFromClipboard = async () => {
   try {
     const clipboardContent = await navigator.clipboard.readText();
@@ -52,16 +55,37 @@ export const findObjectIndex = (array, dataId) => {
   return array.findIndex((x) => x.id === dataId);
 };
 
-export const  stringToSubstring = (rawString, word, index) => {
-  if (rawString.includes(word)) { 
-   return rawString.substring(index) 
- }
- } 
+export const stringToSubstring = (rawString, word, index) => {
+  if (rawString.includes(word)) {
+    return rawString.substring(index);
+  }
+};
 
 export const findEntriesInArray = (array, themeId) => {
-  if (array.includes(array.find(
-    (e) => e.id === array.themeId
-     )  
-    ))
-    return array.themeId
-}
+  if (array.includes(array.find((e) => e.id === array.themeId))) return array.themeId;
+};
+
+const getDaysInMilliseconds = (numberOfDays = 1) => {
+  return 86400000 * numberOfDays;
+};
+
+export const jwtIsExpired = (jwt) => {
+  // console.log('jwtIsExpired() raw JWT', jwt);
+  if (jwt) {
+    const decodedJWT = jwtDecode(jwt);
+    const jwtExpiryDate = decodedJWT.exp * 1000;
+    // const currentDate = 1679574874 * 1000;
+    const currentDate = Date.now();
+    console.log(
+      { jwtExpiryDate, currentDate },
+      'expiry is less than current by',
+      jwtExpiryDate - currentDate
+    );
+
+    if (jwtExpiryDate - currentDate < 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+};

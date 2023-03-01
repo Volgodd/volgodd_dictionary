@@ -1,11 +1,11 @@
 import MiniButton from '../mini-button/MiniButton';
-import { deleteLocalDataFromArray } from 'common/utils';
+import { OVERLAY_TYPES } from 'common/constants';
+import clsx from 'clsx';
+import { deleteWordAction } from 'data/api';
+import { findObjectIndex } from 'common/utils';
 import styles from './DataEntryButton.module.scss';
 import useGlobalContext from 'hooks/useGlobalContext';
 import { useState } from 'react';
-import { deleteWordAction } from 'data/api';
-import { findObjectIndex } from 'common/utils';
-import { OVERLAY_TYPES } from 'common/constants';
 
 const DataEntryButton = ({
   mainCellData,
@@ -13,13 +13,11 @@ const DataEntryButton = ({
   color,
   onClickF,
   expandAreaText,
-  wordId,
-  dataArray, 
-  type
+  wordId
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const {EDIT_WORD} = OVERLAY_TYPES;
+  const { EDIT_WORD } = OVERLAY_TYPES;
 
   const { jwt, setOverlay, wordData, setWordData } = useGlobalContext();
 
@@ -41,27 +39,32 @@ const DataEntryButton = ({
 
   const deleteWord = (wordId) => {
     // deleteLocalDataFromArray(dataArray, wordId);
-    console.log('word deleted', wordId)
+    console.log('word deleted', wordId);
 
     deleteWordAction(jwt, wordId).then(() => {
       const wordArrayIndex = findObjectIndex(wordData, wordId);
-  
       const modifiedWordData = [...wordData];
-
-     
       modifiedWordData.splice(wordArrayIndex, 1);
-
       setWordData(modifiedWordData);
-    })
+    });
+  };
+
+  const getColor = (color) => {
+    switch (color) {
+      case 'orange':
+        return styles.textButton_accent2;
+      case 'mint':
+        return styles.textButton_accent3;
+      default:
+        return styles.textButton_accent1;
+    }
   };
 
   return (
-    
     <div className={styles.wrapper}>
-      <button className={styles.textButton} onClick={onClickHandler}>
+      <button className={clsx(styles.textButton, getColor(color))} onClick={onClickHandler}>
         <span className={styles.mainCell}>{mainCellData}</span>
         <span className={styles.secondaryCell}>{secondaryCellData}</span>
-        {/* {type = 'themes' && (<span>hgjklhgjk</span>)} */}
       </button>
       {isExpanded && (
         <div className={styles.wordUi}>
@@ -75,7 +78,6 @@ const DataEntryButton = ({
         </div>
       )}
     </div>
-    
   );
 };
 

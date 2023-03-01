@@ -18,3 +18,9 @@
     grid-gap: $clusterSize;
   }
 }
+
+.searchedContentWrapper {
+  overflow-y: auto;
+  box-sizing: border-box;
+  height: 30rem;
+}

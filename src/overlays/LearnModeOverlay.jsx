@@ -1,42 +1,41 @@
-import { DEFAULT_OVERLAY_STATE, ROUTES } from 'common/constants';
+import { DEFAULT_OVERLAY_STATE, LEARN_MODES, ROUTES } from 'common/constants';
+import React, { useState } from 'react';
 
 import Input from 'components/input/Input';
 import LearnButton from 'components/buttons/learn-button/LearnButton';
-import React from 'react';
 import { findObjectIndex } from 'common/utils';
 import styles from './LearnModeOverlay.module.scss';
 import useGlobalContext from 'hooks/useGlobalContext';
 import { useNavigate } from 'react-router-dom/dist/index';
 
-const { FLASHCARDS } = ROUTES;
+const { LEARN_MODE } = ROUTES;
+const { FLASH_CARDS } = LEARN_MODES;
 
 const LearnModeOverlay = () => {
-  const { themeData, themesArrForLearnMode, setOverlay } = useGlobalContext();
+  const [checkedThemes, setCheckedThemes] = useState([]);
+
+  const { themeData, setThemesArrayForLearnMode, setOverlay } = useGlobalContext();
 
   const navigate = useNavigate();
 
-  themesArrForLearnMode.current = [];
-
-  console.log(themesArrForLearnMode.current);
-
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log('navigate to learn');
-    navigate(FLASHCARDS);
+    setThemesArrayForLearnMode(checkedThemes);
+    navigate(`${LEARN_MODE}/${FLASH_CARDS}`);
     setOverlay(DEFAULT_OVERLAY_STATE);
   };
 
   const addThemesIfChecked = ({ checked, themeIndex, themeId }) => {
-    const localCheckedThemeArr = [...themesArrForLearnMode.current];
+    const newCheckedThemes = [...checkedThemes];
 
     if (checked) {
-      localCheckedThemeArr.push(themeData[themeIndex]);
+      newCheckedThemes.push(themeData[themeIndex]);
     } else {
-      const currentIndex = findObjectIndex(localCheckedThemeArr, themeId);
-      localCheckedThemeArr.splice(currentIndex);
+      const currentIndex = findObjectIndex(newCheckedThemes, themeId);
+      newCheckedThemes.splice(currentIndex);
     }
 
-    themesArrForLearnMode.current = [...localCheckedThemeArr];
+    setCheckedThemes(newCheckedThemes);
   };
 
   return (
@@ -55,7 +54,6 @@ const LearnModeOverlay = () => {
                 onChangeF={(e) =>
                   addThemesIfChecked({ checked: e.target.checked, themeIndex, themeId: id })
                 }
-                // onChangeF={(e)=> console.log(e.target.checked)}
               />
             );
           })}

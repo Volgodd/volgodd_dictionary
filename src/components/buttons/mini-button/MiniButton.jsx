@@ -3,12 +3,13 @@ import BufferIcon from 'icons/BufferIcon';
 import ChangeColorIcon from 'icons/ChangeColorIcon';
 import CloseIcon from 'icons/CloseIcon';
 import DeleteIcon from 'icons/DeleteIcon';
-import PenIcon from 'icons/PenIcon';
 import DictionaryIcon from 'icons/DictionaryIcon';
+import PenIcon from 'icons/PenIcon';
 import SearchIcon from 'icons/SearchIcon';
+import SettingsIcon from 'icons/SettingsIcon';
+import VisibilityIcon from 'icons/VisibilityIcon';
 import clsx from 'clsx';
 import styles from './MiniButton.module.scss';
-import SettingsIcon from 'icons/SettingsIcon';
 
 const getButtonIcon = (type) => {
   switch (type) {
@@ -28,18 +29,21 @@ const getButtonIcon = (type) => {
       return <BackArrowIcon />;
     case 'settingsIcon':
       return <SettingsIcon />;
+    case 'visibilityIcon':
+      return <VisibilityIcon />;
     default:
       return <PenIcon />;
   }
 };
 
-const MiniButton = ({ type, additionalStyles, onClickF, transparent = false }) => {
+const MiniButton = ({ type, additionalStyles, onClickF, transparent = false, bigger = false }) => {
   return (
     <div className={clsx(styles.miniButtonContainer, additionalStyles)}>
       <button
         className={clsx(
           styles.miniButton,
-          transparent && styles.miniButton_transparent && additionalStyles
+          transparent && styles.miniButton_transparent && additionalStyles,
+          bigger && styles.bigger
         )}
         onClick={() => onClickF()}>
         {getButtonIcon(type)}
