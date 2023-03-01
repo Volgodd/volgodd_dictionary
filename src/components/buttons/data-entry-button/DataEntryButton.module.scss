@@ -38,8 +38,26 @@
     position: absolute;
     width: $clusterSize / 2;
     height: calc(100% - #{$clusterSizeX2});
-    background-color: $colorWhite;
+    background-color: var(--bg-color);
     border-radius: $borderRadius05;
+  }
+
+  &_accent1 {
+    &::before {
+      background-color: $colorAccent1;
+    }
+  }
+
+  &_accent2 {
+    &::before {
+      background-color: $colorAccent2;
+    }
+  }
+
+  &_accent3 {
+    &::before {
+      background-color: $colorAccent3;
+    }
   }
 }
 
@@ -68,4 +86,8 @@
   color: $colorGray25;
   font-size: $fontSize14;
   line-height: $fontLineHeight14;
+}
+
+.colorOrange {
+  background-color: $colorAccent2;
 }
