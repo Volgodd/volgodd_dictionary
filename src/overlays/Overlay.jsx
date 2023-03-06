@@ -37,7 +37,7 @@ const getOverlayType = (overlayType) => {
 };
 
 const Overlay = () => {
-  const { overlay, setOverlay } = useGlobalContext();
+  const { overlay, setOverlay, setAddWordData } = useGlobalContext();
   let headerString = 'Overlay header text';
 
   switch (overlay.type) {
@@ -83,10 +83,13 @@ const Overlay = () => {
       <div className={styles.overlayFrame}>
         <div className={styles.overlayHeader}>
           {headerString}
-          {!OVERLAY_TYPES.LOGIN && (
+          {overlay.type !== 'login ' && (
             <MiniButton
               type={'closeIcon'}
-              onClickF={() => setOverlay(DEFAULT_OVERLAY_STATE)}
+              onClickF={() => {
+                setOverlay(DEFAULT_OVERLAY_STATE);
+                setAddWordData('');
+              }}
               additionalStyles={styles.closeButton}
               transparent={true}
             />
@@ -96,7 +99,9 @@ const Overlay = () => {
       </div>
       <div
         className={styles.overlayShade}
-        onClick={() => overlay.type !== 'login' && setOverlay(DEFAULT_OVERLAY_STATE)}
+        onClick={() =>
+          overlay.type !== 'login' && (setOverlay(DEFAULT_OVERLAY_STATE), setAddWordData(''))
+        }
       />
     </div>
   );

@@ -1,16 +1,10 @@
 @import '../css/variables.scss';
 
 .formWrapper {
-  // display: grid;
-  // grid-template-columns: 1fr;
-  // grid-auto-columns: $clusterSizeX4;
-  // grid-gap: $clusterSize;
-  // margin-bottom: $clusterSize;
-
   display: flex;
   flex-direction: column;
   border-color: $colorWhite;
-  
+
   .headerSpan {
     color: $colorWhite;
     font-size: $fontSize16;
@@ -18,14 +12,27 @@
   }
 }
 
-.inputContainer {
-  // height: $clusterSizeX4;
-
+.scrollPad {
   display: grid;
-
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: min-content;
+  width: 100%;
+  align-items: center;
+  gap: $clusterSizeX05;
   overflow-y: auto;
-  height: $clusterSizeX10;
+  overflow-x: hidden;
+  height: $clusterSizeX10 * 2;
   margin-block: $clusterSize;
+
+  padding-right: $clusterSizeX05;
+
+  @media (max-width: 470px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 360px) {
+    grid-template-columns: 1fr;
+  }
 }
 
 .deleteButton {
@@ -46,4 +53,8 @@
 .deleteButtonWrapper {
   display: flex;
   justify-content: center;
+}
+
+.scrollPadContainer {
+  width: 100%;
 }

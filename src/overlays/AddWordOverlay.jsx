@@ -1,4 +1,5 @@
 import { copyFromClipboard, copyFromClipboardOld } from 'common/utils';
+
 import { DEFAULT_OVERLAY_STATE } from 'common/constants';
 import MiniButton from 'components/buttons/mini-button/MiniButton';
 import NavButton from 'components/footer/nav-button/NavButton';
@@ -11,7 +12,8 @@ import useGlobalContext from 'hooks/useGlobalContext';
 import { useState } from 'react';
 
 const AddWordOverlay = () => {
-  const { jwt, setOverlay, wordData, setWordData, themeData } = useGlobalContext();
+  const { jwt, setOverlay, wordData, setWordData, themeData, addWordData, setAddWordData } =
+    useGlobalContext();
   const [text, setText] = useState('');
   const [translation, setTranslation] = useState('');
   const [theme, setTheme] = useState(themeData[0].id);
@@ -21,26 +23,29 @@ const AddWordOverlay = () => {
     return { value: themeDataEntry.id, text: themeDataEntry.name };
   });
 
+  console.log({ addWordData, translation, theme, examples });
+
   const submitHandler = (e) => {
     e.preventDefault();
 
-    console.log({ text, translation, theme, examples });
+    console.log({ addWordData, translation, theme, examples });
     //здесь будет ф по отправке данных на сервер
 
     const newWordData = {
-      foreign: text,
+      foreign: addWordData,
       native: translation,
       examples: examples,
       themeIdList: [theme]
     };
 
     // console.log({ newWordData });
-    
+
     addWordAction(jwt, newWordData).then(({ data }) => {
       console.log('word added', data);
       const newWordData = [data, ...wordData];
       setWordData(newWordData);
       setOverlay(DEFAULT_OVERLAY_STATE);
+      setAddWordData();
     });
 
     console.log(theme, newWordData.themeIdList);
@@ -55,7 +60,7 @@ const AddWordOverlay = () => {
 
     switch (inputType) {
       case 'word':
-        setText(buffer);
+        setAddWordData(buffer);
         break;
       case 'translation':
         setTranslation(buffer);
@@ -86,8 +91,8 @@ const AddWordOverlay = () => {
           type="text"
           placeholder="Word"
           className="inputElement"
-          value={text}
-          onChange={(e) => setText(e.target.value)}
+          value={addWordData}
+          onChange={(e) => setAddWordData(e.target.value)}
           required
         />
         <MiniButton type="buffer" onClickF={(e) => handleBufferButtonClick('word')} />

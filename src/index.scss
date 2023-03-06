@@ -38,7 +38,7 @@ html {
 
   &:active,
   &:focus {
-    box-shadow: 0 0 $clusterSize/2 $colorAccent1;
+    box-shadow: 0 0 $clusterSizeX05 $colorAccent1;
     outline: solid 1px $colorAccent1;
   }
 
@@ -49,9 +49,8 @@ html {
   }
 }
 
-
 ::-webkit-scrollbar {
-  width: $clusterSize / 2;
+  width: $clusterSizeX05;
 }
 
 /* Track */
