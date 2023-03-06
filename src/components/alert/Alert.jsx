@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import styles from './Input.module.scss';
 import { useState } from 'react';
 
-const Input = ({ value, id, onChangeF, additionalStyles }) => {
+const Alert = ({ value, id, onChangeF, additionalStyles }) => {
   const [isChecked, setIsChecked] = useState(false);
 
   const checkboxHandler = (e) => {
@@ -19,4 +19,4 @@ const Input = ({ value, id, onChangeF, additionalStyles }) => {
   );
 };
 
-export default Input;
+export default Alert;

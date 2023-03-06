@@ -26,14 +26,14 @@ function App() {
   const [themeData, setThemeData] = useState();
   const [burgerOverlay, setBurgerOverlay] = useState(false);
   const [themesArrayForLearnMode, setThemesArrayForLearnMode] = useState();
+  const [addWordData, setAddWordData] = useState('');
 
   // const chosenThemesArray = useRef();
   // const themesArrayForLearnMode = chosenThemesArray.current;
 
   useEffect(() => {
-    // LOGIN CHECK
-
     if (rawThemeData) {
+      console.log('rtd pross', rawThemeData);
       setThemeData(countThemeWords({ wordData, themeData: rawThemeData }));
     }
   }, [rawThemeData, wordData]);
@@ -78,7 +78,9 @@ function App() {
     setJWT,
     jwt,
     themesArrayForLearnMode,
-    setThemesArrayForLearnMode
+    setThemesArrayForLearnMode,
+    addWordData,
+    setAddWordData
   };
 
   if (jwt && (!wordData || !themeData)) {

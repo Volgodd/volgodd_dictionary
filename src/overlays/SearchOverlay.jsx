@@ -1,20 +1,21 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 
 import DataEntryButton from 'components/buttons/data-entry-button/DataEntryButton';
 import NavButton from 'components/footer/nav-button/NavButton';
+import { OVERLAY_TYPES } from 'common/constants';
 import clsx from 'clsx';
 import styles from './SearchOverlay.module.scss';
 import useGlobalContext from 'hooks/useGlobalContext';
 import { useState } from 'react';
 
+const { ADD_WORD } = OVERLAY_TYPES;
+
 const SearchOverlay = () => {
   const [searchingItem, setSearchingItem] = useState('');
   const [sortedWordData, setSortedWordData] = useState([]);
-  const { wordData } = useGlobalContext();
+  const { wordData, setOverlay, addWordData, setAddWordData } = useGlobalContext();
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-  };
+  console.log(sortedWordData, addWordData);
 
   useEffect(() => {
     const performSearch = setTimeout(() => {
@@ -35,7 +36,7 @@ const SearchOverlay = () => {
   }, [searchingItem, wordData]);
 
   return (
-    <form onSubmit={submitHandler} className={styles.searchInterface}>
+    <div className={styles.searchInterface}>
       <div className={styles.searchInterfaceRow}>
         <input
           autoFocus
@@ -44,13 +45,14 @@ const SearchOverlay = () => {
           className="inputElement"
           onChange={(e) => {
             setSearchingItem(e.target.value);
+            setAddWordData(e.target.value);
           }}
           value={searchingItem}
           required
         />
       </div>
+      <NavButton name="Add a word" onClickF={() => setOverlay({ type: ADD_WORD })} />
 
-      <NavButton name="Search" styles={clsx(styles.saveButton, styles.addWordButton)} />
       <div className={styles.searchedContentWrapper}>
         {sortedWordData?.map((sortedItem) => {
           return (
@@ -62,7 +64,7 @@ const SearchOverlay = () => {
           );
         })}
       </div>
-    </form>
+    </div>
   );
 };
 export default SearchOverlay;

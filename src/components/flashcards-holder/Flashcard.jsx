@@ -45,6 +45,9 @@ const Flashcard = () => {
     setWordListArr(newWordListArray);
 
     setCurrentWord(chooseRandomWord(wordListArr));
+
+    if (wordListArr.length === 0) {
+    }
   };
 
   const dontKnowButtonF = () => {
@@ -56,31 +59,35 @@ const Flashcard = () => {
   return (
     <>
       <Header />
-      <div className={styles.flashcardWrapper}>
-        <div className={styles.mainContent}>
-          <div className={styles.foreign}>{currentWord?.foreign}</div>
-          <div className={styles.nativeWrapper}>
-            <MiniButton
-              onClickF={() => setTranslateVisibility(!translateVisibility)}
-              type={'visibilityIcon'}
-              additionalStyles={translateVisibility && 'active'}
-              bigger={true}
-            />
+      {wordListArr.length !== 0 && (
+        <div className={styles.flashcardWrapper}>
+          <div className={styles.mainContent}>
+            <div className={styles.foreign}>{currentWord?.foreign}</div>
+            <div className={styles.nativeWrapper}>
+              <MiniButton
+                onClickF={() => setTranslateVisibility(!translateVisibility)}
+                type={'visibilityIcon'}
+                additionalStyles={translateVisibility && 'active'}
+                bigger={true}
+              />
 
-            <div className={clsx(styles.native, translateVisibility && 'active')}>
-              {currentWord?.native}
+              <div className={clsx(styles.native, translateVisibility && 'active')}>
+                {currentWord?.native}
+              </div>
             </div>
           </div>
+          <div className={styles.buttonContainer}>
+            <LearnButton
+              additionalStyles={styles.button}
+              name={'Still learning'}
+              onClickF={dontKnowButtonF}
+            />
+            <LearnButton additionalStyles={styles.button} name={'Know'} onClickF={knowButtonF} />
+          </div>
         </div>
-        <div className={styles.buttonContainer}>
-          <LearnButton
-            additionalStyles={styles.button}
-            name={'Still learning'}
-            onClickF={dontKnowButtonF}
-          />
-          <LearnButton additionalStyles={styles.button} name={'Know'} onClickF={knowButtonF} />
-        </div>
-      </div>
+      )}
+
+      {wordListArr.length === 0 && <div className={styles.alertWrapper}></div>}
     </>
   );
 };

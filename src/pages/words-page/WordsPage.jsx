@@ -17,32 +17,33 @@ const WordsPage = () => {
     <div className={clsx(styles.main, 'dark:bg-slate-800')}>
       <Header title={themeData[themeIndex].name} themeId={themeIdUrlParam} />
       <div className={styles.mainContent}>
-        {wordData
-          .filter((wordObject) => {
-            const { themeIdList } = wordObject;
-            if (!themeIdUrlParam && themeIdList.length === 0) {
-              return true;
-            }
-            if (themeIdList.indexOf(themeIdUrlParam) > -1) {
-              return true;
-            }
-            return false;
-          })
-          .map((wordObject) => {
-            const { native, foreign, id, examples } = wordObject;
+        {wordData.length !== 0 &&
+          wordData
+            .filter((wordObject) => {
+              const { themeIdList } = wordObject;
+              if (!themeIdUrlParam && themeIdList.length === 0) {
+                return true;
+              }
+              if (themeIdList.indexOf(themeIdUrlParam) > -1) {
+                return true;
+              }
+              return false;
+            })
+            .map((wordObject) => {
+              const { native, foreign, id, examples } = wordObject;
 
-            return (
-              <DataEntryButton
-                dataArray={wordData}
-                key={id}
-                wordId={id}
-                mainCellData={foreign}
-                secondaryCellData={native}
-                expandAreaText={examples}
-                color={'mint'}
-              />
-            );
-          })}
+              return (
+                <DataEntryButton
+                  dataArray={wordData}
+                  key={id}
+                  wordId={id}
+                  mainCellData={foreign}
+                  secondaryCellData={native}
+                  expandAreaText={examples}
+                  color={'mint'}
+                />
+              );
+            })}
       </div>
     </div>
   );

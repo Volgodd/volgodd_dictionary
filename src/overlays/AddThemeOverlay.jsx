@@ -23,7 +23,8 @@ const AddThemeOverlay = () => {
     addThemeAction(jwt, newThemeData).then(({ data }) => {
       console.log('theme added', data);
 
-      const newRawThemeData = [...themeData, newThemeData];
+      const newRawThemeData = [...themeData, data];
+
       setRawThemeData(newRawThemeData);
       setOverlay(DEFAULT_OVERLAY_STATE);
     });

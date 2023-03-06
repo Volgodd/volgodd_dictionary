@@ -36,7 +36,7 @@
     display: block;
     content: '';
     position: absolute;
-    width: $clusterSize / 2;
+    width: $clusterSizeX05;
     height: calc(100% - #{$clusterSizeX2});
     background-color: var(--bg-color);
     border-radius: $borderRadius05;
@@ -64,6 +64,15 @@
 .mainCell {
   font-size: $fontSize20;
   font-weight: $fontWeightBold;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+
+  line-height: 19px;
+  line-break: anywhere;
 }
 
 .secondaryCell {
