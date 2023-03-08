@@ -7,6 +7,7 @@ import styles from './DataEntryButton.module.scss';
 import useGlobalContext from 'hooks/useGlobalContext';
 import useOverlayStore from 'store/overlayStore';
 import { useState } from 'react';
+import useUserStorage from 'store/userStore';
 
 const DataEntryButton = ({
   mainCellData,
@@ -22,7 +23,9 @@ const DataEntryButton = ({
 
   const { EDIT_WORD } = OVERLAY_TYPES;
 
-  const { jwt, wordData, setWordData } = useGlobalContext();
+  const jwt = useUserStorage((state) => state.jwt);
+
+  const { wordData, setWordData } = useGlobalContext();
 
   const onClickHandler = () => {
     if (onClickF) {

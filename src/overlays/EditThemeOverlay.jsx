@@ -10,6 +10,7 @@ import styles from './EditThemeOverlay.module.scss';
 import useGlobalContext from 'hooks/useGlobalContext';
 import useOverlayStore from 'store/overlayStore';
 import { useState } from 'react';
+import useUserStorage from 'store/userStore';
 
 const EditThemeOverlay = () => {
   const { overlayMetadata, closeOverlay } = useOverlayStore(
@@ -17,7 +18,9 @@ const EditThemeOverlay = () => {
     shallow
   );
 
-  const { jwt, themeData, setRawThemeData, wordData, setWordData } = useGlobalContext();
+  const jwt = useUserStorage((state) => state.jwt);
+
+  const { themeData, setRawThemeData, wordData, setWordData } = useGlobalContext();
 
   const themeId = overlayMetadata;
   const themeIndex = findObjectIndex(themeData, themeId);

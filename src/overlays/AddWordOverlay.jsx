@@ -10,10 +10,12 @@ import styles from './AddWordOverlay.module.scss';
 import useGlobalContext from 'hooks/useGlobalContext';
 import useOverlayStore from 'store/overlayStore';
 import { useState } from 'react';
+import useUserStorage from 'store/userStore';
 
 const AddWordOverlay = () => {
   const closeOverlay = useOverlayStore((state) => state.closeOverlay);
-  const { jwt, wordData, setWordData, themeData, addWordData, setAddWordData } = useGlobalContext();
+  const jwt = useUserStorage((state) => state.jwt);
+  const { wordData, setWordData, themeData, addWordData, setAddWordData } = useGlobalContext();
   const [text, setText] = useState('');
   const [translation, setTranslation] = useState('');
   const [theme, setTheme] = useState(themeData[0].id);

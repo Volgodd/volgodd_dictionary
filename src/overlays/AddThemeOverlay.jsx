@@ -5,13 +5,14 @@ import styles from './AddThemeOverlay.module.scss';
 import useGlobalContext from 'hooks/useGlobalContext';
 import useOverlayStore from 'store/overlayStore';
 import { useState } from 'react';
+import useUserStorage from 'store/userStore';
 
 const AddThemeOverlay = () => {
   const [theme, setTheme] = useState('');
 
   const closeOverlay = useOverlayStore((state) => state.closeOverlay);
-
-  const { jwt, themeData, setRawThemeData } = useGlobalContext();
+  const jwt = useUserStorage((state) => state.jwt);
+  const { themeData, setRawThemeData } = useGlobalContext();
 
   const submitHandler = (e) => {
     e.preventDefault();

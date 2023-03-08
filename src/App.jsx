@@ -2,8 +2,7 @@ import './index.scss';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { DEFAULT_ALERT_OVERLAY_STATE, OVERLAY_TYPES, ROUTES } from './common/constants';
-import React, { useEffect, useRef, useState } from 'react';
-import { getJWTFromLocalStorage, setJWTFromLocalStorage } from 'common/local-storage';
+import React, { useEffect, useState } from 'react';
 
 import AlertOverLay from 'overlays/AlertOverlay';
 import BurgerOverlay from 'overlays/BurgerOverlay';
@@ -14,16 +13,14 @@ import ThemePage from 'pages/theme-page/ThemePage';
 import WordsPage from 'pages/words-page/WordsPage';
 import { countThemeWords } from 'data/utils';
 import { getData } from './data/api';
-import { jwtIsExpired } from 'common/utils';
 import { shallow } from 'zustand/shallow';
 import useOverlayStore from 'store/overlayStore';
+import useUserStorage from 'store/userStore';
 
 const { MAIN_PAGE, WORDS, LEARN_MODE } = ROUTES;
 
 function App() {
-  const [jwt, setJWT] = useState(getJWTFromLocalStorage());
   const [alertOverlay, setAlertOverlay] = useState(DEFAULT_ALERT_OVERLAY_STATE);
-  const [overlayMetaData, setOverlayMetaData] = useState();
   const [wordData, setWordData] = useState();
   const [rawThemeData, setRawThemeData] = useState();
   const [themeData, setThemeData] = useState();
@@ -39,27 +36,22 @@ function App() {
     shallow
   );
 
+  const jwt = useUserStorage((state) => state.jwt);
+
   // const {openOverlay, type} = useOverlayStore((state) => {
   //   return {openOverlay: state.openOverlay, type: state.type}
   // });
 
   useEffect(() => {
     if (rawThemeData) {
-      // console.log('rtd pross', rawThemeData);
       setThemeData(countThemeWords({ wordData, themeData: rawThemeData }));
     }
   }, [rawThemeData, wordData]);
 
   useEffect(() => {
-    if (!jwt || jwtIsExpired(jwt)) {
+    if (!jwt) {
       openOverlay({ overlayType: OVERLAY_TYPES.LOGIN });
-    } else {
-      setJWTFromLocalStorage(jwt);
     }
-    // } else {
-    //   localStorage.clear();
-    //   setJWT(null);
-    // }
   }, [jwt, openOverlay]);
 
   useEffect(() => {
@@ -72,13 +64,6 @@ function App() {
     }
   }, [jwt]);
 
-  // console.log(
-  //   'GLOBAL STATE',
-  //   { wordData, themeData },
-  //   'themesArrayForLearnMode',
-  //   themesArrayForLearnMode
-  // );
-
   const globalContextData = {
     wordData,
     setWordData,
@@ -89,10 +74,6 @@ function App() {
     setAlertOverlay,
     burgerOverlay,
     setBurgerOverlay,
-    overlayMetaData,
-    setOverlayMetaData,
-    setJWT,
-    jwt,
     themesArrayForLearnMode,
     setThemesArrayForLearnMode,
     addWordData,

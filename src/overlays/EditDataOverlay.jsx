@@ -8,9 +8,11 @@ import styles from './EditDataOverlay.module.scss';
 import useGlobalContext from 'hooks/useGlobalContext';
 import useOverlayStore from 'store/overlayStore';
 import { useState } from 'react';
+import useUserStorage from 'store/userStore';
 
 const EditDataOverlay = () => {
-  const { jwt, wordData, setWordData, themeData } = useGlobalContext();
+  const jwt = useUserStorage((state) => state.jwt);
+  const { wordData, setWordData, themeData } = useGlobalContext();
 
   const { overlayMetadata, closeOverlay } = useOverlayStore(
     (state) => ({ closeOverlay: state.closeOverlay, overlayMetadata: state.overlayMetadata }),
