@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
+import { ALERT_OVERLAY_TYPES } from 'common/constants';
+import AlertOverLay from 'overlays/AlertOverlay';
 import Header from 'components/header/Header';
 import LearnButton from 'components/buttons/learn-button/LearnButton';
 import MiniButton from 'components/buttons/mini-button/MiniButton';
@@ -9,11 +11,13 @@ import styles from './Flashcard.module.scss';
 import useGlobalContext from 'hooks/useGlobalContext';
 
 const Flashcard = () => {
-  const { themesArrayForLearnMode, wordData } = useGlobalContext();
+  const { themesArrayForLearnMode, wordData, setAlertOverlay } = useGlobalContext();
   const [translateVisibility, setTranslateVisibility] = useState(false);
   const [themeIdArr, setThemeIdArr] = useState([]);
   const [wordListArr, setWordListArr] = useState([]);
   const [currentWord, setCurrentWord] = useState();
+
+  const { WORDS_LEARNT, DELETE } = ALERT_OVERLAY_TYPES;
 
   useEffect(() => {
     const newThemeIdArr = themesArrayForLearnMode
@@ -37,7 +41,7 @@ const Flashcard = () => {
     }
   }, [wordListArr]);
 
-  console.log({ themesArrayForLearnMode, wordData, themeIdArr, wordListArr });
+  // console.log({ themesArrayForLearnMode, wordData, themeIdArr, wordListArr });
 
   const knowButtonF = () => {
     const currentWordId = currentWord.id;
@@ -54,7 +58,7 @@ const Flashcard = () => {
     setCurrentWord(chooseRandomWord(wordListArr));
   };
 
-  console.log('CURRENT WORD', currentWord);
+  // console.log('CURRENT WORD', currentWord);
 
   return (
     <>
@@ -87,7 +91,7 @@ const Flashcard = () => {
         </div>
       )}
 
-      {wordListArr.length === 0 && <div className={styles.alertWrapper}></div>}
+      {/* {wordListArr.length === 0 && setAlertOverlay({ type: WORDS_LEARNT })} */}
     </>
   );
 };

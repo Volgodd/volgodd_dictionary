@@ -1,10 +1,16 @@
 import './index.scss';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { DEFAULT_OVERLAY_STATE, OVERLAY_TYPES, ROUTES } from './common/constants';
+import {
+  DEFAULT_ALERT_OVERLAY_STATE,
+  DEFAULT_OVERLAY_STATE,
+  OVERLAY_TYPES,
+  ROUTES
+} from './common/constants';
 import React, { useEffect, useRef, useState } from 'react';
 import { getJWTFromLocalStorage, setJWTFromLocalStorage } from 'common/local-storage';
 
+import AlertOverLay from 'overlays/AlertOverlay';
 import BurgerOverlay from 'overlays/BurgerOverlay';
 import { GlobalContextProvider } from 'providers/GlobalContext';
 import LearnPage from 'pages/learn-page/LearnPage';
@@ -20,20 +26,18 @@ const { MAIN_PAGE, WORDS, LEARN_MODE } = ROUTES;
 function App() {
   const [jwt, setJWT] = useState(getJWTFromLocalStorage());
   const [overlay, setOverlay] = useState(DEFAULT_OVERLAY_STATE);
+  const [alertOverlay, setAlertOverlay] = useState(DEFAULT_ALERT_OVERLAY_STATE);
   const [overlayMetaData, setOverlayMetaData] = useState();
   const [wordData, setWordData] = useState();
   const [rawThemeData, setRawThemeData] = useState();
   const [themeData, setThemeData] = useState();
   const [burgerOverlay, setBurgerOverlay] = useState(false);
-  const [themesArrayForLearnMode, setThemesArrayForLearnMode] = useState();
+  const [themesArrayForLearnMode, setThemesArrayForLearnMode] = useState(undefined);
   const [addWordData, setAddWordData] = useState('');
-
-  // const chosenThemesArray = useRef();
-  // const themesArrayForLearnMode = chosenThemesArray.current;
 
   useEffect(() => {
     if (rawThemeData) {
-      console.log('rtd pross', rawThemeData);
+      // console.log('rtd pross', rawThemeData);
       setThemeData(countThemeWords({ wordData, themeData: rawThemeData }));
     }
   }, [rawThemeData, wordData]);
@@ -52,7 +56,6 @@ function App() {
 
   useEffect(() => {
     // FETCH DATA
-
     if (jwt) {
       getData(jwt).then(({ wordData, themeData }) => {
         setWordData(wordData);
@@ -61,7 +64,12 @@ function App() {
     }
   }, [jwt]);
 
-  console.log('GLOBAL STATE', { wordData, themeData });
+  console.log(
+    'GLOBAL STATE',
+    { wordData, themeData },
+    'themesArrayForLearnMode',
+    themesArrayForLearnMode
+  );
 
   const globalContextData = {
     wordData,
@@ -71,6 +79,8 @@ function App() {
     themeData,
     overlay,
     setOverlay,
+    alertOverlay,
+    setAlertOverlay,
     burgerOverlay,
     setBurgerOverlay,
     overlayMetaData,
@@ -94,6 +104,7 @@ function App() {
         <Link to={ADD_WORD_PAGE}>Add word</Link> */}
         {overlay.type && <Overlay />}
         {burgerOverlay && <BurgerOverlay />}
+        {alertOverlay.type && <AlertOverLay />}
         {jwt && (
           <Routes>
             <Route path={MAIN_PAGE} element={<ThemePage />} />

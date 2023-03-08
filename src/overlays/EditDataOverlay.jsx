@@ -23,8 +23,9 @@ const EditDataOverlay = () => {
   const submitHandler = (e) => {
     e.preventDefault();
 
+    const wordId = wordData[wordArrayIndex].id;
+
     console.log({ text, translation, theme });
-    //здесь будет ф по отправке данных на сервер
 
     const newWordData = {
       foreign: text,
@@ -33,16 +34,16 @@ const EditDataOverlay = () => {
       themeIdList: wordData[wordArrayIndex].themeIdList
     };
 
-    console.log(wordData[wordArrayIndex], wordData[wordArrayIndex].id);
-
-    console.log(newWordData.themeIdList);
-
     //найти newWordDatd по id и заменить значение на новую дейту
 
-    editWordAction(jwt, newWordData, wordData[wordArrayIndex].id).then(({ data }) => {
+    editWordAction(jwt, newWordData, wordId).then(({ data }) => {
       console.log('word edited', data);
-      wordData[wordArrayIndex] = newWordData;
-      setWordData(newWordData);
+
+      const wordDataCopy = [...wordData];
+
+      wordDataCopy.splice(wordArrayIndex, 1, data);
+
+      setWordData(wordDataCopy);
       setOverlay(DEFAULT_OVERLAY_STATE);
     });
   };

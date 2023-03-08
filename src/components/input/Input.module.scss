@@ -7,18 +7,11 @@
   font-size: $fontSize14;
   color: $colorWhite;
   background-color: $colorGray75;
-  // margin-block: $clusterSizeX05;
-  // width: $clusterSizeX9;
   overflow: hidden;
   border-radius: $clusterSize;
-
-  font-family: 'Roboto', sans-serif;
+  font-family: $fontRoboto;
   font-weight: $fontWeightBold;
   overflow-wrap: anywhere;
-  // word-wrap: break-word;
-  // white-space: nowrap;
-  // line-break: anywhere;
-
   max-height: 8rem;
 
   &_active {
@@ -33,17 +26,12 @@
   > label {
     display: flex;
     width: 100%;
-    // height: 100%;
-    // align-items: center;
-    // margin-inline: $clusterSizeX05;
-    // justify-content: center;
-    // text-align: center;
+    height: 100%;
     padding: $clusterSize/3;
-
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     text-align: center;
     font-weight: normal;
