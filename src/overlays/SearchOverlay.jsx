@@ -6,7 +6,6 @@ import { OVERLAY_TYPES } from 'common/constants';
 import clsx from 'clsx';
 import styles from './SearchOverlay.module.scss';
 import useDataStore from 'store/dataStore';
-import useGlobalContext from 'hooks/useGlobalContext';
 import useOverlayStore from 'store/overlayStore';
 import { useState } from 'react';
 
@@ -15,13 +14,12 @@ const { ADD_WORD } = OVERLAY_TYPES;
 const SearchOverlay = () => {
   const [searchingItem, setSearchingItem] = useState('');
   const [sortedWordData, setSortedWordData] = useState([]);
-  const { addWordData, setAddWordData } = useGlobalContext();
 
   const wordData = useDataStore((state) => state.wordData);
 
   const openOverlay = useOverlayStore((state) => state.openOverlay);
 
-  console.log(sortedWordData, addWordData);
+  console.log(sortedWordData);
 
   useEffect(() => {
     const performSearch = setTimeout(() => {
@@ -49,15 +47,15 @@ const SearchOverlay = () => {
           type="text"
           placeholder=""
           className="inputElement"
-          onChange={(e) => {
-            setSearchingItem(e.target.value);
-            setAddWordData(e.target.value);
-          }}
+          onChange={(e) => setSearchingItem(e.target.value)}
           value={searchingItem}
           required
         />
       </div>
-      <NavButton name="Add a word" onClickF={() => openOverlay({ overlayType: ADD_WORD })} />
+      <NavButton
+        name="Add a word"
+        onClickF={() => openOverlay({ overlayType: ADD_WORD, overlayMetadata: searchingItem })}
+      />
 
       <div className={styles.searchedContentWrapper}>
         {sortedWordData?.map((sortedItem) => {

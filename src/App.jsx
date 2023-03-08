@@ -24,7 +24,6 @@ function App() {
 
   const [burgerOverlay, setBurgerOverlay] = useState(false);
   const [themesArrayForLearnMode, setThemesArrayForLearnMode] = useState(undefined);
-  const [addWordData, setAddWordData] = useState('');
 
   const jwt = useUserStorage((state) => state.jwt);
 
@@ -69,12 +68,8 @@ function App() {
     burgerOverlay,
     setBurgerOverlay,
     themesArrayForLearnMode,
-    setThemesArrayForLearnMode,
-    addWordData,
-    setAddWordData
+    setThemesArrayForLearnMode
   };
-
-  console.log('APP LEVEL', { wordData, themeData });
 
   if (jwt && (!wordData || !themeData)) {
     return <div>Loading data</div>;

@@ -11,7 +11,6 @@ import { OVERLAY_TYPES } from 'common/constants';
 import SearchOverlay from './SearchOverlay';
 import { shallow } from 'zustand/shallow';
 import styles from './Overlay.module.scss';
-import useGlobalContext from 'hooks/useGlobalContext';
 import useOverlayStore from 'store/overlayStore';
 
 const getOverlayTypeContent = (overlayType) => {
@@ -47,7 +46,6 @@ const Overlay = () => {
     shallow
   );
 
-  const { setAddWordData } = useGlobalContext();
   let headerString = 'Overlay header text';
 
   switch (overlayType) {
@@ -87,10 +85,7 @@ const Overlay = () => {
           {overlayType !== 'login' && (
             <MiniButton
               type={'closeIcon'}
-              onClickF={() => {
-                closeOverlay();
-                setAddWordData('');
-              }}
+              onClickF={() => closeOverlay()}
               additionalStyles={styles.closeButton}
               transparent={true}
             />
@@ -103,7 +98,6 @@ const Overlay = () => {
         onClick={() => {
           if (overlayType !== 'login') {
             closeOverlay();
-            setAddWordData('');
           }
         }}
       />

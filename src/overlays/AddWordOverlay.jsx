@@ -9,15 +9,29 @@ import clsx from 'clsx';
 import { shallow } from 'zustand/shallow';
 import styles from './AddWordOverlay.module.scss';
 import useDataStore from 'store/dataStore';
+import { useEffect } from 'react';
 import useGlobalContext from 'hooks/useGlobalContext';
 import useOverlayStore from 'store/overlayStore';
 import { useState } from 'react';
 import useUserStorage from 'store/userStore';
 
 const AddWordOverlay = () => {
-  const closeOverlay = useOverlayStore((state) => state.closeOverlay);
   const jwt = useUserStorage((state) => state.jwt);
-  const { addWordData, setAddWordData } = useGlobalContext();
+  const [addWordData, setAddWordData] = useState('');
+
+  const { closeOverlay, overlayMetadata } = useOverlayStore(
+    (state) => ({
+      closeOverlay: state.closeOverlay,
+      overlayMetadata: state.overlayMetadata
+    }),
+    shallow
+  );
+
+  useEffect(() => {
+    if (overlayMetadata) {
+      setAddWordData(overlayMetadata);
+    }
+  }, [overlayMetadata, setAddWordData]);
 
   const { wordData, setWordData, themeData } = useDataStore(
     (state) => ({
@@ -127,11 +141,12 @@ const AddWordOverlay = () => {
           className={clsx(styles.addWordTextarea, 'inputElement inputElement_textArea')}
           placeholder="Examples"
           defaultValue={examples}
-          onChange={(e) => setExamples(e.target.value)}></textarea>
+          onChange={(e) => setExamples(e.target.value)}
+        />
         <MiniButton type="buffer" onClickF={(e) => handleBufferButtonClick('examples')} />
       </div>
-      <SelectMenu additionalStyles={''} data={selectMenuData} onSelect={handleSelectMenu} />
-      <NavButton name={'Save'} styles={''} />
+      <SelectMenu data={selectMenuData} onSelect={handleSelectMenu} />
+      <NavButton name={'Save'} />
     </form>
   );
 };
