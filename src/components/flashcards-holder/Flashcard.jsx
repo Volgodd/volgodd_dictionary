@@ -8,10 +8,13 @@ import MiniButton from 'components/buttons/mini-button/MiniButton';
 import { chooseRandomWord } from './utils';
 import clsx from 'clsx';
 import styles from './Flashcard.module.scss';
+import useDataStore from 'store/dataStore';
 import useGlobalContext from 'hooks/useGlobalContext';
 
 const Flashcard = () => {
-  const { themesArrayForLearnMode, wordData, setAlertOverlay } = useGlobalContext();
+  const { themesArrayForLearnMode, setAlertOverlay } = useGlobalContext();
+
+  const wordData = useDataStore((state) => state.wordData);
   const [translateVisibility, setTranslateVisibility] = useState(false);
   const [themeIdArr, setThemeIdArr] = useState([]);
   const [wordListArr, setWordListArr] = useState([]);

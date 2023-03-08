@@ -5,13 +5,14 @@ import MetaTags from 'common/MetaTags';
 import { ROUTES } from 'common/constants';
 import React from 'react';
 import styles from './ThemePage.module.scss';
-import useGlobalContext from 'hooks/useGlobalContext';
+import useDataStore from 'store/dataStore';
 import { useNavigate } from 'react-router-dom';
 
 const { WORDS } = ROUTES;
 
 const ThemePage = () => {
-  const { themeData } = useGlobalContext();
+  const themeData = useDataStore((state) => state.themeData);
+
   const navigate = useNavigate();
 
   return (

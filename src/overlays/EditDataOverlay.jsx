@@ -5,14 +5,22 @@ import { editWordAction } from 'data/api';
 import { findObjectIndex } from 'common/utils';
 import { shallow } from 'zustand/shallow';
 import styles from './EditDataOverlay.module.scss';
-import useGlobalContext from 'hooks/useGlobalContext';
+import useDataStore from 'store/dataStore';
 import useOverlayStore from 'store/overlayStore';
 import { useState } from 'react';
 import useUserStorage from 'store/userStore';
 
 const EditDataOverlay = () => {
   const jwt = useUserStorage((state) => state.jwt);
-  const { wordData, setWordData, themeData } = useGlobalContext();
+
+  const { wordData, setWordData, themeData } = useDataStore(
+    (state) => ({
+      wordData: state.wordData,
+      setWordData: state.setWordData,
+      themeData: state.themeData
+    }),
+    shallow
+  );
 
   const { overlayMetadata, closeOverlay } = useOverlayStore(
     (state) => ({ closeOverlay: state.closeOverlay, overlayMetadata: state.overlayMetadata }),

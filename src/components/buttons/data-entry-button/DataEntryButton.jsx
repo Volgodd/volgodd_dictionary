@@ -3,7 +3,9 @@ import { OVERLAY_TYPES } from 'common/constants';
 import clsx from 'clsx';
 import { deleteWordAction } from 'data/api';
 import { findObjectIndex } from 'common/utils';
+import { shallow } from 'zustand/shallow';
 import styles from './DataEntryButton.module.scss';
+import useDataStore from 'store/dataStore';
 import useGlobalContext from 'hooks/useGlobalContext';
 import useOverlayStore from 'store/overlayStore';
 import { useState } from 'react';
@@ -25,7 +27,13 @@ const DataEntryButton = ({
 
   const jwt = useUserStorage((state) => state.jwt);
 
-  const { wordData, setWordData } = useGlobalContext();
+  const { wordData, setWordData } = useDataStore(
+    (state) => ({
+      wordData: state.wordData,
+      setWordData: state.setWordData
+    }),
+    shallow
+  );
 
   const onClickHandler = () => {
     if (onClickF) {

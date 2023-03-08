@@ -5,6 +5,7 @@ import NavButton from 'components/footer/nav-button/NavButton';
 import { OVERLAY_TYPES } from 'common/constants';
 import clsx from 'clsx';
 import styles from './SearchOverlay.module.scss';
+import useDataStore from 'store/dataStore';
 import useGlobalContext from 'hooks/useGlobalContext';
 import useOverlayStore from 'store/overlayStore';
 import { useState } from 'react';
@@ -14,7 +15,10 @@ const { ADD_WORD } = OVERLAY_TYPES;
 const SearchOverlay = () => {
   const [searchingItem, setSearchingItem] = useState('');
   const [sortedWordData, setSortedWordData] = useState([]);
-  const { wordData, addWordData, setAddWordData } = useGlobalContext();
+  const { addWordData, setAddWordData } = useGlobalContext();
+
+  const wordData = useDataStore((state) => state.wordData);
+
   const openOverlay = useOverlayStore((state) => state.openOverlay);
 
   console.log(sortedWordData, addWordData);

@@ -6,7 +6,9 @@ import React from 'react';
 import SelectMenu from 'components/selectMenu/SelectMenu';
 import { addWordAction } from 'data/api';
 import clsx from 'clsx';
+import { shallow } from 'zustand/shallow';
 import styles from './AddWordOverlay.module.scss';
+import useDataStore from 'store/dataStore';
 import useGlobalContext from 'hooks/useGlobalContext';
 import useOverlayStore from 'store/overlayStore';
 import { useState } from 'react';
@@ -15,7 +17,17 @@ import useUserStorage from 'store/userStore';
 const AddWordOverlay = () => {
   const closeOverlay = useOverlayStore((state) => state.closeOverlay);
   const jwt = useUserStorage((state) => state.jwt);
-  const { wordData, setWordData, themeData, addWordData, setAddWordData } = useGlobalContext();
+  const { addWordData, setAddWordData } = useGlobalContext();
+
+  const { wordData, setWordData, themeData } = useDataStore(
+    (state) => ({
+      wordData: state.wordData,
+      setWordData: state.setWordData,
+      themeData: state.themeData
+    }),
+    shallow
+  );
+
   const [text, setText] = useState('');
   const [translation, setTranslation] = useState('');
   const [theme, setTheme] = useState(themeData[0].id);

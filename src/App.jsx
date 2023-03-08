@@ -11,9 +11,9 @@ import LearnPage from 'pages/learn-page/LearnPage';
 import Overlay from './overlays/Overlay';
 import ThemePage from 'pages/theme-page/ThemePage';
 import WordsPage from 'pages/words-page/WordsPage';
-import { countThemeWords } from 'data/utils';
 import { getData } from './data/api';
 import { shallow } from 'zustand/shallow';
+import useDataStore from 'store/dataStore';
 import useOverlayStore from 'store/overlayStore';
 import useUserStorage from 'store/userStore';
 
@@ -21,12 +21,12 @@ const { MAIN_PAGE, WORDS, LEARN_MODE } = ROUTES;
 
 function App() {
   const [alertOverlay, setAlertOverlay] = useState(DEFAULT_ALERT_OVERLAY_STATE);
-  const [wordData, setWordData] = useState();
-  const [rawThemeData, setRawThemeData] = useState();
-  const [themeData, setThemeData] = useState();
+
   const [burgerOverlay, setBurgerOverlay] = useState(false);
   const [themesArrayForLearnMode, setThemesArrayForLearnMode] = useState(undefined);
   const [addWordData, setAddWordData] = useState('');
+
+  const jwt = useUserStorage((state) => state.jwt);
 
   const { openOverlay, overlayType } = useOverlayStore(
     (state) => ({
@@ -36,17 +36,18 @@ function App() {
     shallow
   );
 
-  const jwt = useUserStorage((state) => state.jwt);
-
   // const {openOverlay, type} = useOverlayStore((state) => {
   //   return {openOverlay: state.openOverlay, type: state.type}
   // });
 
-  useEffect(() => {
-    if (rawThemeData) {
-      setThemeData(countThemeWords({ wordData, themeData: rawThemeData }));
-    }
-  }, [rawThemeData, wordData]);
+  const { wordData, themeData, setData } = useDataStore(
+    (state) => ({
+      wordData: state.wordData,
+      themeData: state.themeData,
+      setData: state.setData
+    }),
+    shallow
+  );
 
   useEffect(() => {
     if (!jwt) {
@@ -55,21 +56,14 @@ function App() {
   }, [jwt, openOverlay]);
 
   useEffect(() => {
-    // FETCH DATA
     if (jwt) {
       getData(jwt).then(({ wordData, themeData }) => {
-        setWordData(wordData);
-        setRawThemeData(themeData);
+        setData({ wordData, themeData });
       });
     }
-  }, [jwt]);
+  }, [jwt, setData]);
 
   const globalContextData = {
-    wordData,
-    setWordData,
-    rawThemeData,
-    setRawThemeData,
-    themeData,
     alertOverlay,
     setAlertOverlay,
     burgerOverlay,
@@ -79,6 +73,8 @@ function App() {
     addWordData,
     setAddWordData
   };
+
+  console.log('APP LEVEL', { wordData, themeData });
 
   if (jwt && (!wordData || !themeData)) {
     return <div>Loading data</div>;

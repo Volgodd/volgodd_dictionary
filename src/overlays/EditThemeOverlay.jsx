@@ -7,7 +7,7 @@ import React from 'react';
 import { findEntriesInArray } from 'common/utils';
 import { shallow } from 'zustand/shallow';
 import styles from './EditThemeOverlay.module.scss';
-import useGlobalContext from 'hooks/useGlobalContext';
+import useDataStore from 'store/dataStore';
 import useOverlayStore from 'store/overlayStore';
 import { useState } from 'react';
 import useUserStorage from 'store/userStore';
@@ -20,7 +20,15 @@ const EditThemeOverlay = () => {
 
   const jwt = useUserStorage((state) => state.jwt);
 
-  const { themeData, setRawThemeData, wordData, setWordData } = useGlobalContext();
+  const { wordData, setWordData, themeData, setThemeData } = useDataStore(
+    (state) => ({
+      wordData: state.wordData,
+      setWordData: state.setWordData,
+      themeData: state.themeData,
+      setThemeData: state.setThemeData
+    }),
+    shallow
+  );
 
   const themeId = overlayMetadata;
   const themeIndex = findObjectIndex(themeData, themeId);
@@ -48,7 +56,7 @@ const EditThemeOverlay = () => {
 
       themeDataCopy.splice(themeIndex, 1, newThemeData);
 
-      setRawThemeData(themeDataCopy);
+      setThemeData(themeDataCopy);
       closeOverlay();
     });
   };
@@ -59,7 +67,7 @@ const EditThemeOverlay = () => {
     deleteThemeAction(jwt, themeId).then(() => {
       const themeDataCopy = [...themeData];
       themeDataCopy.splice(themeIndex, 1);
-      setRawThemeData(themeDataCopy);
+      setThemeData(themeDataCopy);
       closeOverlay();
     });
 

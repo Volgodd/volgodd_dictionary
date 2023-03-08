@@ -1,4 +1,10 @@
-export const countThemeWords = ({ themeData, wordData }) => {
+/**
+ * Inject word count into theme data
+ * @param themeData: raw theme data
+ * @param wordData: raw word data
+ * @returns themeData with injected wordCount
+ */
+export const parseThemeData = ({ themeData, wordData }) => {
   if (!themeData || !wordData) {
     return undefined;
   }
