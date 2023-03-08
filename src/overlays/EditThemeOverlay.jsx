@@ -5,15 +5,21 @@ import { DEFAULT_OVERLAY_STATE } from 'common/constants';
 import NavButton from 'components/footer/nav-button/NavButton';
 import React from 'react';
 import { findEntriesInArray } from 'common/utils';
+import { shallow } from 'zustand/shallow';
 import styles from './EditThemeOverlay.module.scss';
 import useGlobalContext from 'hooks/useGlobalContext';
+import useOverlayStore from 'store/overlayStore';
 import { useState } from 'react';
 
 const EditThemeOverlay = () => {
-  const { jwt, setOverlay, themeData, overlay, setRawThemeData, wordData, setWordData } =
-    useGlobalContext();
+  const { overlayMetadata, closeOverlay } = useOverlayStore(
+    (state) => ({ closeOverlay: state.closeOverlay, overlayMetadata: state.overlayMetadata }),
+    shallow
+  );
 
-  const themeId = overlay.metadata;
+  const { jwt, themeData, setRawThemeData, wordData, setWordData } = useGlobalContext();
+
+  const themeId = overlayMetadata;
   const themeIndex = findObjectIndex(themeData, themeId);
   const themeName = themeData[themeIndex].name;
 
@@ -40,7 +46,7 @@ const EditThemeOverlay = () => {
       themeDataCopy.splice(themeIndex, 1, newThemeData);
 
       setRawThemeData(themeDataCopy);
-      setOverlay(DEFAULT_OVERLAY_STATE);
+      closeOverlay();
     });
   };
 
@@ -51,7 +57,7 @@ const EditThemeOverlay = () => {
       const themeDataCopy = [...themeData];
       themeDataCopy.splice(themeIndex, 1);
       setRawThemeData(themeDataCopy);
-      setOverlay(DEFAULT_OVERLAY_STATE);
+      closeOverlay();
     });
 
     // wordData.themeIdList.toString()

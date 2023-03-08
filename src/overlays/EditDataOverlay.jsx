@@ -1,16 +1,22 @@
-import { DEFAULT_OVERLAY_STATE } from 'common/constants';
 import NavButton from 'components/footer/nav-button/NavButton';
 import React from 'react';
 import SelectMenu from 'components/selectMenu/SelectMenu';
 import { editWordAction } from 'data/api';
 import { findObjectIndex } from 'common/utils';
+import { shallow } from 'zustand/shallow';
 import styles from './EditDataOverlay.module.scss';
 import useGlobalContext from 'hooks/useGlobalContext';
+import useOverlayStore from 'store/overlayStore';
 import { useState } from 'react';
 
 const EditDataOverlay = () => {
-  const { jwt, overlay, setOverlay, wordData, setWordData, themeData } = useGlobalContext();
-  const wordArrayIndex = findObjectIndex(wordData, overlay.metadata);
+  const { jwt, wordData, setWordData, themeData } = useGlobalContext();
+
+  const { overlayMetadata, closeOverlay } = useOverlayStore(
+    (state) => ({ closeOverlay: state.closeOverlay, overlayMetadata: state.overlayMetadata }),
+    shallow
+  );
+  const wordArrayIndex = findObjectIndex(wordData, overlayMetadata);
   const [text, setText] = useState(wordData[wordArrayIndex].foreign);
   const [translation, setTranslation] = useState(wordData[wordArrayIndex].native);
   const [theme, setTheme] = useState(themeData[0].id);
@@ -44,7 +50,7 @@ const EditDataOverlay = () => {
       wordDataCopy.splice(wordArrayIndex, 1, data);
 
       setWordData(wordDataCopy);
-      setOverlay(DEFAULT_OVERLAY_STATE);
+      closeOverlay();
     });
   };
 

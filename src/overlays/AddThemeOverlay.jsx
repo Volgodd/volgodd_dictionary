@@ -1,15 +1,17 @@
-import { DEFAULT_OVERLAY_STATE } from 'common/constants';
 import NavButton from 'components/footer/nav-button/NavButton';
 import React from 'react';
 import { addThemeAction } from 'data/api';
 import styles from './AddThemeOverlay.module.scss';
 import useGlobalContext from 'hooks/useGlobalContext';
+import useOverlayStore from 'store/overlayStore';
 import { useState } from 'react';
 
 const AddThemeOverlay = () => {
   const [theme, setTheme] = useState('');
 
-  const { jwt, setOverlay, themeData, setRawThemeData } = useGlobalContext();
+  const closeOverlay = useOverlayStore((state) => state.closeOverlay);
+
+  const { jwt, themeData, setRawThemeData } = useGlobalContext();
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -26,7 +28,7 @@ const AddThemeOverlay = () => {
       const newRawThemeData = [...themeData, data];
 
       setRawThemeData(newRawThemeData);
-      setOverlay(DEFAULT_OVERLAY_STATE);
+      closeOverlay();
     });
   };
 

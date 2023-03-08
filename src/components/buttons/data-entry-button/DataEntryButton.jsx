@@ -5,6 +5,7 @@ import { deleteWordAction } from 'data/api';
 import { findObjectIndex } from 'common/utils';
 import styles from './DataEntryButton.module.scss';
 import useGlobalContext from 'hooks/useGlobalContext';
+import useOverlayStore from 'store/overlayStore';
 import { useState } from 'react';
 
 const DataEntryButton = ({
@@ -17,9 +18,11 @@ const DataEntryButton = ({
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
+  const openOverlay = useOverlayStore((state) => state.openOverlay);
+
   const { EDIT_WORD } = OVERLAY_TYPES;
 
-  const { jwt, setOverlay, wordData, setWordData } = useGlobalContext();
+  const { jwt, wordData, setWordData } = useGlobalContext();
 
   const onClickHandler = () => {
     if (onClickF) {
@@ -69,7 +72,9 @@ const DataEntryButton = ({
       {isExpanded && (
         <div className={styles.wordUi}>
           <div className={styles.buttonContainer}>
-            <MiniButton onClickF={() => setOverlay({ type: EDIT_WORD, metadata: wordId })} />
+            <MiniButton
+              onClickF={() => openOverlay({ overlayType: EDIT_WORD, overlayMetadata: wordId })}
+            />
             <MiniButton type="deleteIcon" onClickF={() => deleteWord(wordId)} />
           </div>
           <div className={styles.description}>

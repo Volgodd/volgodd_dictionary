@@ -1,14 +1,14 @@
+import { useLocation, useNavigate } from 'react-router-dom';
+
 import MiniButton from 'components/buttons/mini-button/MiniButton';
 import { OVERLAY_TYPES } from 'common/constants';
 import styles from './Header.module.scss';
-import useGlobalContext from 'hooks/useGlobalContext';
-import { useLocation } from '../../../node_modules/react-router-dom/dist/index';
-import { useNavigate } from '../../../node_modules/react-router-dom/dist/index';
+import useOverlayStore from 'store/overlayStore';
 
 const { SEARCH, EDIT_THEME } = OVERLAY_TYPES;
 
 const Header = ({ title, themeId }) => {
-  const { setOverlay, themeData } = useGlobalContext();
+  const openOverlay = useOverlayStore((state) => state.openOverlay);
 
   let navigate = useNavigate();
   const urlLocation = useLocation();
@@ -27,11 +27,14 @@ const Header = ({ title, themeId }) => {
       </div>
       <h2>{title}</h2>
       <div>
-        {pathname !== '/' && 
-        <MiniButton onClickF={()=> setOverlay({type: EDIT_THEME, metadata: themeId })} type={'settingsIcon'}/>
-        }
+        {pathname !== '/' && (
+          <MiniButton
+            onClickF={() => openOverlay({ overlayType: EDIT_THEME, overlayMetadata: themeId })}
+            type={'settingsIcon'}
+          />
+        )}
       </div>
-      <MiniButton onClickF={() => setOverlay({ type: SEARCH })} type={'searchIcon'} />
+      <MiniButton onClickF={() => openOverlay({ overlayType: SEARCH })} type={'searchIcon'} />
     </div>
   );
 };

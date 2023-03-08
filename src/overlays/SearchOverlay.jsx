@@ -6,6 +6,7 @@ import { OVERLAY_TYPES } from 'common/constants';
 import clsx from 'clsx';
 import styles from './SearchOverlay.module.scss';
 import useGlobalContext from 'hooks/useGlobalContext';
+import useOverlayStore from 'store/overlayStore';
 import { useState } from 'react';
 
 const { ADD_WORD } = OVERLAY_TYPES;
@@ -13,7 +14,8 @@ const { ADD_WORD } = OVERLAY_TYPES;
 const SearchOverlay = () => {
   const [searchingItem, setSearchingItem] = useState('');
   const [sortedWordData, setSortedWordData] = useState([]);
-  const { wordData, setOverlay, addWordData, setAddWordData } = useGlobalContext();
+  const { wordData, addWordData, setAddWordData } = useGlobalContext();
+  const openOverlay = useOverlayStore((state) => state.openOverlay);
 
   console.log(sortedWordData, addWordData);
 
@@ -51,7 +53,7 @@ const SearchOverlay = () => {
           required
         />
       </div>
-      <NavButton name="Add a word" onClickF={() => setOverlay({ type: ADD_WORD })} />
+      <NavButton name="Add a word" onClickF={() => openOverlay({ overlayType: ADD_WORD })} />
 
       <div className={styles.searchedContentWrapper}>
         {sortedWordData?.map((sortedItem) => {

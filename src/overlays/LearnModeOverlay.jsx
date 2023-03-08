@@ -7,13 +7,15 @@ import { findObjectIndex } from 'common/utils';
 import styles from './LearnModeOverlay.module.scss';
 import useGlobalContext from 'hooks/useGlobalContext';
 import { useNavigate } from 'react-router-dom/dist/index';
+import useOverlayStore from 'store/overlayStore';
 
 const { LEARN_MODE } = ROUTES;
 const { FLASH_CARDS } = LEARN_MODES;
 
 const LearnModeOverlay = () => {
   const [checkedThemes, setCheckedThemes] = useState([]);
-  const { themeData, setThemesArrayForLearnMode, setOverlay } = useGlobalContext();
+  const closeOverlay = useOverlayStore((state) => state.closeOverlay);
+  const { themeData, setThemesArrayForLearnMode } = useGlobalContext();
 
   const navigate = useNavigate();
 
@@ -21,7 +23,7 @@ const LearnModeOverlay = () => {
     e.preventDefault();
     setThemesArrayForLearnMode(checkedThemes);
     navigate(`${LEARN_MODE}/${FLASH_CARDS}`);
-    setOverlay(DEFAULT_OVERLAY_STATE);
+    closeOverlay();
   };
 
   const addThemesIfChecked = ({ checked, themeIndex, themeId }) => {

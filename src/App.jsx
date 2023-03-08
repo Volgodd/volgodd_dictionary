@@ -1,12 +1,7 @@
 import './index.scss';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import {
-  DEFAULT_ALERT_OVERLAY_STATE,
-  DEFAULT_OVERLAY_STATE,
-  OVERLAY_TYPES,
-  ROUTES
-} from './common/constants';
+import { DEFAULT_ALERT_OVERLAY_STATE, OVERLAY_TYPES, ROUTES } from './common/constants';
 import React, { useEffect, useRef, useState } from 'react';
 import { getJWTFromLocalStorage, setJWTFromLocalStorage } from 'common/local-storage';
 
@@ -20,12 +15,13 @@ import WordsPage from 'pages/words-page/WordsPage';
 import { countThemeWords } from 'data/utils';
 import { getData } from './data/api';
 import { jwtIsExpired } from 'common/utils';
+import { shallow } from 'zustand/shallow';
+import useOverlayStore from 'store/overlayStore';
 
 const { MAIN_PAGE, WORDS, LEARN_MODE } = ROUTES;
 
 function App() {
   const [jwt, setJWT] = useState(getJWTFromLocalStorage());
-  const [overlay, setOverlay] = useState(DEFAULT_OVERLAY_STATE);
   const [alertOverlay, setAlertOverlay] = useState(DEFAULT_ALERT_OVERLAY_STATE);
   const [overlayMetaData, setOverlayMetaData] = useState();
   const [wordData, setWordData] = useState();
@@ -34,6 +30,18 @@ function App() {
   const [burgerOverlay, setBurgerOverlay] = useState(false);
   const [themesArrayForLearnMode, setThemesArrayForLearnMode] = useState(undefined);
   const [addWordData, setAddWordData] = useState('');
+
+  const { openOverlay, overlayType } = useOverlayStore(
+    (state) => ({
+      openOverlay: state.openOverlay,
+      overlayType: state.overlayType
+    }),
+    shallow
+  );
+
+  // const {openOverlay, type} = useOverlayStore((state) => {
+  //   return {openOverlay: state.openOverlay, type: state.type}
+  // });
 
   useEffect(() => {
     if (rawThemeData) {
@@ -44,7 +52,7 @@ function App() {
 
   useEffect(() => {
     if (!jwt || jwtIsExpired(jwt)) {
-      setOverlay({ type: OVERLAY_TYPES.LOGIN });
+      openOverlay({ overlayType: OVERLAY_TYPES.LOGIN });
     } else {
       setJWTFromLocalStorage(jwt);
     }
@@ -52,7 +60,7 @@ function App() {
     //   localStorage.clear();
     //   setJWT(null);
     // }
-  }, [jwt]);
+  }, [jwt, openOverlay]);
 
   useEffect(() => {
     // FETCH DATA
@@ -64,12 +72,12 @@ function App() {
     }
   }, [jwt]);
 
-  console.log(
-    'GLOBAL STATE',
-    { wordData, themeData },
-    'themesArrayForLearnMode',
-    themesArrayForLearnMode
-  );
+  // console.log(
+  //   'GLOBAL STATE',
+  //   { wordData, themeData },
+  //   'themesArrayForLearnMode',
+  //   themesArrayForLearnMode
+  // );
 
   const globalContextData = {
     wordData,
@@ -77,8 +85,6 @@ function App() {
     rawThemeData,
     setRawThemeData,
     themeData,
-    overlay,
-    setOverlay,
     alertOverlay,
     setAlertOverlay,
     burgerOverlay,
@@ -102,7 +108,7 @@ function App() {
       <GlobalContextProvider data={globalContextData}>
         {/* <Link to={MAIN_PAGE}>Main Page</Link>
         <Link to={ADD_WORD_PAGE}>Add word</Link> */}
-        {overlay.type && <Overlay />}
+        {overlayType && <Overlay />}
         {burgerOverlay && <BurgerOverlay />}
         {alertOverlay.type && <AlertOverLay />}
         {jwt && (

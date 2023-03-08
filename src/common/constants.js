@@ -30,8 +30,6 @@ export const ALERT_OVERLAY_TYPES = {
   DELETE: 'delete'
 };
 
-export const DEFAULT_OVERLAY_STATE = { type: undefined, metadata: undefined };
-
 export const DEFAULT_ALERT_OVERLAY_STATE = { type: undefined, metadata: undefined };
 
 export const LOCAL_STORAGE_JWT_KEY = 'authKey';
