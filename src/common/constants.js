@@ -22,10 +22,16 @@ export const OVERLAY_TYPES = {
   EDIT_THEME: 'editTheme',
   MENU: 'menu',
   LOGIN: 'login',
-  EDIT_THEME: 'editTheme',
   LEARN_MODE: 'learnMode'
 };
 
+export const ALERT_OVERLAY_TYPES = {
+  WORDS_LEARNT: 'wordsLearnt',
+  DELETE: 'delete'
+};
+
 export const DEFAULT_OVERLAY_STATE = { type: undefined, metadata: undefined };
+
+export const DEFAULT_ALERT_OVERLAY_STATE = { type: undefined, metadata: undefined };
 
 export const LOCAL_STORAGE_JWT_KEY = 'authKey';

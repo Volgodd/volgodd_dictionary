@@ -1,20 +1,31 @@
+import MiniButton from 'components/buttons/mini-button/MiniButton';
 import clsx from 'clsx';
-import styles from './Input.module.scss';
+import styles from './Alert.module.scss';
 import { useState } from 'react';
 
-const Alert = ({ value, id, onChangeF, additionalStyles }) => {
-  const [isChecked, setIsChecked] = useState(false);
+const Alert = ({ type }) => {
+  let customStyle;
+  let alertText;
 
-  const checkboxHandler = (e) => {
-    const { checked } = e.target;
-    setIsChecked(checked);
-    onChangeF(checked);
-  };
+  switch (type) {
+    case 'green':
+      customStyle = styles.alertWrapper_green;
+      alertText = "Great! You've learnt everything!";
+      break;
+    case 'red':
+      customStyle = styles.alertWrapper_red;
+      break;
+    default:
+      customStyle = styles.alertWrapper_orange;
+  }
 
   return (
-    <div className={clsx(styles.inputWrapper, isChecked && styles.inputWrapper_active)}>
-      <input type="checkbox" value={value} id={id} name={id} onChange={checkboxHandler} />
-      <label htmlFor={id}>{value}</label>
+    <div className={styles.alertWrapper}>
+      <div className={clsx(styles.alertFrame)}>
+        <span>{alertText}</span>
+        <MiniButton additionalStyles={styles.closeButton} type="closeIcon" />
+      </div>
+      <div className={styles.alertShade} />
     </div>
   );
 };
