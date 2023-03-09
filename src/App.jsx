@@ -1,14 +1,8 @@
 import './index.scss';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import {
-  DEFAULT_ALERT_OVERLAY_STATE,
-  DEFAULT_OVERLAY_STATE,
-  OVERLAY_TYPES,
-  ROUTES
-} from './common/constants';
-import React, { useEffect, useRef, useState } from 'react';
-import { getJWTFromLocalStorage, setJWTFromLocalStorage } from 'common/local-storage';
+import { DEFAULT_ALERT_OVERLAY_STATE, OVERLAY_TYPES, ROUTES } from './common/constants';
+import React, { useEffect, useState } from 'react';
 
 import AlertOverLay from 'overlays/AlertOverlay';
 import BurgerOverlay from 'overlays/BurgerOverlay';
@@ -17,80 +11,64 @@ import LearnPage from 'pages/learn-page/LearnPage';
 import Overlay from './overlays/Overlay';
 import ThemePage from 'pages/theme-page/ThemePage';
 import WordsPage from 'pages/words-page/WordsPage';
-import { countThemeWords } from 'data/utils';
 import { getData } from './data/api';
-import { jwtIsExpired } from 'common/utils';
+import { shallow } from 'zustand/shallow';
+import useDataStore from 'store/dataStore';
+import useOverlayStore from 'store/overlayStore';
+import useUserStorage from 'store/userStore';
 
 const { MAIN_PAGE, WORDS, LEARN_MODE } = ROUTES;
 
 function App() {
-  const [jwt, setJWT] = useState(getJWTFromLocalStorage());
-  const [overlay, setOverlay] = useState(DEFAULT_OVERLAY_STATE);
   const [alertOverlay, setAlertOverlay] = useState(DEFAULT_ALERT_OVERLAY_STATE);
-  const [overlayMetaData, setOverlayMetaData] = useState();
-  const [wordData, setWordData] = useState();
-  const [rawThemeData, setRawThemeData] = useState();
-  const [themeData, setThemeData] = useState();
+
   const [burgerOverlay, setBurgerOverlay] = useState(false);
   const [themesArrayForLearnMode, setThemesArrayForLearnMode] = useState(undefined);
-  const [addWordData, setAddWordData] = useState('');
 
-  useEffect(() => {
-    if (rawThemeData) {
-      // console.log('rtd pross', rawThemeData);
-      setThemeData(countThemeWords({ wordData, themeData: rawThemeData }));
-    }
-  }, [rawThemeData, wordData]);
+  const jwt = useUserStorage((state) => state.jwt);
 
-  useEffect(() => {
-    if (!jwt || jwtIsExpired(jwt)) {
-      setOverlay({ type: OVERLAY_TYPES.LOGIN });
-    } else {
-      setJWTFromLocalStorage(jwt);
-    }
-    // } else {
-    //   localStorage.clear();
-    //   setJWT(null);
-    // }
-  }, [jwt]);
-
-  useEffect(() => {
-    // FETCH DATA
-    if (jwt) {
-      getData(jwt).then(({ wordData, themeData }) => {
-        setWordData(wordData);
-        setRawThemeData(themeData);
-      });
-    }
-  }, [jwt]);
-
-  console.log(
-    'GLOBAL STATE',
-    { wordData, themeData },
-    'themesArrayForLearnMode',
-    themesArrayForLearnMode
+  const { openOverlay, overlayType } = useOverlayStore(
+    (state) => ({
+      openOverlay: state.openOverlay,
+      overlayType: state.overlayType
+    }),
+    shallow
   );
 
+  // const {openOverlay, type} = useOverlayStore((state) => {
+  //   return {openOverlay: state.openOverlay, type: state.type}
+  // });
+
+  const { wordData, themeData, setData } = useDataStore(
+    (state) => ({
+      wordData: state.wordData,
+      themeData: state.themeData,
+      setData: state.setData
+    }),
+    shallow
+  );
+
+  useEffect(() => {
+    if (!jwt) {
+      openOverlay({ overlayType: OVERLAY_TYPES.LOGIN });
+    }
+  }, [jwt, openOverlay]);
+
+  useEffect(() => {
+    if (jwt) {
+      getData(jwt).then(({ wordData, themeData }) => {
+        setData({ wordData, themeData });
+      });
+    }
+  }, [jwt, setData]);
+
   const globalContextData = {
-    wordData,
-    setWordData,
-    rawThemeData,
-    setRawThemeData,
-    themeData,
-    overlay,
-    setOverlay,
     alertOverlay,
     setAlertOverlay,
     burgerOverlay,
     setBurgerOverlay,
-    overlayMetaData,
-    setOverlayMetaData,
-    setJWT,
-    jwt,
     themesArrayForLearnMode,
-    setThemesArrayForLearnMode,
-    addWordData,
-    setAddWordData
+    setThemesArrayForLearnMode
   };
 
   if (jwt && (!wordData || !themeData)) {
@@ -102,7 +80,7 @@ function App() {
       <GlobalContextProvider data={globalContextData}>
         {/* <Link to={MAIN_PAGE}>Main Page</Link>
         <Link to={ADD_WORD_PAGE}>Add word</Link> */}
-        {overlay.type && <Overlay />}
+        {overlayType && <Overlay />}
         {burgerOverlay && <BurgerOverlay />}
         {alertOverlay.type && <AlertOverLay />}
         {jwt && (

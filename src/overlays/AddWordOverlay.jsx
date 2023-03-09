@@ -1,19 +1,47 @@
 import { copyFromClipboard, copyFromClipboardOld } from 'common/utils';
 
-import { DEFAULT_OVERLAY_STATE } from 'common/constants';
 import MiniButton from 'components/buttons/mini-button/MiniButton';
 import NavButton from 'components/footer/nav-button/NavButton';
 import React from 'react';
 import SelectMenu from 'components/selectMenu/SelectMenu';
 import { addWordAction } from 'data/api';
 import clsx from 'clsx';
+import { shallow } from 'zustand/shallow';
 import styles from './AddWordOverlay.module.scss';
+import useDataStore from 'store/dataStore';
+import { useEffect } from 'react';
 import useGlobalContext from 'hooks/useGlobalContext';
+import useOverlayStore from 'store/overlayStore';
 import { useState } from 'react';
+import useUserStorage from 'store/userStore';
 
 const AddWordOverlay = () => {
-  const { jwt, setOverlay, wordData, setWordData, themeData, addWordData, setAddWordData } =
-    useGlobalContext();
+  const jwt = useUserStorage((state) => state.jwt);
+  const [addWordData, setAddWordData] = useState('');
+
+  const { closeOverlay, overlayMetadata } = useOverlayStore(
+    (state) => ({
+      closeOverlay: state.closeOverlay,
+      overlayMetadata: state.overlayMetadata
+    }),
+    shallow
+  );
+
+  useEffect(() => {
+    if (overlayMetadata) {
+      setAddWordData(overlayMetadata);
+    }
+  }, [overlayMetadata, setAddWordData]);
+
+  const { wordData, setWordData, themeData } = useDataStore(
+    (state) => ({
+      wordData: state.wordData,
+      setWordData: state.setWordData,
+      themeData: state.themeData
+    }),
+    shallow
+  );
+
   const [text, setText] = useState('');
   const [translation, setTranslation] = useState('');
   const [theme, setTheme] = useState(themeData[0].id);
@@ -44,7 +72,7 @@ const AddWordOverlay = () => {
       console.log('word added', data);
       const newWordData = [data, ...wordData];
       setWordData(newWordData);
-      setOverlay(DEFAULT_OVERLAY_STATE);
+      closeOverlay();
       setAddWordData();
     });
 
@@ -113,11 +141,12 @@ const AddWordOverlay = () => {
           className={clsx(styles.addWordTextarea, 'inputElement inputElement_textArea')}
           placeholder="Examples"
           defaultValue={examples}
-          onChange={(e) => setExamples(e.target.value)}></textarea>
+          onChange={(e) => setExamples(e.target.value)}
+        />
         <MiniButton type="buffer" onClickF={(e) => handleBufferButtonClick('examples')} />
       </div>
-      <SelectMenu additionalStyles={''} data={selectMenuData} onSelect={handleSelectMenu} />
-      <NavButton name={'Save'} styles={''} />
+      <SelectMenu data={selectMenuData} onSelect={handleSelectMenu} />
+      <NavButton name={'Save'} />
     </form>
   );
 };

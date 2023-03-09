@@ -1,7 +1,5 @@
 /* eslint-disable no-restricted-globals */
 
-import { DEFAULT_OVERLAY_STATE, OVERLAY_TYPES } from 'common/constants';
-
 import AddThemeOverlay from './AddThemeOverlay';
 import AddWordOverlay from './AddWordOverlay';
 import EditDataOverlay from './EditDataOverlay';
@@ -9,11 +7,13 @@ import EditThemeOverlay from './EditThemeOverlay';
 import LearnModeOverlay from './LearnModeOverlay';
 import Login from './Login';
 import MiniButton from 'components/buttons/mini-button/MiniButton';
+import { OVERLAY_TYPES } from 'common/constants';
 import SearchOverlay from './SearchOverlay';
+import { shallow } from 'zustand/shallow';
 import styles from './Overlay.module.scss';
-import useGlobalContext from 'hooks/useGlobalContext';
+import useOverlayStore from 'store/overlayStore';
 
-const getOverlayType = (overlayType) => {
+const getOverlayTypeContent = (overlayType) => {
   switch (overlayType) {
     case OVERLAY_TYPES.ADD_WORD:
       return <AddWordOverlay />;
@@ -37,10 +37,18 @@ const getOverlayType = (overlayType) => {
 };
 
 const Overlay = () => {
-  const { overlay, setOverlay, setAddWordData } = useGlobalContext();
+  const { openOverlay, overlayType, closeOverlay } = useOverlayStore(
+    (state) => ({
+      openOverlay: state.openOverlay,
+      overlayType: state.overlayType,
+      closeOverlay: state.closeOverlay
+    }),
+    shallow
+  );
+
   let headerString = 'Overlay header text';
 
-  switch (overlay.type) {
+  switch (overlayType) {
     case OVERLAY_TYPES.ADD_WORD:
       headerString = 'Add a word';
       break;
@@ -69,44 +77,32 @@ const Overlay = () => {
       headerString = '';
   }
 
-  const closeSafeguard = () => {
-    const alertMessage = 'Are your sure you want to close? All unsaved data will be lost';
-
-    // if (wordData || themeData || )
-    if (confirm(alertMessage) === true) {
-      setOverlay(DEFAULT_OVERLAY_STATE);
-    } else return;
-  };
-
   return (
     <div className={styles.overlayWrapper}>
       <div className={styles.overlayFrame}>
         <div className={styles.overlayHeader}>
           {headerString}
-          {overlay.type !== 'login ' && (
+          {overlayType !== 'login' && (
             <MiniButton
               type={'closeIcon'}
-              onClickF={() => {
-                setOverlay(DEFAULT_OVERLAY_STATE);
-                setAddWordData('');
-              }}
+              onClickF={() => closeOverlay()}
               additionalStyles={styles.closeButton}
               transparent={true}
             />
           )}
         </div>
-        <div className={styles.overlayContent}>{getOverlayType(overlay.type)}</div>
+        <div className={styles.overlayContent}>{getOverlayTypeContent(overlayType)}</div>
       </div>
       <div
         className={styles.overlayShade}
-        onClick={() =>
-          overlay.type !== 'login' && (setOverlay(DEFAULT_OVERLAY_STATE), setAddWordData(''))
-        }
+        onClick={() => {
+          if (overlayType !== 'login') {
+            closeOverlay();
+          }
+        }}
       />
     </div>
   );
 };
 
 export default Overlay;
-
-//close button закрывает оверлей потому, что в setOverlayType в скобках стоит undefined, а по дефолтному значению в свитч  рендерится пустой дом

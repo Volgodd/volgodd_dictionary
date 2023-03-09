@@ -7,3 +7,5 @@ export const getJWTFromLocalStorage = () => {
 export const setJWTFromLocalStorage = (jwt) => {
   localStorage.setItem(LOCAL_STORAGE_JWT_KEY, jwt);
 };
+
+export const clearLocalStorage = () => localStorage.clear();

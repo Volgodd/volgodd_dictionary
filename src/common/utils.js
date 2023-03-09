@@ -83,9 +83,11 @@ export const jwtIsExpired = (jwt) => {
     );
 
     if (jwtExpiryDate - currentDate < 0) {
-      return true;
-    } else {
-      return false;
+      return null;
     }
+
+    return jwt;
   }
+
+  return null;
 };

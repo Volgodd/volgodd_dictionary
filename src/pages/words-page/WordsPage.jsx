@@ -3,13 +3,20 @@ import Header from 'components/header/Header';
 import React from 'react';
 import clsx from 'clsx';
 import { findObjectIndex } from 'common/utils';
+import { shallow } from 'zustand/shallow';
 import styles from './WordsPage.module.scss';
-import useGlobalContext from 'hooks/useGlobalContext';
+import useDataStore from 'store/dataStore';
 import { useParams } from 'react-router-dom';
 
 const WordsPage = () => {
   const { themeIdUrlParam } = useParams();
-  const { wordData, themeData } = useGlobalContext();
+  const { wordData, themeData } = useDataStore(
+    (state) => ({
+      wordData: state.wordData,
+      themeData: state.themeData
+    }),
+    shallow
+  );
 
   const themeIndex = findObjectIndex(themeData, themeIdUrlParam);
 

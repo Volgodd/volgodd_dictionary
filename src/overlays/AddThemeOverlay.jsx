@@ -1,15 +1,22 @@
-import { DEFAULT_OVERLAY_STATE } from 'common/constants';
 import NavButton from 'components/footer/nav-button/NavButton';
 import React from 'react';
 import { addThemeAction } from 'data/api';
+import { shallow } from 'zustand/shallow';
 import styles from './AddThemeOverlay.module.scss';
-import useGlobalContext from 'hooks/useGlobalContext';
+import useDataStore from 'store/dataStore';
+import useOverlayStore from 'store/overlayStore';
 import { useState } from 'react';
+import useUserStorage from 'store/userStore';
 
 const AddThemeOverlay = () => {
   const [theme, setTheme] = useState('');
 
-  const { jwt, setOverlay, themeData, setRawThemeData } = useGlobalContext();
+  const closeOverlay = useOverlayStore((state) => state.closeOverlay);
+  const jwt = useUserStorage((state) => state.jwt);
+  const { themeData, setThemeData } = useDataStore(
+    (state) => ({ themeData: state.themeData, setThemeData: state.setThemeData }),
+    shallow
+  );
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -23,10 +30,11 @@ const AddThemeOverlay = () => {
     addThemeAction(jwt, newThemeData).then(({ data }) => {
       console.log('theme added', data);
 
-      const newRawThemeData = [...themeData, data];
+      const newThemeData = [...themeData, data];
 
-      setRawThemeData(newRawThemeData);
-      setOverlay(DEFAULT_OVERLAY_STATE);
+      setThemeData(newThemeData);
+
+      closeOverlay();
     });
   };
 

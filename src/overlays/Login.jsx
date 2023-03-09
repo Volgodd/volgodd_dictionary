@@ -1,17 +1,18 @@
-import { DEFAULT_OVERLAY_STATE } from 'common/constants';
 import NavButton from 'components/footer/nav-button/NavButton';
 import React from 'react';
 import { loginAction } from 'data/api';
 import styles from './Login.module.scss';
-import useGlobalContext from 'hooks/useGlobalContext';
+import useOverlayStore from 'store/overlayStore';
 import { useState } from 'react';
+import useUserStorage from 'store/userStore';
 
 const Login = () => {
+  const closeOverlay = useOverlayStore((state) => state.closeOverlay);
+  const setJwt = useUserStorage((state) => state.setJwt);
+
   const [error, setError] = useState();
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
-
-  const { setJWT, setOverlay } = useGlobalContext();
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -19,9 +20,10 @@ const Login = () => {
 
     try {
       const { data } = await loginAction({ login, password });
-      console.log({ data });
-      setJWT(data.jwt);
-      setOverlay(DEFAULT_OVERLAY_STATE);
+
+      setJwt({ jwt: data.jwt });
+
+      closeOverlay();
     } catch (e) {
       console.log('Err', e);
       setError(e.message);
@@ -63,7 +65,7 @@ const Login = () => {
         />
       </div>
       {error && <div className={styles.loginInterfaceRow_error}>{error}</div>}
-      <NavButton name="Save" styles={styles.saveButton} />
+      <NavButton name="Login" styles={styles.saveButton} />
     </form>
   );
 };
