@@ -1,10 +1,11 @@
+import type { DataStore } from 'types/store-types';
 import { create } from 'zustand';
 import { getData } from 'data/api';
 import { parseThemeData } from 'data/utils';
 
 const defaultDataStore = { wordData: undefined, themeData: undefined }; // null if does not exist
 
-const useDataStore = create((set) => ({
+const useDataStore = create<DataStore>((set) => ({
   ...defaultDataStore,
   getAndSetData: async (jwt) => {
     const data = await getData(jwt);

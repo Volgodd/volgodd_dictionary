@@ -14,16 +14,27 @@ export const LEARN_MODES = {
   FLASH_CARDS: 'flash-cards'
 };
 
-export const OVERLAY_TYPES = {
-  ADD_WORD: 'addWord',
-  ADD_THEME: 'addTheme',
-  SEARCH: 'search',
-  EDIT_WORD: 'editWord',
-  EDIT_THEME: 'editTheme',
-  MENU: 'menu',
-  LOGIN: 'login',
-  LEARN_MODE: 'learnMode'
-};
+// export const OVERLAY_TYPES = {
+//   ADD_WORD: 'addWord',
+//   ADD_THEME: 'addTheme',
+//   SEARCH: 'search',
+//   EDIT_WORD: 'editWord',
+//   EDIT_THEME: 'editTheme',
+//   MENU: 'menu',
+//   LOGIN: 'login',
+//   LEARN_MODE: 'learnMode'
+// };
+
+export enum OVERLAY_TYPES {
+  ADD_WORD = 'addWord',
+  ADD_THEME = 'addTheme',
+  SEARCH = 'search',
+  EDIT_WORD = 'editWord',
+  EDIT_THEME = 'editTheme',
+  MENU = 'menu',
+  LOGIN = 'login',
+  LEARN_MODE = 'learnMode'
+}
 
 export const ALERT_OVERLAY_TYPES = {
   WORDS_LEARNT: 'wordsLearnt',

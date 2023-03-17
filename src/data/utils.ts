@@ -8,8 +8,8 @@ import type { DataId, ParsedTheme, RawTheme, Word } from 'types/data-types';
  */
 
 type ParseThemeDataProps = {
-  themeData: RawTheme[];
-  wordData: Word[];
+  themeData: RawTheme[] | undefined;
+  wordData: Word[] | undefined;
 };
 
 export const parseThemeData = ({

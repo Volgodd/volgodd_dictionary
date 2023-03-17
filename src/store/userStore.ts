@@ -4,6 +4,7 @@ import {
   setJWTFromLocalStorage
 } from 'common/local-storage';
 
+import type { UserStore } from 'types/store-types';
 import { create } from 'zustand';
 import { jwtIsExpired } from 'common/utils';
 
@@ -14,7 +15,7 @@ const validatedJwt = jwtIsExpired(getJWTFromLocalStorage());
 
 const defaultUserStore = { jwt: validatedJwt }; // null if does not exist
 
-const useUserStore = create((set) => ({
+const useUserStore = create<UserStore>((set) => ({
   ...defaultUserStore,
   setJwt: ({ jwt }) => {
     setJWTFromLocalStorage(jwt);
