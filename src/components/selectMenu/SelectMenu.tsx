@@ -1,7 +1,24 @@
 import clsx from 'clsx';
 import styles from './SelectMenu.module.scss';
 
-const SelectMenu = ({ data, onSelect, additionalStyles, defaultValue }) => {
+export type SelectMenuData = {
+  value: string;
+  text: string;
+}[];
+
+type SelectMenuProps = {
+  data: SelectMenuData;
+  onSelect: (value: string) => void;
+  additionalStyles?: string;
+  defaultValue?: string;
+};
+
+const SelectMenu: React.FC<SelectMenuProps> = ({
+  data,
+  onSelect,
+  additionalStyles,
+  defaultValue
+}) => {
   if (!data) {
     return <>No SelectMenu data</>;
   }

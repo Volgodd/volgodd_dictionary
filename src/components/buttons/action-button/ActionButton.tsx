@@ -1,7 +1,13 @@
 import clsx from 'clsx';
 import styles from './ActionButton.module.scss';
 
-const ActionButton = ({ name, onClickF, additionalStyles }) => {
+type ActionButtonProps = {
+  name: string;
+  onClickF?: () => void;
+  additionalStyles?: string;
+};
+
+const ActionButton: React.FC<ActionButtonProps> = ({ name, onClickF, additionalStyles }) => {
   if (!onClickF && !name) {
     return <input type="submit" className={styles.button} value="Save"></input>;
   }
