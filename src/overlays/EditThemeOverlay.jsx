@@ -1,10 +1,8 @@
 import { deleteThemeAction, deleteWordAction, editThemeAction } from 'data/api';
 import { findObjectIndex, findObjectIndexByIdList } from 'common/utils';
 
-import { DEFAULT_OVERLAY_STATE } from 'common/constants';
-import NavButton from 'components/footer/nav-button/NavButton';
+import ActionButton from 'components/buttons/action-button/ActionButton';
 import React from 'react';
-import { findEntriesInArray } from 'common/utils';
 import { shallow } from 'zustand/shallow';
 import styles from './EditThemeOverlay.module.scss';
 import useDataStore from 'store/dataStore';
@@ -125,11 +123,11 @@ const EditThemeOverlay = () => {
           />
         </div>
         <div className={styles.buttonContainer}>
-          <NavButton name="Save" additionalStyles={styles.button} />
+          <ActionButton name="Save" additionalStyles={styles.button} />
         </div>
       </form>
       <div className={styles.deleteButtonWrapper}>
-        <NavButton
+        <ActionButton
           name="Delete"
           additionalStyles={styles.deleteButton}
           onClickF={() => deleteThemeAndWords()}

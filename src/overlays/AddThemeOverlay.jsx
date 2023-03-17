@@ -1,4 +1,4 @@
-import NavButton from 'components/footer/nav-button/NavButton';
+import ActionButton from 'components/buttons/action-button/ActionButton';
 import React from 'react';
 import { addThemeAction } from 'data/api';
 import { shallow } from 'zustand/shallow';
@@ -25,15 +25,11 @@ const AddThemeOverlay = () => {
       name: theme
     };
 
-    console.log({ jwt, data: newThemeData });
-
     addThemeAction(jwt, newThemeData).then(({ data }) => {
       console.log('theme added', data);
 
       const newThemeData = [...themeData, data];
-
       setThemeData(newThemeData);
-
       closeOverlay();
     });
   };
@@ -50,8 +46,9 @@ const AddThemeOverlay = () => {
           required
         />
       </div>
-      <NavButton name="Save" styles={styles.saveButton} />
+      <ActionButton name="Save" styles={styles.saveButton} />
     </form>
   );
 };
+
 export default AddThemeOverlay;

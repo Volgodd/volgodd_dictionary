@@ -13,7 +13,7 @@
 
 .overlayFrame {
   position: absolute;
-  width: calc(100% - 3rem);
+  width: calc(100% - #{$clusterSizeX3});
   background-color: $colorGray50;
   z-index: 10;
   border-radius: $borderRadius05;

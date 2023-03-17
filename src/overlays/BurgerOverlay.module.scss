@@ -15,27 +15,35 @@
 }
 
 @keyframes wrapper {
-  from {opacity: 0;}
-  to {opacity: 1;}
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .overlayFrame {
   position: absolute;
-  width: calc(100% - 3rem);
+  width: calc(100% - #{$clusterSizeX3});
   background-color: $colorBlack;
   color: $colorGray85;
   z-index: 10;
   overflow: hidden;
   top: 0;
   right: 0;
-  margin-block: 2rem;
+  margin-block: $clusterSizeX2;
   animation-name: frame;
   animation-duration: 1s;
 }
 
 @keyframes frame {
-  from {right: -20rem;}
-  to {right: 0;}
+  from {
+    right: -$clusterSizeX10 * 2;
+  }
+  to {
+    right: 0;
+  }
 }
 
 .overlayContent {

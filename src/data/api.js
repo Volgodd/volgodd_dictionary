@@ -1,10 +1,7 @@
-//import { fakeThemeData, fakeWordData } from 'data/fake-data';
-
 // eslint-disable-line no-alert
 /* eslint-disable no-restricted-globals */
 
 import { SERVER_URL, THEME_ENDPOINT, WORD_ENDPOINT } from 'common/constants';
-
 import axios from 'axios';
 
 export const loginAction = ({ login, password }) => {
@@ -60,7 +57,7 @@ export const editWordAction = (jwt, data, id) => {
 
 export const deleteWordAction = (jwt, id) => {
   const alertMessage = 'Are your sure you want to delete word?';
-  if (confirm (alertMessage) === true) {
+  if (confirm(alertMessage) === true) {
     return axios.delete(`${SERVER_URL}${WORD_ENDPOINT}/${id}`, {
       headers: getRequestHeaders(jwt)
     });
@@ -74,8 +71,9 @@ export const editThemeAction = (jwt, data, id) => {
 };
 
 export const deleteThemeAction = (jwt, id) => {
-  const alertMessage = 'Are your sure you want to delete theme? All words in current theme will be deleted';
-  if (confirm (alertMessage) === true) {
+  const alertMessage =
+    'Are your sure you want to delete theme? All words in current theme will be deleted';
+  if (confirm(alertMessage) === true) {
     return axios.delete(`${SERVER_URL}${THEME_ENDPOINT}/${id}`, {
       headers: getRequestHeaders(jwt)
     });

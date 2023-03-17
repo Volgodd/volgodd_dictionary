@@ -23,6 +23,7 @@ export const copyFromClipboardOld = (callbackMurMur) => {
     });
 };
 
+// not in use
 export const deleteLocalDataFromArray = (dataArray, dataId) => {
   const wordIndex = dataArray.findIndex((x) => x.id === dataId);
 
@@ -36,7 +37,7 @@ export const deleteLocalDataFromArray = (dataArray, dataId) => {
 
   console.log(modifiedDataArray, modifiedDataArray.length);
 };
-
+// not in use
 export const modifyLocalData = (dataArray, dataId) => {
   const wordIndex = dataArray.findIndex((x) => x.id === dataId);
 
@@ -51,8 +52,26 @@ export const modifyLocalData = (dataArray, dataId) => {
   console.log(modifiedDataArray, modifiedDataArray.length);
 };
 
+/**
+ *
+ * @param {*} array array, where we find index
+ * @param {*} dataId id to find in array
+ * @returns index as number
+ */
 export const findObjectIndex = (array, dataId) => {
   return array.findIndex((x) => x.id === dataId);
+};
+
+/**
+ *
+ * @param {*} array array, where we find index
+ * @param {*} dataId id to find in array
+ * @returns object/entry from array with current index
+ */
+export const findObjectById = (array, dataId) => {
+  const index = array.findIndex((x) => x.id === dataId);
+
+  return array[index];
 };
 
 export const stringToSubstring = (rawString, word, index) => {
@@ -62,7 +81,9 @@ export const stringToSubstring = (rawString, word, index) => {
 };
 
 export const findEntriesInArray = (array, themeId) => {
-  if (array.includes(array.find((e) => e.id === array.themeId))) return array.themeId;
+  if (array.includes(array.find((e) => e.id === array.themeId))) {
+    return array.themeId;
+  }
 };
 
 const getDaysInMilliseconds = (numberOfDays = 1) => {

@@ -11,7 +11,6 @@ import LearnPage from 'pages/learn-page/LearnPage';
 import Overlay from './overlays/Overlay';
 import ThemePage from 'pages/theme-page/ThemePage';
 import WordsPage from 'pages/words-page/WordsPage';
-import { getData } from './data/api';
 import { shallow } from 'zustand/shallow';
 import useDataStore from 'store/dataStore';
 import useOverlayStore from 'store/overlayStore';
@@ -21,9 +20,8 @@ const { MAIN_PAGE, WORDS, LEARN_MODE } = ROUTES;
 
 function App() {
   const [alertOverlay, setAlertOverlay] = useState(DEFAULT_ALERT_OVERLAY_STATE);
-
+  //не используется, но компонент есть
   const [burgerOverlay, setBurgerOverlay] = useState(false);
-  const [themesArrayForLearnMode, setThemesArrayForLearnMode] = useState(undefined);
 
   const jwt = useUserStorage((state) => state.jwt);
 
@@ -35,15 +33,11 @@ function App() {
     shallow
   );
 
-  // const {openOverlay, type} = useOverlayStore((state) => {
-  //   return {openOverlay: state.openOverlay, type: state.type}
-  // });
-
-  const { wordData, themeData, setData } = useDataStore(
+  const { wordData, themeData, getAndSetData } = useDataStore(
     (state) => ({
       wordData: state.wordData,
       themeData: state.themeData,
-      setData: state.setData
+      getAndSetData: state.getAndSetData
     }),
     shallow
   );
@@ -56,24 +50,21 @@ function App() {
 
   useEffect(() => {
     if (jwt) {
-      getData(jwt).then(({ wordData, themeData }) => {
-        setData({ wordData, themeData });
-      });
+      getAndSetData(jwt);
     }
-  }, [jwt, setData]);
+  }, [jwt, getAndSetData]);
 
   const globalContextData = {
+    //alertOverlay  сейчас не используется, globalContextData оставлена для примера глобального контекста без zustand
     alertOverlay,
-    setAlertOverlay,
-    burgerOverlay,
-    setBurgerOverlay,
-    themesArrayForLearnMode,
-    setThemesArrayForLearnMode
+    setAlertOverlay
   };
 
   if (jwt && (!wordData || !themeData)) {
     return <div>Loading data</div>;
   }
+
+  // console.log(wordData, themeData);
 
   return (
     <BrowserRouter>
@@ -81,7 +72,7 @@ function App() {
         {/* <Link to={MAIN_PAGE}>Main Page</Link>
         <Link to={ADD_WORD_PAGE}>Add word</Link> */}
         {overlayType && <Overlay />}
-        {burgerOverlay && <BurgerOverlay />}
+        {/* {burgerOverlay && <BurgerOverlay />} */}
         {alertOverlay.type && <AlertOverLay />}
         {jwt && (
           <Routes>
@@ -89,12 +80,10 @@ function App() {
             <Route path={`${WORDS}/:themeIdUrlParam`} element={<WordsPage />} />
             <Route path={WORDS} element={<WordsPage />} />
             <Route path={`${LEARN_MODE}/:learnModeId`} element={<LearnPage />} />
-            {/* <Route path="*" element={<div>404</div>} /> */}
           </Routes>
         )}
       </GlobalContextProvider>
     </BrowserRouter>
   );
 }
-
 export default App;

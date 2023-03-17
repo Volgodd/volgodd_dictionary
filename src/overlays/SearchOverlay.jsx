@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
 
+import ActionButton from 'components/buttons/action-button/ActionButton';
 import DataEntryButton from 'components/buttons/data-entry-button/DataEntryButton';
-import NavButton from 'components/footer/nav-button/NavButton';
 import { OVERLAY_TYPES } from 'common/constants';
-import clsx from 'clsx';
 import styles from './SearchOverlay.module.scss';
 import useDataStore from 'store/dataStore';
 import useOverlayStore from 'store/overlayStore';
@@ -19,13 +18,12 @@ const SearchOverlay = () => {
 
   const openOverlay = useOverlayStore((state) => state.openOverlay);
 
-  console.log(sortedWordData);
-
   useEffect(() => {
     const performSearch = setTimeout(() => {
       if (searchingItem) {
         const sortedData = wordData.filter((item) => {
           const formattedSearch = searchingItem.toLowerCase().replace(/\s\s+/g, ' ').trim();
+          //replace заменяет мультипробелы на один
 
           return (
             item.foreign.toLowerCase().includes(formattedSearch) ||
@@ -35,8 +33,10 @@ const SearchOverlay = () => {
         setSortedWordData(sortedData);
       } else setSortedWordData([]);
     }, 300);
+    //при помощи setTimeout реализован debounce
 
     return () => clearTimeout(performSearch);
+    //return в useEffect нужен для подчистки кода от неактуальных ф во избежание крашей
   }, [searchingItem, wordData]);
 
   return (
@@ -52,7 +52,7 @@ const SearchOverlay = () => {
           required
         />
       </div>
-      <NavButton
+      <ActionButton
         name="Add a word"
         onClickF={() => openOverlay({ overlayType: ADD_WORD, overlayMetadata: searchingItem })}
       />
@@ -71,4 +71,5 @@ const SearchOverlay = () => {
     </div>
   );
 };
+
 export default SearchOverlay;

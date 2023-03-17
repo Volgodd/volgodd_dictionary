@@ -1,14 +1,17 @@
+import React, { useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+
 import DataEntryButton from 'components/buttons/data-entry-button/DataEntryButton';
+import Footer from 'components/footer/Footer';
 import Header from 'components/header/Header';
-import React from 'react';
 import clsx from 'clsx';
 import { findObjectIndex } from 'common/utils';
 import { shallow } from 'zustand/shallow';
 import styles from './WordsPage.module.scss';
 import useDataStore from 'store/dataStore';
-import { useParams } from 'react-router-dom';
 
 const WordsPage = () => {
+  const navigate = useNavigate();
   const { themeIdUrlParam } = useParams();
   const { wordData, themeData } = useDataStore(
     (state) => ({
@@ -20,20 +23,30 @@ const WordsPage = () => {
 
   const themeIndex = findObjectIndex(themeData, themeIdUrlParam);
 
+  useEffect(() => {
+    if (wordData.length === 0 || !themeData[themeIndex]) {
+      navigate('/');
+    }
+  }, [wordData, navigate, themeData, themeIndex]);
+
   return (
     <div className={clsx(styles.main, 'dark:bg-slate-800')}>
-      <Header title={themeData[themeIndex].name} themeId={themeIdUrlParam} />
+      <Header title={themeData[themeIndex]?.name} themeId={themeIdUrlParam} />
       <div className={styles.mainContent}>
         {wordData.length !== 0 &&
           wordData
             .filter((wordObject) => {
               const { themeIdList } = wordObject;
+
               if (!themeIdUrlParam && themeIdList.length === 0) {
                 return true;
               }
+              //????
+
               if (themeIdList.indexOf(themeIdUrlParam) > -1) {
                 return true;
               }
+
               return false;
             })
             .map((wordObject) => {
@@ -52,6 +65,8 @@ const WordsPage = () => {
               );
             })}
       </div>
+
+      <Footer />
     </div>
   );
 };

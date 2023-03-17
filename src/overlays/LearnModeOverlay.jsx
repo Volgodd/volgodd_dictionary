@@ -1,11 +1,13 @@
-import { DEFAULT_OVERLAY_STATE, LEARN_MODES, ROUTES } from 'common/constants';
+import { LEARN_MODES, ROUTES } from 'common/constants';
 import React, { useState } from 'react';
 
 import Input from 'components/input/Input';
 import LearnButton from 'components/buttons/learn-button/LearnButton';
 import { findObjectIndex } from 'common/utils';
+import { shallow } from 'zustand/shallow';
 import styles from './LearnModeOverlay.module.scss';
-import useGlobalContext from 'hooks/useGlobalContext';
+import useDataStore from 'store/dataStore';
+import useLearnModeStore from 'store/learnModeStore';
 import { useNavigate } from 'react-router-dom/dist/index';
 import useOverlayStore from 'store/overlayStore';
 
@@ -15,15 +17,25 @@ const { FLASH_CARDS } = LEARN_MODES;
 const LearnModeOverlay = () => {
   const [checkedThemes, setCheckedThemes] = useState([]);
   const closeOverlay = useOverlayStore((state) => state.closeOverlay);
-  const { themeData, setThemesArrayForLearnMode } = useGlobalContext();
-
   const navigate = useNavigate();
+  const setThemesForLearnMode = useLearnModeStore((state) => state.setThemesForLearnMode);
+
+  const { themeData } = useDataStore(
+    (state) => ({
+      wordData: state.wordData,
+      themeData: state.themeData
+    }),
+    shallow
+  );
 
   const submitHandler = (e) => {
     e.preventDefault();
-    setThemesArrayForLearnMode(checkedThemes);
-    navigate(`${LEARN_MODE}/${FLASH_CARDS}`);
-    closeOverlay();
+
+    if (checkedThemes.length !== 0) {
+      navigate(`${LEARN_MODE}/${FLASH_CARDS}`);
+      closeOverlay();
+      setThemesForLearnMode({ themesForLearnMode: checkedThemes });
+    }
   };
 
   const addThemesIfChecked = ({ checked, themeIndex, themeId }) => {
@@ -50,8 +62,6 @@ const LearnModeOverlay = () => {
     });
 
     return checkedWords.toString().replaceAll(',', ' ');
-
-    // console.log(checkedWords, checkedWords.toString().replaceAll(',', ' '));
   };
 
   return (
@@ -63,9 +73,8 @@ const LearnModeOverlay = () => {
             {themeData.map((theme) => {
               const { name, id } = theme;
               const themeIndex = findObjectIndex(themeData, id);
-
-              const themeNameWithDots = longThemeNameSafeguard(name);
-
+              // const themeNameWithDots = longThemeNameSafeguard(name);
+              // решено при помощи css
               return (
                 <Input
                   value={name}
@@ -84,4 +93,5 @@ const LearnModeOverlay = () => {
     </>
   );
 };
+
 export default LearnModeOverlay;

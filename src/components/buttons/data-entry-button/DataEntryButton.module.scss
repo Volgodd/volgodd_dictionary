@@ -26,9 +26,6 @@
   &:hover {
     filter: brightness(125%);
   }
-  // &:last-child {
-  //   margin-bottom: 0px;
-  // }
 
   &::before {
     top: $clusterSize;

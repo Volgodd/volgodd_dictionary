@@ -19,10 +19,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: calc(100% - 3rem);
+  width: calc(100% - #{$clusterSizeX3});
   background-color: $colorGreen;
   z-index: 10;
-  border-radius: 0.5rem;
+  border-radius: $clusterSizeX05;
   overflow: hidden;
   height: $clusterSizeX4;
 }

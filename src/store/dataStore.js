@@ -1,18 +1,25 @@
 import { create } from 'zustand';
+import { getData } from 'data/api';
 import { parseThemeData } from 'data/utils';
 
 const defaultDataStore = { wordData: undefined, themeData: undefined }; // null if does not exist
 
 const useDataStore = create((set) => ({
   ...defaultDataStore,
-  setData: ({ wordData, themeData }) => {
-    set((state) => {
-      const actualWordData = wordData || state.wordData;
+  getAndSetData: async (jwt) => {
+    const data = await getData(jwt);
 
-      const parsedThemeData = parseThemeData({ themeData, wordData: actualWordData });
+    if (data) {
+      const { wordData, themeData } = data;
 
-      return { wordData, themeData: parsedThemeData };
-    });
+      set((state) => {
+        const actualWordData = wordData || state.wordData;
+
+        const parsedThemeData = parseThemeData({ themeData, wordData: actualWordData });
+
+        return { wordData, themeData: parsedThemeData };
+      });
+    }
   },
   setThemeData: (themeData) => {
     set((state) => {

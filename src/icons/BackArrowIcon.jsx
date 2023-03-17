@@ -5,4 +5,5 @@ const BackArrowIcon = () => {
     </svg>
   );
 };
+
 export default BackArrowIcon;
