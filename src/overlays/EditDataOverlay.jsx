@@ -56,7 +56,7 @@ const EditDataOverlay = () => {
       themeIdList: editThemeIdArr
     };
 
-    editWordAction(jwt, newWordData, id).then(({ data }) => {
+    editWordAction({ jwt, data: newWordData, id }).then((data) => {
       console.log('word edited', data);
 
       const wordDataCopy = [...wordData];

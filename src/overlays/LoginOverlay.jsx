@@ -19,7 +19,7 @@ const Login = () => {
     setError();
 
     try {
-      const { data } = await loginAction({ login, password });
+      const data = await loginAction({ login, password });
 
       setJwt({ jwt: data.jwt });
 

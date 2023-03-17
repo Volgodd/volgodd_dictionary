@@ -10,6 +10,9 @@ import useOverlayStore from 'store/overlayStore';
 import { useState } from 'react';
 import useUserStorage from 'store/userStore';
 
+// eslint-disable-line no-alert
+/* eslint-disable no-restricted-globals */
+
 const EditThemeOverlay = () => {
   const { overlayMetadata, closeOverlay } = useOverlayStore(
     (state) => ({ closeOverlay: state.closeOverlay, overlayMetadata: state.overlayMetadata }),
@@ -46,7 +49,7 @@ const EditThemeOverlay = () => {
 
     console.log({ jwt, data: newThemeData }, '====', newThemeData);
 
-    editThemeAction(jwt, newThemeData, themeId).then(({ data }) => {
+    editThemeAction({ jwt, data: newThemeData, id: themeId }).then((data) => {
       console.log('theme edited', data);
 
       // const newThemeDataWithId = { ...newThemeData, themeId };
@@ -62,13 +65,16 @@ const EditThemeOverlay = () => {
   const deleteThemeAndWords = () => {
     // удаление  темы работает, но консоль ругается, что в хедере name undefined, т.к. аррэй с темами пуст
 
-    deleteThemeAction(jwt, themeId).then(() => {
-      const themeDataCopy = [...themeData];
-      themeDataCopy.splice(themeIndex, 1);
-      setThemeData(themeDataCopy);
-      closeOverlay();
-    });
-
+    const alertMessage =
+      'Are your sure you want to delete theme? All words in current theme will be deleted';
+    if (confirm(alertMessage) === true) {
+      deleteThemeAction({ jwt, id: themeId }).then(() => {
+        const themeDataCopy = [...themeData];
+        themeDataCopy.splice(themeIndex, 1);
+        setThemeData(themeDataCopy);
+        closeOverlay();
+      });
+    }
     // wordData.themeIdList.toString()
 
     // const words = findObjectIndexByIdList(wordData, themeId);
@@ -91,7 +97,7 @@ const EditThemeOverlay = () => {
 
         console.log(wordId);
 
-        //   deleteWordAction(jwt, wordId).then(() => {
+        //   deleteWordAction({jwt, id: wordId}).then(() => {
         //     const nextWordIndex = wordsToDelete.indexOf(wordObject) + 1
 
         //     if (nextWordIndex < wordsToDelete.length) {
