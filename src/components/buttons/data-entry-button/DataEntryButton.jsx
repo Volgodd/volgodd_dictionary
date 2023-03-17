@@ -6,7 +6,6 @@ import { findObjectIndex } from 'common/utils';
 import { shallow } from 'zustand/shallow';
 import styles from './DataEntryButton.module.scss';
 import useDataStore from 'store/dataStore';
-import useGlobalContext from 'hooks/useGlobalContext';
 import useOverlayStore from 'store/overlayStore';
 import { useState } from 'react';
 import useUserStorage from 'store/userStore';
@@ -20,9 +19,7 @@ const DataEntryButton = ({
   wordId
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-
   const openOverlay = useOverlayStore((state) => state.openOverlay);
-
   const { EDIT_WORD } = OVERLAY_TYPES;
 
   const jwt = useUserStorage((state) => state.jwt);
@@ -52,14 +49,12 @@ const DataEntryButton = ({
   };
 
   const deleteWord = (wordId) => {
-    // deleteLocalDataFromArray(dataArray, wordId);
-    console.log('word deleted', wordId);
-
     deleteWordAction(jwt, wordId).then(() => {
       const wordArrayIndex = findObjectIndex(wordData, wordId);
       const modifiedWordData = [...wordData];
       modifiedWordData.splice(wordArrayIndex, 1);
       setWordData(modifiedWordData);
+      console.log('word deleted', wordId);
     });
   };
 
@@ -96,5 +91,4 @@ const DataEntryButton = ({
     </div>
   );
 };
-
 export default DataEntryButton;

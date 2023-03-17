@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import styles from './SelectMenu.module.scss';
 
-const SelectMenu = ({ data, onSelect, additionalStyles }) => {
+const SelectMenu = ({ data, onSelect, additionalStyles, defaultValue }) => {
   if (!data) {
     return <>No SelectMenu data</>;
   }
@@ -13,7 +13,8 @@ const SelectMenu = ({ data, onSelect, additionalStyles }) => {
         name="theme"
         id="theme"
         onChange={(e) => onSelect(e.target.value)}
-        className="inputElement">
+        className="inputElement"
+        defaultValue={defaultValue}>
         {data.map((entry, index) => {
           const { value, text } = entry;
 
@@ -27,4 +28,5 @@ const SelectMenu = ({ data, onSelect, additionalStyles }) => {
     </div>
   );
 };
+
 export default SelectMenu;

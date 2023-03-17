@@ -40,8 +40,5 @@ export const parseThemeData = ({ themeData, wordData }) => {
     return { ...theme, wordCount: dump[id] ?? 0 };
   });
 
-  // создать arr  с  id темы, у уоторой это слово относится
-  // themeIdArray
-
   return themeDataWithEnjections;
 };

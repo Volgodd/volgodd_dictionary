@@ -16,7 +16,7 @@
 }
 
 .textareaDom {
-  width: calc(100% - 2rem);
+  width: calc(100% - #{$clusterSizeX2});
   height: $clusterSizeX10;
   padding: $clusterSize;
   border: none;

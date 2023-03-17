@@ -40,9 +40,10 @@ const MiniButton = ({ type, additionalStyles, onClickF, transparent = false, big
   return (
     <div className={clsx(styles.miniButtonContainer, additionalStyles)}>
       <button
+        type="button"
         className={clsx(
           styles.miniButton,
-          transparent && styles.miniButton_transparent && additionalStyles,
+          transparent && styles.miniButton_transparent,
           bigger && styles.bigger
         )}
         onClick={() => onClickF()}>

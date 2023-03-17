@@ -1,17 +1,14 @@
-import clsx from 'clsx';
 import styles from './LearnButton.module.scss';
 
-
-const LearnButton = ({ name, onClickF, additionalStyles }) => {
+const LearnButton = ({ name, onClickF }) => {
   if (!onClickF && !name) {
     return <input type="submit" className={styles.button} value="Save"></input>;
   }
 
   return (
-    <button onClick={onClickF} className={clsx(styles.button, additionalStyles)}>
+    <button onClick={onClickF} className={styles.button}>
       <span>{name}</span>
     </button>
   );
 };
-
 export default LearnButton;

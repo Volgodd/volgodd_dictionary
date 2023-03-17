@@ -1,7 +1,7 @@
-import { copyFromClipboard, copyFromClipboardOld } from 'common/utils';
+import { copyFromClipboard } from 'common/utils';
 
 import MiniButton from 'components/buttons/mini-button/MiniButton';
-import NavButton from 'components/footer/nav-button/NavButton';
+import ActionButton from 'components/buttons/action-button/ActionButton';
 import React from 'react';
 import SelectMenu from 'components/selectMenu/SelectMenu';
 import { addWordAction } from 'data/api';
@@ -10,7 +10,6 @@ import { shallow } from 'zustand/shallow';
 import styles from './AddWordOverlay.module.scss';
 import useDataStore from 'store/dataStore';
 import { useEffect } from 'react';
-import useGlobalContext from 'hooks/useGlobalContext';
 import useOverlayStore from 'store/overlayStore';
 import { useState } from 'react';
 import useUserStorage from 'store/userStore';
@@ -42,7 +41,6 @@ const AddWordOverlay = () => {
     shallow
   );
 
-  const [text, setText] = useState('');
   const [translation, setTranslation] = useState('');
   const [theme, setTheme] = useState(themeData[0].id);
   const [examples, setExamples] = useState('');
@@ -51,13 +49,8 @@ const AddWordOverlay = () => {
     return { value: themeDataEntry.id, text: themeDataEntry.name };
   });
 
-  console.log({ addWordData, translation, theme, examples });
-
   const submitHandler = (e) => {
     e.preventDefault();
-
-    console.log({ addWordData, translation, theme, examples });
-    //здесь будет ф по отправке данных на сервер
 
     const newWordData = {
       foreign: addWordData,
@@ -66,8 +59,6 @@ const AddWordOverlay = () => {
       themeIdList: [theme]
     };
 
-    // console.log({ newWordData });
-
     addWordAction(jwt, newWordData).then(({ data }) => {
       console.log('word added', data);
       const newWordData = [data, ...wordData];
@@ -75,8 +66,6 @@ const AddWordOverlay = () => {
       closeOverlay();
       setAddWordData();
     });
-
-    console.log(theme, newWordData.themeIdList);
   };
 
   const handleSelectMenu = (value) => {
@@ -100,17 +89,6 @@ const AddWordOverlay = () => {
         <></>;
     }
   };
-
-  const handleBufferButtonClickOld = () => {
-    const callbackFunctionMyaff = (clipboardValue) => {
-      setText(clipboardValue);
-    };
-
-    copyFromClipboardOld(callbackFunctionMyaff);
-  };
-  //ф handleSelectMenu получает от select menu значение из инпута
-
-  //написать утилиту, кот будет возвращать список тем
 
   return (
     <form onSubmit={submitHandler} className={styles.addWordInterface}>
@@ -146,7 +124,7 @@ const AddWordOverlay = () => {
         <MiniButton type="buffer" onClickF={(e) => handleBufferButtonClick('examples')} />
       </div>
       <SelectMenu data={selectMenuData} onSelect={handleSelectMenu} />
-      <NavButton name={'Save'} />
+      <ActionButton name={'Save'} type="submit" />
     </form>
   );
 };

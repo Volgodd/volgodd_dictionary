@@ -19,6 +19,7 @@
   display: flex;
   width: 100%;
   align-items: center;
+  text-align: center;
   flex-direction: column;
   gap: $clusterSize;
   flex-wrap: wrap;
@@ -38,10 +39,6 @@
   margin-top: $clusterSizeX2;
 }
 
-.button {
-  width: $clusterSizeX8 * 2;
-}
-
 .native {
   display: none;
   font-size: $fontSize24;
@@ -58,6 +55,11 @@
 }
 
 .visibilityButton {
-  width: 4rem;
-  height: 4rem;
+  width: $clusterSizeX4;
+  height: $clusterSizeX4;
+}
+
+.learntWrapper {
+  text-align: center;
+  color: $colorWhite;
 }

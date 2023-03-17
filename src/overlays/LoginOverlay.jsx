@@ -1,7 +1,7 @@
-import NavButton from 'components/footer/nav-button/NavButton';
+import ActionButton from 'components/buttons/action-button/ActionButton';
 import React from 'react';
 import { loginAction } from 'data/api';
-import styles from './Login.module.scss';
+import styles from './LoginOverlay.module.scss';
 import useOverlayStore from 'store/overlayStore';
 import { useState } from 'react';
 import useUserStorage from 'store/userStore';
@@ -28,18 +28,6 @@ const Login = () => {
       console.log('Err', e);
       setError(e.message);
     }
-
-    // if (!text) {
-    //   alert('please fill in foreign language field');
-    //   return;
-    // }
-
-    // if (!translation) {
-    //   alert('please fill in native language field');
-    //   return;
-    // }
-
-    //здесь будет ф по отправке данных на сервер
   };
 
   return (
@@ -65,7 +53,7 @@ const Login = () => {
         />
       </div>
       {error && <div className={styles.loginInterfaceRow_error}>{error}</div>}
-      <NavButton name="Login" styles={styles.saveButton} />
+      <ActionButton name="Login" styles={styles.saveButton} />
     </form>
   );
 };

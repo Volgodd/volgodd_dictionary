@@ -22,5 +22,5 @@
 .searchedContentWrapper {
   overflow-y: auto;
   box-sizing: border-box;
-  height: 30rem;
+  height: $clusterSizeX10 * 3;
 }

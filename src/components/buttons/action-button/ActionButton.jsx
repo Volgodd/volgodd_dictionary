@@ -1,8 +1,7 @@
 import clsx from 'clsx';
-import styles from './NavButton.module.scss';
+import styles from './ActionButton.module.scss';
 
-
-const NavButton = ({ name, onClickF, additionalStyles }) => {
+const ActionButton = ({ name, onClickF, additionalStyles }) => {
   if (!onClickF && !name) {
     return <input type="submit" className={styles.button} value="Save"></input>;
   }
@@ -14,4 +13,4 @@ const NavButton = ({ name, onClickF, additionalStyles }) => {
   );
 };
 
-export default NavButton;
+export default ActionButton;

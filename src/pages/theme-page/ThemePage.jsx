@@ -20,7 +20,7 @@ const ThemePage = () => {
       <MetaTags />
       <Header title="Suomen - venäjän" />
       <div className={styles.mainContent}>
-        {themeData.map((theme, index) => {
+        {themeData?.map((theme, index) => {
           const { name, wordCount, id } = theme;
 
           const btnFunction = () => navigate(`${WORDS}/${id}`);
@@ -38,7 +38,7 @@ const ThemePage = () => {
         })}
       </div>
 
-      <Footer themePage={true} />
+      <Footer />
     </div>
   );
 };
