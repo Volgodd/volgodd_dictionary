@@ -3,7 +3,9 @@ import { findObjectById, findObjectIndex } from 'common/utils';
 import ActionButton from 'components/buttons/action-button/ActionButton';
 import React from 'react';
 import SelectMenu from 'components/selectMenu/SelectMenu';
+import type { SelectMenuData } from 'components/selectMenu/SelectMenu';
 import { editWordAction } from 'data/api';
+import { getNonNullable } from 'types/utils';
 import { shallow } from 'zustand/shallow';
 import styles from './EditDataOverlay.module.scss';
 import useDataStore from 'store/dataStore';
@@ -12,19 +14,22 @@ import { useState } from 'react';
 import useUserStorage from 'store/userStore';
 
 const EditDataOverlay = () => {
-  const jwt = useUserStorage((state) => state.jwt);
+  const jwt = useUserStorage((state) => getNonNullable(state.jwt));
 
   const { wordData, setWordData, themeData } = useDataStore(
     (state) => ({
-      wordData: state.wordData,
+      wordData: getNonNullable(state.wordData),
       setWordData: state.setWordData,
-      themeData: state.themeData
+      themeData: getNonNullable(state.themeData)
     }),
     shallow
   );
 
   const { overlayMetadata, closeOverlay } = useOverlayStore(
-    (state) => ({ closeOverlay: state.closeOverlay, overlayMetadata: state.overlayMetadata }),
+    (state) => ({
+      closeOverlay: state.closeOverlay,
+      overlayMetadata: getNonNullable(state.overlayMetadata)
+    }),
     shallow
   );
 
@@ -32,12 +37,12 @@ const EditDataOverlay = () => {
   const { id, foreign, native, themeIdList, examples } = operatingWord;
   const wordIndex = findObjectIndex(wordData, overlayMetadata);
 
-  const [editForeign, setEditForeign] = useState(foreign);
-  const [editNative, setEditNative] = useState(native);
-  const [editThemeIdArr, setEditThemeIdArr] = useState(themeIdList);
-  const [editExamples, setEditExamples] = useState(examples);
+  const [editForeign, setEditForeign] = useState<string>(foreign);
+  const [editNative, setEditNative] = useState<string>(native);
+  const [editThemeIdArr, setEditThemeIdArr] = useState<string[]>(themeIdList);
+  const [editExamples, setEditExamples] = useState<string>(examples);
 
-  const selectMenuData = themeData.map((themeDataEntry) => {
+  const selectMenuData: SelectMenuData = themeData.map((themeDataEntry) => {
     return { value: themeDataEntry.id, text: themeDataEntry.name };
   });
 
@@ -46,7 +51,7 @@ const EditDataOverlay = () => {
     return selectMenuData[index].value;
   };
 
-  const submitHandler = (e) => {
+  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const newWordData = {
@@ -56,7 +61,7 @@ const EditDataOverlay = () => {
       themeIdList: editThemeIdArr
     };
 
-    editWordAction(jwt, newWordData, id).then(({ data }) => {
+    editWordAction({ jwt, data: newWordData, id }).then((data) => {
       console.log('word edited', data);
 
       const wordDataCopy = [...wordData];
@@ -66,7 +71,7 @@ const EditDataOverlay = () => {
     });
   };
 
-  const handleSelectMenu = (value) => {
+  const handleSelectMenu = (value: string) => {
     setEditThemeIdArr([value]);
   };
 
@@ -106,7 +111,7 @@ const EditDataOverlay = () => {
           onSelect={handleSelectMenu}
         />
       </div>
-      <ActionButton name={'Save'} styles={styles.saveButton} />
+      <ActionButton name={'Save'} additionalStyles={styles.saveButton} />
     </form>
   );
 };

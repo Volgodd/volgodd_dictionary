@@ -25,10 +25,10 @@ const AddThemeOverlay = () => {
       name: theme
     };
 
-    addThemeAction(jwt, newThemeData).then(({ data }) => {
-      console.log('theme added', data);
+    addThemeAction({ jwt, data: newThemeData }).then((rawData) => {
+      console.log('theme added', rawData);
 
-      const newThemeData = [...themeData, data];
+      const newThemeData = [...themeData, rawData];
       setThemeData(newThemeData);
       closeOverlay();
     });

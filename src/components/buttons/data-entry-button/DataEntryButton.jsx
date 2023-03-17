@@ -10,6 +10,9 @@ import useOverlayStore from 'store/overlayStore';
 import { useState } from 'react';
 import useUserStorage from 'store/userStore';
 
+// eslint-disable-line no-alert
+/* eslint-disable no-restricted-globals */
+
 const DataEntryButton = ({
   mainCellData,
   secondaryCellData,
@@ -49,13 +52,17 @@ const DataEntryButton = ({
   };
 
   const deleteWord = (wordId) => {
-    deleteWordAction(jwt, wordId).then(() => {
-      const wordArrayIndex = findObjectIndex(wordData, wordId);
-      const modifiedWordData = [...wordData];
-      modifiedWordData.splice(wordArrayIndex, 1);
-      setWordData(modifiedWordData);
-      console.log('word deleted', wordId);
-    });
+    const alertMessage = 'Are your sure you want to delete word?';
+
+    if (confirm(alertMessage) === true) {
+      deleteWordAction({ jwt, id: wordId }).then((data) => {
+        const wordArrayIndex = findObjectIndex(wordData, wordId);
+        const modifiedWordData = [...wordData];
+        modifiedWordData.splice(wordArrayIndex, 1);
+        setWordData(modifiedWordData);
+        console.log('word deleted', wordId);
+      });
+    }
   };
 
   const getColor = (color) => {

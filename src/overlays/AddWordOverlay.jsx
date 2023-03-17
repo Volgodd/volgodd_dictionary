@@ -1,11 +1,10 @@
-import { copyFromClipboard } from 'common/utils';
-
-import MiniButton from 'components/buttons/mini-button/MiniButton';
 import ActionButton from 'components/buttons/action-button/ActionButton';
+import MiniButton from 'components/buttons/mini-button/MiniButton';
 import React from 'react';
 import SelectMenu from 'components/selectMenu/SelectMenu';
 import { addWordAction } from 'data/api';
 import clsx from 'clsx';
+import { copyFromClipboard } from 'common/utils';
 import { shallow } from 'zustand/shallow';
 import styles from './AddWordOverlay.module.scss';
 import useDataStore from 'store/dataStore';
@@ -59,7 +58,7 @@ const AddWordOverlay = () => {
       themeIdList: [theme]
     };
 
-    addWordAction(jwt, newWordData).then(({ data }) => {
+    addWordAction({ jwt, data: newWordData }).then((data) => {
       console.log('word added', data);
       const newWordData = [data, ...wordData];
       setWordData(newWordData);
