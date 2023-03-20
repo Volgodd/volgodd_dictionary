@@ -1,6 +1,8 @@
-import React from 'react';
+type SearchIconProps = {
+  additionalClasses?: string;
+};
 
-const SearchIcon = ({ additionalClasses }) => {
+const SearchIcon = ({ additionalClasses }: SearchIconProps): JSX.Element => {
   return (
     <svg
       className={additionalClasses}

@@ -11,7 +11,7 @@ import VisibilityIcon from 'icons/VisibilityIcon';
 import clsx from 'clsx';
 import styles from './MiniButton.module.scss';
 
-const getButtonIcon = (type) => {
+const getButtonIcon = (type: string) => {
   switch (type) {
     case 'buffer':
       return <BufferIcon />;
@@ -36,7 +36,21 @@ const getButtonIcon = (type) => {
   }
 };
 
-const MiniButton = ({ type, additionalStyles, onClickF, transparent = false, bigger = false }) => {
+type MiniButtonProps = {
+  type: string;
+  additionalStyles?: string;
+  onClickF: () => void;
+  transparent?: boolean;
+  bigger?: boolean;
+};
+
+const MiniButton: React.FC<MiniButtonProps> = ({
+  type,
+  additionalStyles,
+  onClickF,
+  transparent = false,
+  bigger = false
+}) => {
   return (
     <div className={clsx(styles.miniButtonContainer, additionalStyles)}>
       <button
