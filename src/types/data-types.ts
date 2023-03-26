@@ -32,7 +32,7 @@ export type RawTheme = ServerDataBase & {
   name: string;
 };
 
-export type ParsedTheme = RawTheme & {
+export type ParsedTheme = Pick<RawTheme, 'id' | 'name'> & {
   wordCount: number;
 };
 

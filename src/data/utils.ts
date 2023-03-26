@@ -8,7 +8,7 @@ import type { DataId, ParsedTheme, RawTheme, Word } from 'types/data-types';
  */
 
 type ParseThemeDataProps = {
-  themeData: RawTheme[] | undefined;
+  themeData: (RawTheme | ParsedTheme)[] | undefined;
   wordData: Word[] | undefined;
 };
 
@@ -37,9 +37,9 @@ export const parseThemeData = ({
   const themeDataWithInjections: ParsedTheme[] = themeData.map((theme) => {
     //safeguard для случая, если тема отсутствует (в нашем случае нет темы 8)
 
-    const { id } = theme;
+    const { id, name } = theme;
 
-    return { ...theme, wordCount: wordCountForThemeIdsCollection[id] ?? 0 };
+    return { id, name, wordCount: wordCountForThemeIdsCollection[id] ?? 0 };
   });
 
   return themeDataWithInjections;

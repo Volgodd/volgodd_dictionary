@@ -2,7 +2,7 @@ import './index.scss';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { DEFAULT_ALERT_OVERLAY_STATE, OVERLAY_TYPES, ROUTES } from './common/constants';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import AlertOverLay from 'overlays/AlertOverlay';
 import BurgerOverlay from 'overlays/BurgerOverlay';
