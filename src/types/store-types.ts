@@ -6,7 +6,7 @@ export type DataStore = {
   wordData: Word[] | undefined;
   themeData: ParsedTheme[] | undefined;
   getAndSetData: (jwt: JWTType) => void;
-  setThemeData: (themeData: RawTheme[]) => void;
+  setThemeData: (themeData: (RawTheme | ParsedTheme)[]) => void;
   setWordData: (wordData: Word[]) => void;
   resetData: () => void;
 };

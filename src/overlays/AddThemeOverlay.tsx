@@ -1,6 +1,7 @@
 import ActionButton from 'components/buttons/action-button/ActionButton';
 import React from 'react';
 import { addThemeAction } from 'data/api';
+import { getNonNullable } from 'types/utils';
 import { shallow } from 'zustand/shallow';
 import styles from './AddThemeOverlay.module.scss';
 import useDataStore from 'store/dataStore';
@@ -9,16 +10,16 @@ import { useState } from 'react';
 import useUserStorage from 'store/userStore';
 
 const AddThemeOverlay = () => {
-  const [theme, setTheme] = useState('');
+  const jwt = useUserStorage((state) => getNonNullable(state.jwt));
+  const [theme, setTheme] = useState<string>('');
 
   const closeOverlay = useOverlayStore((state) => state.closeOverlay);
-  const jwt = useUserStorage((state) => state.jwt);
   const { themeData, setThemeData } = useDataStore(
-    (state) => ({ themeData: state.themeData, setThemeData: state.setThemeData }),
+    (state) => ({ themeData: getNonNullable(state.themeData), setThemeData: state.setThemeData }),
     shallow
   );
 
-  const submitHandler = (e) => {
+  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const newThemeData = {
@@ -46,7 +47,7 @@ const AddThemeOverlay = () => {
           required
         />
       </div>
-      <ActionButton name="Save" styles={styles.saveButton} />
+      <ActionButton name="Save" additionalStyles={styles.saveButton} />
     </form>
   );
 };

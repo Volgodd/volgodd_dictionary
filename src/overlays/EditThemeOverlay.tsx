@@ -1,8 +1,9 @@
-import { deleteThemeAction, deleteWordAction, editThemeAction } from 'data/api';
-import { findObjectIndex, findObjectIndexByIdList } from 'common/utils';
+import { deleteThemeAction, editThemeAction } from 'data/api';
 
 import ActionButton from 'components/buttons/action-button/ActionButton';
-import React from 'react';
+import { ParsedTheme } from 'types/data-types';
+import { findObjectIndex } from 'common/utils';
+import { getNonNullable } from 'types/utils';
 import { shallow } from 'zustand/shallow';
 import styles from './EditThemeOverlay.module.scss';
 import useDataStore from 'store/dataStore';
@@ -15,17 +16,20 @@ import useUserStorage from 'store/userStore';
 
 const EditThemeOverlay = () => {
   const { overlayMetadata, closeOverlay } = useOverlayStore(
-    (state) => ({ closeOverlay: state.closeOverlay, overlayMetadata: state.overlayMetadata }),
+    (state) => ({
+      closeOverlay: state.closeOverlay,
+      overlayMetadata: getNonNullable(state.overlayMetadata)
+    }),
     shallow
   );
 
-  const jwt = useUserStorage((state) => state.jwt);
+  const jwt = useUserStorage((state) => getNonNullable(state.jwt));
 
-  const { wordData, setWordData, themeData, setThemeData } = useDataStore(
+  const { wordData, themeData, setThemeData } = useDataStore(
     (state) => ({
-      wordData: state.wordData,
+      wordData: getNonNullable(state.wordData),
       setWordData: state.setWordData,
-      themeData: state.themeData,
+      themeData: getNonNullable(state.themeData),
       setThemeData: state.setThemeData
     }),
     shallow
@@ -37,14 +41,15 @@ const EditThemeOverlay = () => {
 
   const [theme, setTheme] = useState(themeName);
 
-  const { themeIdList } = wordData;
+  // const { themeIdList } = wordData;
 
-  const submitHandler = (e) => {
+  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const newThemeData = {
       name: theme,
-      id: themeId
+      id: themeId,
+      wordCount: 0
     };
 
     console.log({ jwt, data: newThemeData }, '====', newThemeData);
@@ -53,9 +58,17 @@ const EditThemeOverlay = () => {
       console.log('theme edited', data);
 
       // const newThemeDataWithId = { ...newThemeData, themeId };
-      const themeDataCopy = [...themeData];
+      // const themeDataCopy = [...themeData];
 
-      themeDataCopy.splice(themeIndex, 1, newThemeData);
+      // themeDataCopy.splice(themeIndex, 1, newThemeData);
+
+      const themeDataCopy = themeData.map((themeDataEntry, index) => {
+        if (index === themeIndex) {
+          return newThemeData;
+        }
+
+        return themeDataEntry;
+      });
 
       setThemeData(themeDataCopy);
       closeOverlay();
@@ -82,36 +95,36 @@ const EditThemeOverlay = () => {
 
     // wordData.map((wordData) => findObjectIndexByIdList (wordData, themeId))
 
-    const filteredWordData = wordData.filter((i) => i.themeIdList == themeId);
+    // const filteredWordData = wordData.filter((i) => i.themeIdList.includes(themeId));
     //возвращает арэй из объетов, содержащих айди темы
 
     // const wordsToDelete = [16546046840, 146545610];
 
-    function deleteWordSequence(wordIdArray) {
-      const wordsToDelete = [...wordIdArray];
+    // function deleteWordSequence(wordIdArray) {
+    //   const wordsToDelete = [...wordIdArray];
 
-      console.log(wordsToDelete, '======', filteredWordData);
+    //   console.log(wordsToDelete, '======', filteredWordData);
 
-      const deleteSingleWord = (wordObject) => {
-        const wordId = wordObject.id;
+    //   const deleteSingleWord = (wordObject) => {
+    //     const wordId = wordObject.id;
 
-        console.log(wordId);
+    //     console.log(wordId);
 
-        //   deleteWordAction({jwt, id: wordId}).then(() => {
-        //     const nextWordIndex = wordsToDelete.indexOf(wordObject) + 1
+    //   deleteWordAction({jwt, id: wordId}).then(() => {
+    //     const nextWordIndex = wordsToDelete.indexOf(wordObject) + 1
 
-        //     if (nextWordIndex < wordsToDelete.length) {
-        //       deleteSingleWord(wordsToDelete[nextWordIndex].id)
-        //     } else {
-        //       alert('All words have been deleted')
-        //     }
-        //   })
-      };
+    //     if (nextWordIndex < wordsToDelete.length) {
+    //       deleteSingleWord(wordsToDelete[nextWordIndex].id)
+    //     } else {
+    //       alert('All words have been deleted')
+    //     }
+    //   })
+    // };
 
-      deleteSingleWord(wordsToDelete[0]);
-    }
+    //   deleteSingleWord(wordsToDelete[0]);
+    // }
 
-    deleteWordSequence(filteredWordData);
+    // deleteWordSequence(filteredWordData);
 
     // эта функция работает некорректно, сервер выдает ошибку 500
   };
