@@ -10,8 +10,9 @@ import SearchOverlay from './SearchOverlay';
 import { shallow } from 'zustand/shallow';
 import styles from './Overlay.module.scss';
 import useOverlayStore from 'store/overlayStore';
+import { ReactElement } from 'react';
 
-const getOverlayTypeContent = (overlayType) => {
+const getOverlayTypeContent = (overlayType: string | undefined): {header: string; overlayContent: ReactElement}  => {
   switch (overlayType) {
     case OVERLAY_TYPES.ADD_WORD:
       return {
@@ -54,7 +55,9 @@ const getOverlayTypeContent = (overlayType) => {
     //   overlayContent: <BurgerOverlay />
     // };
     default:
-      return <></>;
+      return {
+        header: 'Learn mode',
+        overlayContent: <></>};
   }
 };
 

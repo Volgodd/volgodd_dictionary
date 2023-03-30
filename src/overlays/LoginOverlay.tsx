@@ -1,5 +1,4 @@
 import ActionButton from 'components/buttons/action-button/ActionButton';
-import React from 'react';
 import { loginAction } from 'data/api';
 import styles from './LoginOverlay.module.scss';
 import useOverlayStore from 'store/overlayStore';
@@ -10,13 +9,13 @@ const Login = () => {
   const closeOverlay = useOverlayStore((state) => state.closeOverlay);
   const setJwt = useUserStorage((state) => state.setJwt);
 
-  const [error, setError] = useState();
-  const [login, setLogin] = useState('');
-  const [password, setPassword] = useState('');
+  const [error, setError] = useState<string>();
+  const [login, setLogin] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
-  const submitHandler = async (e) => {
+  const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError();
+    setError('');
 
     try {
       const data = await loginAction({ login, password });
@@ -24,7 +23,8 @@ const Login = () => {
       setJwt({ jwt: data.jwt });
 
       closeOverlay();
-    } catch (e) {
+    } catch (e: any) {
+
       console.log('Err', e);
       setError(e.message);
     }
@@ -53,7 +53,7 @@ const Login = () => {
         />
       </div>
       {error && <div className={styles.loginInterfaceRow_error}>{error}</div>}
-      <ActionButton name="Login" styles={styles.saveButton} />
+      <ActionButton name="Login" additionalStyles={styles.saveButton} />
     </form>
   );
 };

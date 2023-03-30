@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-
+import  { useEffect } from 'react';
 import ActionButton from 'components/buttons/action-button/ActionButton';
 import DataEntryButton from 'components/buttons/data-entry-button/DataEntryButton';
 import { OVERLAY_TYPES } from 'common/constants';
@@ -7,14 +6,16 @@ import styles from './SearchOverlay.module.scss';
 import useDataStore from 'store/dataStore';
 import useOverlayStore from 'store/overlayStore';
 import { useState } from 'react';
+import type { Word } from 'types/data-types';
+import { getNonNullable } from 'types/utils';
 
 const { ADD_WORD } = OVERLAY_TYPES;
 
 const SearchOverlay = () => {
-  const [searchingItem, setSearchingItem] = useState('');
-  const [sortedWordData, setSortedWordData] = useState([]);
+  const [searchingItem, setSearchingItem] = useState<string>('');
+  const [sortedWordData, setSortedWordData] = useState<Word[]>([]);
 
-  const wordData = useDataStore((state) => state.wordData);
+  const wordData = useDataStore((state) => getNonNullable(state.wordData));
 
   const openOverlay = useOverlayStore((state) => state.openOverlay);
 

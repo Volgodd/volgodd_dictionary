@@ -31,8 +31,8 @@ const getButtonIcon = (type: string) => {
       return <SettingsIcon />;
     case 'visibilityIcon':
       return <VisibilityIcon />;
-    default:
-      return <PenIcon />;
+    case 'penIcon':
+     return <PenIcon />;
   }
 };
 
