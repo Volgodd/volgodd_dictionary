@@ -1,11 +1,10 @@
 import MiniButton from 'components/buttons/mini-button/MiniButton';
 import clsx from 'clsx';
 import styles from './Alert.module.scss';
-import { useState } from 'react';
 
-const Alert = ({ type }) => {
-  let customStyle;
-  let alertText;
+const Alert = (type: string ) => {
+  let customStyle: string;
+  let alertText: string = '';
 
   switch (type) {
     case 'green':
@@ -23,7 +22,7 @@ const Alert = ({ type }) => {
     <div className={styles.alertWrapper}>
       <div className={clsx(styles.alertFrame)}>
         <span>{alertText}</span>
-        <MiniButton additionalStyles={styles.closeButton} type="closeIcon" />
+        <MiniButton additionalStyles={styles.closeButton} type="closeIcon" onClickF={()=>{}}/>
       </div>
       <div className={styles.alertShade} />
     </div>

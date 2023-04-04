@@ -1,6 +1,11 @@
 import styles from './LearnButton.module.scss';
 
-const LearnButton = ({ name, onClickF }) => {
+type LearnButtonProps = {
+  name: string
+  onClickF?: ()=> void 
+}
+
+const LearnButton: React.FC<LearnButtonProps> = ({ name, onClickF }) => {
   if (!onClickF && !name) {
     return <input type="submit" className={styles.button} value="Save"></input>;
   }

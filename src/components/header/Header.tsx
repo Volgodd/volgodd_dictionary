@@ -7,7 +7,11 @@ import useOverlayStore from 'store/overlayStore';
 
 const { SEARCH, EDIT_THEME } = OVERLAY_TYPES;
 
-const Header = ({ title, themeId }) => {
+type HeaderProps = {
+  title?: string 
+  themeId?: string
+}
+const Header: React.FC<HeaderProps> = ({ title, themeId }) => {
   const openOverlay = useOverlayStore((state) => state.openOverlay);
 
   let navigate = useNavigate();

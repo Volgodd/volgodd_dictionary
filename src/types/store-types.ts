@@ -34,10 +34,10 @@ export type OverlayStore = {
   closeOverlay: () => void;
 };
 
-type SetThemesForLearnModeProps = { themesForLearnMode: DataId[] };
+//type SetThemesForLearnModeProps = { themesForLearnMode: ParsedTheme[] };
 
 export type LearnModeStore = {
-  themesForLearnMode: DataId[];
+  themesForLearnMode: ParsedTheme[];
   resetLearnModeStore: () => void;
-  setThemesForLearnMode: ({ themesForLearnMode }: SetThemesForLearnModeProps) => void;
+  setThemesForLearnMode: (themesForLearnMode: ParsedTheme[] ) => void;
 };

@@ -27,7 +27,6 @@ const ThemePage = () => {
 
           return (
             <DataEntryButton
-              type="themes"
               key={index}
               mainCellData={name}
               secondaryCellData={wordCount}
@@ -37,7 +36,7 @@ const ThemePage = () => {
           );
         })}
       </div>
-
+      
       <Footer />
     </div>
   );

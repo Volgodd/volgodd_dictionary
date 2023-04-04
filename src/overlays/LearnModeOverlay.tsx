@@ -1,5 +1,5 @@
 import { LEARN_MODES, ROUTES } from 'common/constants';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import Input from 'components/input/Input';
 import LearnButton from 'components/buttons/learn-button/LearnButton';
@@ -10,35 +10,43 @@ import useDataStore from 'store/dataStore';
 import useLearnModeStore from 'store/learnModeStore';
 import { useNavigate } from 'react-router-dom/dist/index';
 import useOverlayStore from 'store/overlayStore';
+import type { ParsedTheme, DataId } from 'types/data-types';
+import { getNonNullable } from 'types/utils';
 
 const { LEARN_MODE } = ROUTES;
 const { FLASH_CARDS } = LEARN_MODES;
 
 const LearnModeOverlay = () => {
-  const [checkedThemes, setCheckedThemes] = useState([]);
+  ///// ошибка!
+  const [checkedThemes, setCheckedThemes] = useState<ParsedTheme[]>([]);
   const closeOverlay = useOverlayStore((state) => state.closeOverlay);
   const navigate = useNavigate();
   const setThemesForLearnMode = useLearnModeStore((state) => state.setThemesForLearnMode);
 
   const { themeData } = useDataStore(
     (state) => ({
-      wordData: state.wordData,
-      themeData: state.themeData
+      wordData: getNonNullable(state.wordData),
+      themeData: getNonNullable(state.themeData)
     }),
     shallow
   );
 
-  const submitHandler = (e) => {
+  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (checkedThemes.length !== 0) {
       navigate(`${LEARN_MODE}/${FLASH_CARDS}`);
       closeOverlay();
-      setThemesForLearnMode({ themesForLearnMode: checkedThemes });
+      setThemesForLearnMode(checkedThemes);
     }
   };
 
-  const addThemesIfChecked = ({ checked, themeIndex, themeId }) => {
+  type addThemesIfCheckedProps = {
+    checked: boolean
+    themeIndex: number
+    themeId: DataId
+  }
+  const addThemesIfChecked = ({ checked, themeIndex, themeId }: addThemesIfCheckedProps) => {
     const newCheckedThemes = [...checkedThemes];
 
     if (checked) {
@@ -51,7 +59,7 @@ const LearnModeOverlay = () => {
     setCheckedThemes(newCheckedThemes);
   };
 
-  const longThemeNameSafeguard = (name) => {
+  const longThemeNameSafeguard = (name: string) => {
     const wordArray = name.split(' ');
     const threeDots = '...';
 
@@ -80,7 +88,7 @@ const LearnModeOverlay = () => {
                   value={name}
                   key={id}
                   id={id}
-                  onChangeF={(checked) => addThemesIfChecked({ checked, themeIndex, themeId: id })}
+                  onChangeF={(checked: boolean) => addThemesIfChecked({ checked, themeIndex, themeId: id })}
                 />
               );
             })}

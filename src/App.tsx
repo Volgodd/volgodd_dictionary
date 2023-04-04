@@ -5,7 +5,6 @@ import { DEFAULT_ALERT_OVERLAY_STATE, OVERLAY_TYPES, ROUTES } from './common/con
 import { useEffect, useState } from 'react';
 
 import AlertOverLay from 'overlays/AlertOverlay';
-import BurgerOverlay from 'overlays/BurgerOverlay';
 import { GlobalContextProvider } from 'providers/GlobalContext';
 import LearnPage from 'pages/learn-page/LearnPage';
 import Overlay from './overlays/Overlay';

@@ -1,11 +1,17 @@
 import clsx from 'clsx';
 import styles from './Input.module.scss';
 import { useState } from 'react';
+import type { DataId } from 'types/data-types';
 
-const Input = ({ value, id, onChangeF }) => {
-  const [isChecked, setIsChecked] = useState(false);
+type InputProps = {
+  value: string
+   id: DataId
+   onChangeF: (checked: boolean) => void
+}
+const Input: React.FC<InputProps> = ({ value, id, onChangeF }) => {
+  const [isChecked, setIsChecked] = useState<boolean>(false);
 
-  const checkboxHandler = (e) => {
+  const checkboxHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { checked } = e.target;
     setIsChecked(checked);
     onChangeF(checked);

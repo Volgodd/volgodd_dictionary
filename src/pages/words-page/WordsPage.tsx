@@ -9,19 +9,22 @@ import { findObjectIndex } from 'common/utils';
 import { shallow } from 'zustand/shallow';
 import styles from './WordsPage.module.scss';
 import useDataStore from 'store/dataStore';
+import { getNonNullable } from 'types/utils';
 
 const WordsPage = () => {
   const navigate = useNavigate();
   const { themeIdUrlParam } = useParams();
   const { wordData, themeData } = useDataStore(
     (state) => ({
-      wordData: state.wordData,
-      themeData: state.themeData
+      wordData: getNonNullable(state.wordData),
+      themeData: getNonNullable(state.themeData)
     }),
     shallow
   );
 
-  const themeIndex = findObjectIndex(themeData, themeIdUrlParam);
+  const themeId = getNonNullable(themeIdUrlParam);
+
+  const themeIndex = findObjectIndex(themeData, themeId);
 
   useEffect(() => {
     if (wordData.length === 0 || !themeData[themeIndex]) {
@@ -43,7 +46,7 @@ const WordsPage = () => {
               }
               //????
 
-              if (themeIdList.indexOf(themeIdUrlParam) > -1) {
+              if (themeIdList.indexOf(themeId) > -1) {
                 return true;
               }
 
@@ -54,7 +57,6 @@ const WordsPage = () => {
 
               return (
                 <DataEntryButton
-                  dataArray={wordData}
                   key={id}
                   wordId={id}
                   mainCellData={foreign}
