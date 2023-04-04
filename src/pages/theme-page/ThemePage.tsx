@@ -3,7 +3,6 @@ import Footer from 'components/footer/Footer';
 import Header from 'components/header/Header';
 import MetaTags from 'common/MetaTags';
 import { ROUTES } from 'common/constants';
-import React from 'react';
 import styles from './ThemePage.module.scss';
 import useDataStore from 'store/dataStore';
 import { useNavigate } from 'react-router-dom';
@@ -23,13 +22,15 @@ const ThemePage = () => {
         {themeData?.map((theme, index) => {
           const { name, wordCount, id } = theme;
 
+          const wordsAmount = wordCount.toString();
+
           const btnFunction = () => navigate(`${WORDS}/${id}`);
 
           return (
             <DataEntryButton
               key={index}
               mainCellData={name}
-              secondaryCellData={wordCount}
+              secondaryCellData={wordsAmount}
               onClickF={btnFunction}
               color={'orange'}
             />

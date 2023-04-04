@@ -1,4 +1,4 @@
-import type { DataId, JWTType, ParsedTheme, RawTheme, Word } from './data-types';
+import type { JWTType, ParsedTheme, RawTheme, Word } from './data-types';
 
 import type { OVERLAY_TYPES } from 'common/constants';
 

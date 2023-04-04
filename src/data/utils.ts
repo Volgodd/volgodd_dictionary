@@ -29,8 +29,6 @@ export const parseThemeData = ({
       } else {
         wordCountForThemeIdsCollection[themeId] = wordCountForThemeIdsCollection[themeId] + 1;
       }
-
-      // console.log(wordCountForThemeIdsCollection);
     });
   });
 

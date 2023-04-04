@@ -17,7 +17,7 @@ import { getNonNullable } from 'types/utils';
 
 type DataEntryButtonProps = {
   mainCellData: string
-  secondaryCellData: string | number
+  secondaryCellData: string
   color?: string
   onClickF?: () => void
   expandAreaText?: string
