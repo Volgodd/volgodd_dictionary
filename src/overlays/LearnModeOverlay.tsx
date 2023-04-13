@@ -1,7 +1,7 @@
 import { LEARN_MODES, ROUTES } from 'common/constants';
 import { useState } from 'react';
 
-import Input from 'components/input/Input';
+import InputThemeChoice from 'components/input-theme-choice/InputThemeChoice';
 import LearnButton from 'components/buttons/learn-button/LearnButton';
 import { findObjectIndex } from 'common/utils';
 import { shallow } from 'zustand/shallow';
@@ -12,30 +12,39 @@ import { useNavigate } from 'react-router-dom/dist/index';
 import useOverlayStore from 'store/overlayStore';
 import type { ParsedTheme, DataId } from 'types/data-types';
 import { getNonNullable } from 'types/utils';
+import ToggleSwitch from 'components/toggle-switch/ToggleSwitch';
 
 const { LEARN_MODE } = ROUTES;
-const { FLASH_CARDS } = LEARN_MODES;
+const { FLASH_CARDS, WRITING_MODE } = LEARN_MODES;
 
 const LearnModeOverlay = () => {
-  ///// ошибка!
   const [checkedThemes, setCheckedThemes] = useState<ParsedTheme[]>([]);
   const closeOverlay = useOverlayStore((state) => state.closeOverlay);
   const navigate = useNavigate();
-  const setThemesForLearnMode = useLearnModeStore((state) => state.setThemesForLearnMode);
+
+  const {setThemesForLearnMode, setTranslationFirst, translationFirst} = useLearnModeStore(
+    (state) => ({
+      setThemesForLearnMode: state.setThemesForLearnMode,
+      setTranslationFirst: state.setTranslationFirst,
+      translationFirst: state.translationFirst
+  }), shallow )
 
   const { themeData } = useDataStore(
     (state) => ({
       wordData: getNonNullable(state.wordData),
       themeData: getNonNullable(state.themeData)
-    }),
-    shallow
-  );
+    }), shallow )
 
-  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const submitHandler = (type: string) => {
 
+    
     if (checkedThemes.length !== 0) {
-      navigate(`${LEARN_MODE}/${FLASH_CARDS}`);
+      if (type === 'flash-cards') 
+        { 
+          navigate(`${LEARN_MODE}/${FLASH_CARDS}`)
+        } else if (type === 'writing-mode') {
+          navigate(`${LEARN_MODE}/${WRITING_MODE}`)
+        }
       closeOverlay();
       setThemesForLearnMode(checkedThemes);
     }
@@ -55,50 +64,37 @@ const LearnModeOverlay = () => {
       const currentIndex = findObjectIndex(newCheckedThemes, themeId);
       newCheckedThemes.splice(currentIndex);
     }
-
     setCheckedThemes(newCheckedThemes);
   };
 
-  const longThemeNameSafeguard = (name: string) => {
-    const wordArray = name.split(' ');
-    const threeDots = '...';
-
-    const checkedWords = wordArray.map((item) => {
-      if (item.length <= 13) {
-        return item;
-      } else return item.slice(0, 11).concat(threeDots);
-    });
-
-    return checkedWords.toString().replaceAll(',', ' ');
-  };
-
   return (
-    <>
-      <form onSubmit={submitHandler} className={styles.formWrapper}>
-        <span className={styles.headerSpan}>Select themes to learn:</span>
-        <div className={styles.scrollPadContainer}>
-          <div className={styles.scrollPad}>
-            {themeData.map((theme) => {
-              const { name, id } = theme;
-              const themeIndex = findObjectIndex(themeData, id);
-              // const themeNameWithDots = longThemeNameSafeguard(name);
-              // решено при помощи css
-              return (
-                <Input
-                  value={name}
-                  key={id}
-                  id={id}
-                  onChangeF={(checked: boolean) => addThemesIfChecked({ checked, themeIndex, themeId: id })}
-                />
-              );
-            })}
-          </div>
+    <div  className={styles.formWrapper}>
+      <span className={styles.headerSpan}>Select themes to learn:</span>
+      <div className={styles.scrollPadContainer}>
+        <div className={styles.scrollPad}>
+          {themeData.map((theme) => {
+            const { name, id } = theme;
+            const themeIndex = findObjectIndex(themeData, id);
+            return (
+              <InputThemeChoice
+                value={name}
+                key={id}
+                id={id}
+                onChangeF={(checked: boolean) => addThemesIfChecked({ checked, themeIndex, themeId: id })}
+              />
+            );
+          })}
         </div>
-        <div className={styles.buttonContainer}>
-          <LearnButton name={'Flashcards'} />
-        </div>
-      </form>
-    </>
+      </div>
+      <div className={styles.toggleContainer}>
+        <span>Translation first:</span>
+        <ToggleSwitch defaultCheckedValue={translationFirst} onChangeF={(checked: boolean)  => setTranslationFirst(checked)}/>
+      </div>
+      <div className={styles.buttonContainer}>
+        <LearnButton name={'Flashcards'}  onClickF={() => submitHandler(FLASH_CARDS)}/>
+        <LearnButton name={'Writing mode'} onClickF={()=> submitHandler(WRITING_MODE)} />
+      </div>
+    </div>
   );
 };
 

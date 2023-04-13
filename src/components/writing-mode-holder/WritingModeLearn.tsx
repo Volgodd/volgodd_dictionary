@@ -1,24 +1,27 @@
 import { useEffect, useState } from 'react';
 
 import Header from 'components/header/Header';
-import LearnButton from 'components/buttons/learn-button/LearnButton';
 import MiniButton from 'components/buttons/mini-button/MiniButton';
-import { chooseRandomWord } from './utils';
+import { chooseRandomWord, splitedString } from '../flashcards-holder/utils';
 import clsx from 'clsx';
-import styles from './Flashcard.module.scss';
+import styles from './WritingModeLearn.module.scss';
 import useDataStore from 'store/dataStore';
 import useLearnModeStore from 'store/learnModeStore';
 import type { DataId, Word } from 'types/data-types';
 import { getNonNullable } from 'types/utils';
+import Input from 'components/input/Input';
+import LearnButton from 'components/buttons/learn-button/LearnButton';
 import { shallow } from 'zustand/shallow';
 
-const Flashcard = () => {
-  const {themesForLearnMode, translationFirst} = useLearnModeStore( 
-    (state) => ({
-      themesForLearnMode: state.themesForLearnMode,
-      translationFirst: state.translationFirst
-    }), shallow
-    );
+
+const WritingModeLearn = () => {
+
+const {themesForLearnMode, translationFirst} = useLearnModeStore( 
+  (state) => ({
+    themesForLearnMode: state.themesForLearnMode,
+    translationFirst: state.translationFirst
+  }), shallow
+  );
 
   const wordData = useDataStore((state) => getNonNullable(state.wordData));
 
@@ -26,7 +29,9 @@ const Flashcard = () => {
   const [themeIdArr, setThemeIdArr] = useState<DataId[]>([]);
   const [wordListArr, setWordListArr] = useState<Word[]>([]);
   const [currentWord, setCurrentWord] = useState<Word>();
-
+  const [userTyping, setUserTyping] = useState<string | undefined>('');
+  const [answerIsCorrect, setAnswerIsCorrect] = useState<boolean>(true)
+  
   useEffect(() => {
     const newThemeIdArr = themesForLearnMode ? themesForLearnMode.map((theme) => theme.id) : [];
 
@@ -46,16 +51,38 @@ const Flashcard = () => {
     }
   }, [wordListArr]);
 
-  const knowButtonF = () => {
+const isTypingCorrect = () => {
+  const clearedUserTyping = splitedString(userTyping);
+  const clearedNative = splitedString(currentWord?.native);
+  const clearedForeign = splitedString(currentWord?.foreign);
+
+  if(translationFirst && clearedUserTyping === clearedForeign) {
+    return true
+  } 
+
+  if(!translationFirst && clearedUserTyping === clearedNative)  {
+    return true
+  } else return false
+}
+
+const checkUserInput = () => {
+  isTypingCorrect() ? correctUserAnswerF() : incorrectUserAnswerF();
+}
+
+  const correctUserAnswerF = () => {
     const currentWordId = currentWord && currentWord.id;
     const newWordListArray = wordListArr.filter((wordEntry) => wordEntry.id !== currentWordId);
     setWordListArr(newWordListArray);
     setTranslateVisibility(false);
+    setUserTyping('')
+    setAnswerIsCorrect(true)
   };
 
-  const dontKnowButtonF = () => {
-    setCurrentWord(chooseRandomWord(wordListArr));
-    setTranslateVisibility(false);
+  const incorrectUserAnswerF = () => {
+    setTranslateVisibility(true);
+    setUserTyping('');
+
+    setAnswerIsCorrect(false)
   };
 
   const addActiveClass = () => {
@@ -68,26 +95,28 @@ const Flashcard = () => {
     <>
       <Header />
       {wordListArr.length !== 0 && (
-        <div className={styles.flashcardWrapper}>
+        <div className={clsx(styles.flashcardWrapper, !answerIsCorrect &&'active')}>
           <div className={styles.mainContent}>
             <div>{translationFirst ? currentWord?.native : currentWord?.foreign}</div>
+            <span className={styles.spanElement}>Type the translation below:</span>
+            <Input onChangeF={(e: React.ChangeEvent<HTMLInputElement>)=> setUserTyping(e.target.value)} customValue={userTyping}/>
+          </div>
             <div className={styles.nativeWrapper}>
               <MiniButton
+              title={'click here to see a tip'}
                 onClickF={() => setTranslateVisibility(!translateVisibility)}
                 type={'visibilityIcon'}
                 additionalStyles={addActiveClass()}
                 bigger={true}
               />
-              <div className={clsx(styles.native, translateVisibility && 'active')}>
+              <div className={clsx(styles.native, translateVisibility &&'active')}>
                 {translationFirst ? currentWord?.foreign : currentWord?.native}
               </div>
             </div>
+            <LearnButton name={'check'} onClickF={()=> checkUserInput()
+            }/>
           </div>
-          <div className={styles.buttonContainer}>
-            <LearnButton name={'Still learning'} onClickF={dontKnowButtonF} />
-            <LearnButton name={'Know'} onClickF={knowButtonF} />
-          </div>
-        </div>
+
       )}
 
       {wordListArr.length === 0 && (
@@ -98,4 +127,4 @@ const Flashcard = () => {
     </>
   );
 };
-export default Flashcard;
+export default WritingModeLearn;

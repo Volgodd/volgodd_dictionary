@@ -38,6 +38,8 @@ export type OverlayStore = {
 
 export type LearnModeStore = {
   themesForLearnMode: ParsedTheme[];
+  translationFirst: boolean
   resetLearnModeStore: () => void;
   setThemesForLearnMode: (themesForLearnMode: ParsedTheme[] ) => void;
+  setTranslationFirst: (arg: boolean) => void
 };

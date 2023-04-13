@@ -5,8 +5,9 @@ import Flashcard from 'components/flashcards-holder/Flashcard';
 import { LEARN_MODES } from 'common/constants';
 import styles from './LearnPage.module.scss';
 import useLearnModeStore from 'store/learnModeStore';
+import WritingModeLearn from 'components/writing-mode-holder/WritingModeLearn';
 
-const { FLASH_CARDS } = LEARN_MODES;
+const { FLASH_CARDS, WRITING_MODE } = LEARN_MODES;
 
 const LearnPage = () => {
   const { learnModeId } = useParams();
@@ -22,7 +23,9 @@ const LearnPage = () => {
 
   return (
     <>
-      <div className={styles.main}>{learnModeId === FLASH_CARDS && <Flashcard />}</div>
+      <div className={styles.main}>{learnModeId === FLASH_CARDS && <Flashcard />}
+      {learnModeId ===  WRITING_MODE && <WritingModeLearn/>}
+      </div>
     </>
   );
 };

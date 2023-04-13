@@ -1,7 +1,6 @@
 import { deleteThemeAction, editThemeAction } from 'data/api';
 
 import ActionButton from 'components/buttons/action-button/ActionButton';
-import { ParsedTheme } from 'types/data-types';
 import { findObjectIndex } from 'common/utils';
 import { getNonNullable } from 'types/utils';
 import { shallow } from 'zustand/shallow';
@@ -10,6 +9,7 @@ import useDataStore from 'store/dataStore';
 import useOverlayStore from 'store/overlayStore';
 import { useState } from 'react';
 import useUserStorage from 'store/userStore';
+import Input from 'components/input/Input';
 
 // eslint-disable-line no-alert
 /* eslint-disable no-restricted-globals */
@@ -39,7 +39,7 @@ const EditThemeOverlay = () => {
   const themeIndex = findObjectIndex(themeData, themeId);
   const themeName = themeData[themeIndex].name;
 
-  const [theme, setTheme] = useState(themeName);
+  const [theme, setTheme] = useState<string>(themeName);
 
   // const { themeIdList } = wordData;
 
@@ -52,7 +52,7 @@ const EditThemeOverlay = () => {
       wordCount: 0
     };
 
-    console.log({ jwt, data: newThemeData }, '====', newThemeData);
+    // console.log({ jwt, data: newThemeData }, '====', newThemeData);
 
     editThemeAction({ jwt, data: newThemeData, id: themeId }).then((data) => {
       console.log('theme edited', data);
@@ -75,9 +75,7 @@ const EditThemeOverlay = () => {
     });
   };
 
-  const deleteThemeAndWords = () => {
-    // удаление  темы работает, но консоль ругается, что в хедере name undefined, т.к. аррэй с темами пуст
-
+  const deleteTheme = () => {
     const alertMessage =
       'Are your sure you want to delete theme? All words in current theme will be deleted';
     if (confirm(alertMessage) === true) {
@@ -88,57 +86,15 @@ const EditThemeOverlay = () => {
         closeOverlay();
       });
     }
-    // wordData.themeIdList.toString()
-
-    // const words = findObjectIndexByIdList(wordData, themeId);
-    // console.log(words)
-
-    // wordData.map((wordData) => findObjectIndexByIdList (wordData, themeId))
-
-    // const filteredWordData = wordData.filter((i) => i.themeIdList.includes(themeId));
-    //возвращает арэй из объетов, содержащих айди темы
-
-    // const wordsToDelete = [16546046840, 146545610];
-
-    // function deleteWordSequence(wordIdArray) {
-    //   const wordsToDelete = [...wordIdArray];
-
-    //   console.log(wordsToDelete, '======', filteredWordData);
-
-    //   const deleteSingleWord = (wordObject) => {
-    //     const wordId = wordObject.id;
-
-    //     console.log(wordId);
-
-    //   deleteWordAction({jwt, id: wordId}).then(() => {
-    //     const nextWordIndex = wordsToDelete.indexOf(wordObject) + 1
-
-    //     if (nextWordIndex < wordsToDelete.length) {
-    //       deleteSingleWord(wordsToDelete[nextWordIndex].id)
-    //     } else {
-    //       alert('All words have been deleted')
-    //     }
-    //   })
-    // };
-
-    //   deleteSingleWord(wordsToDelete[0]);
-    // }
-
-    // deleteWordSequence(filteredWordData);
-
-    // эта функция работает некорректно, сервер выдает ошибку 500
   };
 
   return (
     <>
       <form onSubmit={submitHandler} className={styles.addThemeInterface}>
         <div className={styles.addThemeInterfaceRow}>
-          <input
-            type="text"
-            className="inputElement"
-            onChange={(e) => setTheme(e.target.value)}
-            value={theme}
-            required
+          <Input
+            onChangeF={(e:  React.ChangeEvent<HTMLInputElement>) =>  setTheme(e.target.value)}
+            customValue={theme}
           />
         </div>
         <div className={styles.buttonContainer}>
@@ -149,7 +105,7 @@ const EditThemeOverlay = () => {
         <ActionButton
           name="Delete"
           additionalStyles={styles.deleteButton}
-          onClickF={() => deleteThemeAndWords()}
+          onClickF={() => deleteTheme()}
         />
       </div>
     </>

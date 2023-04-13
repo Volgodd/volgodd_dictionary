@@ -19,8 +19,6 @@ const { MAIN_PAGE, WORDS, LEARN_MODE } = ROUTES;
 
 function App() {
   const [alertOverlay, setAlertOverlay] = useState(DEFAULT_ALERT_OVERLAY_STATE);
-  //не используется, но компонент есть
-  const [burgerOverlay, setBurgerOverlay] = useState(false);
 
   const jwt = useUserStorage((state) => state.jwt);
 
@@ -71,7 +69,6 @@ function App() {
         {/* <Link to={MAIN_PAGE}>Main Page</Link>
         <Link to={ADD_WORD_PAGE}>Add word</Link> */}
         {overlayType && <Overlay />}
-        {/* {burgerOverlay && <BurgerOverlay />} */}
         {alertOverlay.type && <AlertOverLay />}
         {jwt && (
           <Routes>
