@@ -8,6 +8,7 @@ import useDataStore from 'store/dataStore';
 import useOverlayStore from 'store/overlayStore';
 import { useState } from 'react';
 import useUserStorage from 'store/userStore';
+import Input from 'components/input/Input';
 
 const AddThemeOverlay = () => {
   const jwt = useUserStorage((state) => getNonNullable(state.jwt));
@@ -38,14 +39,10 @@ const AddThemeOverlay = () => {
   return (
     <form onSubmit={submitHandler} className={styles.addThemeInterface}>
       <div className={styles.addThemeInterfaceRow}>
-        <input
-          type="text"
-          placeholder="Theme name"
-          className="inputElement"
-          onChange={(e) => setTheme(e.target.value)}
-          value={theme}
-          required
-        />
+      <Input
+            onChangeF={(e:  React.ChangeEvent<HTMLInputElement>) =>  setTheme(e.target.value)}
+            customValue={theme}
+          />
       </div>
       <ActionButton name="Save" additionalStyles={styles.saveButton} />
     </form>

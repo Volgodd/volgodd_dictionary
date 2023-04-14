@@ -47,7 +47,9 @@
 
 .buttonContainer {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  gap: 1rem;
 }
 
 .deleteButtonWrapper {
@@ -57,4 +59,21 @@
 
 .scrollPadContainer {
   width: 100%;
+}
+
+
+.toggleContainer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: $clusterSize;
+  margin-block: $clusterSizeX2;
+
+
+  > span {
+    font-family: $fontRoboto;
+    font-size: $fontSize14;
+    font-weight: $fontWeightNormal;
+    color: $colorWhite
+  }
 }

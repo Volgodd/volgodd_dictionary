@@ -11,7 +11,8 @@ export const ROUTES = {
 };
 
 export const LEARN_MODES = {
-  FLASH_CARDS: 'flash-cards'
+  FLASH_CARDS: 'flash-cards',
+  WRITING_MODE: 'writing-mode'
 };
 
 // export const OVERLAY_TYPES = {

@@ -1,14 +1,13 @@
 import type { LearnModeStore } from 'types/store-types';
 import { create } from 'zustand';
-import type { ParsedTheme } from 'types/data-types';
 
-
-const defaultLearnModeStore = { themesForLearnMode: [] };
+const defaultLearnModeStore = { themesForLearnMode: [],   translationFirst: true};
 
 const useLearnModeStore = create<LearnModeStore>((set) => ({
   ...defaultLearnModeStore,
   resetLearnModeStore: () => set(defaultLearnModeStore),
-  setThemesForLearnMode: ( themesForLearnMode  ) => set({ themesForLearnMode})
+  setThemesForLearnMode: ( themesForLearnMode  ) => set({ themesForLearnMode}),
+  setTranslationFirst: (translationFirst) => set ({translationFirst})
 }));
 
 export default useLearnModeStore;

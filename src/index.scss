@@ -21,6 +21,7 @@ html {
 
 .inputElement {
   height: $clusterSizeX4;
+  width: 100%;
   padding-inline: $clusterSize;
   padding-block: $clusterSize;
   border-radius: $borderRadius05;

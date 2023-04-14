@@ -42,6 +42,7 @@ type MiniButtonProps = {
   onClickF: () => void;
   transparent?: boolean;
   bigger?: boolean;
+  title?: string
 };
 
 const MiniButton: React.FC<MiniButtonProps> = ({
@@ -49,10 +50,10 @@ const MiniButton: React.FC<MiniButtonProps> = ({
   additionalStyles,
   onClickF,
   transparent = false,
-  bigger = false
+  bigger = false, title
 }) => {
   return (
-    <div className={clsx(styles.miniButtonContainer, additionalStyles)}>
+    <div className={clsx(styles.miniButtonContainer, additionalStyles)} title={title}>
       <button
         type="button"
         className={clsx(
