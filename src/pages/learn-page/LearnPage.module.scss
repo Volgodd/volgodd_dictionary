@@ -3,10 +3,14 @@
 .main {
   display: grid;
   height: 100%;
-  grid-template-rows: 10% auto 8%;
+  grid-template-rows: 10% auto;
   position: relative;
-  padding-inline: $clusterSizeX2;
   justify-content: center;
+
+   // styles for Safari
+   max-width: $clusterSizeX10 * 4;
+   max-height: 100vh;
+   margin: 0 auto;
 }
 
 .mainContent {
