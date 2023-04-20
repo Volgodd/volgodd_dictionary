@@ -23,4 +23,6 @@
   overflow-y: auto;
   box-sizing: border-box;
   height: $clusterSizeX10 * 3;
+  scrollbar-color: $colorWhite $colorGray75;
+  scrollbar-width: thin;
 }

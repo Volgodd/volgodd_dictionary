@@ -33,6 +33,13 @@ html {
   resize: none;
   font-family: Arial, Helvetica, sans-serif;
 
+  //styles for firefox
+  &:-webkit-autofill {
+    /* also works for firefox! */
+    filter: none; /* u need this for firefox */
+    box-shadow: 0 0 0 100px $colorGray75 inset;
+  }
+
   &::placeholder {
     color: $colorGray20;
     opacity: 0.6;
@@ -69,4 +76,9 @@ html {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: $colorWhite;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: $colorWhite $colorGray75;
 }
