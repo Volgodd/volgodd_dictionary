@@ -6,6 +6,11 @@
   grid-template-rows: 10% auto 8%;
   position: relative;
   padding-inline: $clusterSizeX2;
+
+   // styles for Safari
+  max-width: $clusterSizeX10 * 4;
+  max-height: 100vh;
+  margin: 0 auto;
 }
 
 .mainContent {
