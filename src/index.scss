@@ -1,10 +1,13 @@
 @import './css/variables.scss';
+@import 'css/breakpoints.scss';
 
 body,
 html {
   font-size: 12px;
   font-family: Arial, Helvetica, sans-serif;
   background-color: $colorGray50;
+  padding: 0;
+  margin: 0;
 }
 
 #root {
@@ -13,10 +16,13 @@ html {
   max-height: 100vh;
   margin: auto;
   aspect-ratio: 9/16;
+  padding: $clusterSizeX05 0 $clusterSize 0;
 }
 
 * {
   box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: $colorWhite $colorGray75;
 }
 
 .inputElement {
@@ -32,6 +38,10 @@ html {
   color: $colorGray20;
   resize: none;
   font-family: Arial, Helvetica, sans-serif;
+
+  @include for-phone-600 {
+    font-size: $fontSize12;
+  }
 
   //styles for firefox
   &:-webkit-autofill {
@@ -76,9 +86,4 @@ html {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: $colorWhite;
-}
-
-* {
-  scrollbar-width: thin;
-  scrollbar-color: $colorWhite $colorGray75;
 }

@@ -1,4 +1,5 @@
 @import '../css/variables.scss';
+@import 'css/breakpoints.scss';
 
 .overlayWrapper {
   position: absolute;
@@ -24,6 +25,10 @@
   position: relative;
   width: 100%;
   padding: $clusterSizeX2;
+
+  @include for-phone-600 {
+    padding: $clusterSize;
+  }
 }
 
 .overlayShade {
@@ -47,6 +52,10 @@
   justify-content: center;
   font-family: $fontRoboto;
   font-weight: $fontWeightBold;
+
+  @include for-phone-600 {
+    font-size: $fontSize16;
+  }
 }
 
 .closeButton {

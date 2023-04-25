@@ -1,19 +1,11 @@
-@import '../../css/variables.scss';
+@import 'css/variables.scss';
+@import 'css/breakpoints.scss';
+@import 'css/mixins.scss';
 
 .main {
-  display: grid;
-  height: 100%;
-  grid-template-rows: 10% auto 8%;
-  position: relative;
-  padding-inline: $clusterSizeX2;
-
-  // styles for Safari
-  max-width: $clusterSizeX10 * 4;
-  max-height: 100vh;
-  margin: 0 auto;
+  @include pages-main;
 }
 
 .mainContent {
-  flex-grow: 1;
-  overflow-y: auto;
+  @include pages-main-content;
 }

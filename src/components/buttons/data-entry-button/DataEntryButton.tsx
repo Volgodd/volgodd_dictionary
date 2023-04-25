@@ -1,29 +1,28 @@
+import type { DataId } from 'types/data-types';
 import MiniButton from '../mini-button/MiniButton';
 import { OVERLAY_TYPES } from 'common/constants';
 import clsx from 'clsx';
 import { deleteWordAction } from 'data/api';
 import { findObjectIndex } from 'common/utils';
+import { getNonNullable } from 'types/utils';
 import { shallow } from 'zustand/shallow';
 import styles from './DataEntryButton.module.scss';
 import useDataStore from 'store/dataStore';
 import useOverlayStore from 'store/overlayStore';
 import { useState } from 'react';
 import useUserStorage from 'store/userStore';
-import type { DataId } from 'types/data-types';
-import { getNonNullable } from 'types/utils';
 
 // eslint-disable-line no-alert
 /* eslint-disable no-restricted-globals */
 
 type DataEntryButtonProps = {
-  mainCellData: string
-  secondaryCellData: string
-  color?: string
-  onClickF?: () => void
-  expandAreaText?: string
-  wordId?: DataId 
-}
-
+  mainCellData: string;
+  secondaryCellData: string;
+  color?: string;
+  onClickF?: () => void;
+  expandAreaText?: string;
+  wordId?: DataId;
+};
 
 const DataEntryButton: React.FC<DataEntryButtonProps> = ({
   mainCellData,
@@ -77,7 +76,7 @@ const DataEntryButton: React.FC<DataEntryButtonProps> = ({
     }
   };
 
-  const getColor = (color: string ): string => {
+  const getColor = (color: string): string => {
     switch (color) {
       case 'orange':
         return styles.textButton_accent2;
@@ -90,7 +89,9 @@ const DataEntryButton: React.FC<DataEntryButtonProps> = ({
 
   return (
     <div className={styles.wrapper}>
-      <button className={clsx(styles.textButton, color && getColor(color))} onClick={onClickHandler}>
+      <button
+        className={clsx(styles.textButton, color && getColor(color))}
+        onClick={onClickHandler}>
         <span className={styles.mainCell}>{mainCellData}</span>
         <span className={styles.secondaryCell}>{secondaryCellData}</span>
       </button>
@@ -101,7 +102,7 @@ const DataEntryButton: React.FC<DataEntryButtonProps> = ({
               type={'penIcon'}
               onClickF={() => openOverlay({ overlayType: EDIT_WORD, overlayMetadata: wordId })}
             />
-            <MiniButton type="deleteIcon" onClickF={() => wordId &&deleteWord(wordId)} />
+            <MiniButton type="deleteIcon" onClickF={() => wordId && deleteWord(wordId)} />
           </div>
           <div className={styles.description}>
             {examplesExist() ? expandAreaText : 'Examples not found'}

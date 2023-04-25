@@ -1,4 +1,5 @@
-@import '../css/variables.scss';
+@import 'css/variables.scss';
+@import 'css/breakpoints.scss';
 
 .searchInterface {
   display: grid;
@@ -25,4 +26,8 @@
   height: $clusterSizeX10 * 3;
   scrollbar-color: $colorWhite $colorGray75;
   scrollbar-width: thin;
+
+  @include for-phone-447 {
+    height: $clusterSizeX10 * 2.5;
+  }
 }

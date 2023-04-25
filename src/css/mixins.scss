@@ -1,0 +1,28 @@
+@import 'css/variables.scss';
+@import 'css/breakpoints.scss';
+
+@mixin pages-main {
+  @content;
+
+  display: grid;
+  height: 100%;
+  grid-template-rows: min-content auto min-content;
+  position: relative;
+  padding-inline: $clusterSizeX2;
+
+  // styles for Safari
+  max-width: $clusterSizeX10 * 4;
+  max-height: 100vh;
+  margin: 0 auto;
+
+  @include for-phone-370 {
+    padding-inline: $clusterSize;
+  }
+}
+
+@mixin pages-main-content {
+  @content;
+
+  flex-grow: 1;
+  overflow-y: auto;
+}
