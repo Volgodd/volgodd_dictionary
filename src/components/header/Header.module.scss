@@ -1,16 +1,14 @@
 @import '../../css/variables.scss';
+@import 'css/breakpoints.scss';
 
 .wrapper {
   display: inline-grid;
-  grid-template-columns: 1fr 5fr 1fr 1fr;
+  grid-template-columns: $clusterSizeX4 1fr $clusterSizeX4 $clusterSizeX4;
   width: 100%;
   align-items: center;
 
-  > h2 {
-    font-size: $fontSize24;
-    font-weight: $fontWeightBold;
-    color: $colorWhite;
-    margin-left: $clusterSize;
+  &_mainPage {
+    grid-template-columns: 1fr $clusterSizeX4;
   }
 
   > div,
@@ -21,4 +19,23 @@
 
 .backButton.active {
   display: block;
+}
+
+.headerText {
+  font-size: $fontSize24;
+  font-weight: $fontWeightBold;
+  color: $colorWhite;
+  margin-left: $clusterSize;
+
+  @include for-phone-447 {
+    font-size: $fontSize20;
+  }
+
+  @include for-phone-370 {
+    font-size: $fontSize16;
+  }
+
+  &_padded {
+    padding-left: $clusterSize;
+  }
 }

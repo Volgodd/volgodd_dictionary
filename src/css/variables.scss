@@ -21,13 +21,13 @@ $colorRed: #f44336;
 $colorGreen: #04aa6d;
 $colorOrange: #ff9800;
 
-
 // Fonts
 $fontRoboto: 'Roboto', sans-serif;
 
 $fontWeightNormal: 400;
 $fontWeightBold: 700;
 
+$fontSize10: 1rem * 0.84;
 $fontSize12: 1rem;
 $fontSize14: 1.1666rem;
 $fontSize16: 1.3333rem;
@@ -71,4 +71,4 @@ $opacity30: 0.3;
 $opacity20: 0.2;
 $opacity10: 0.1;
 
-$inputInnerShadow: inset 0 0 $clusterSize/3 rgba(0, 0, 0, 0.5);
+$inputInnerShadow: inset 0 0 calc($clusterSize/3) rgba(0, 0, 0, 0.5);

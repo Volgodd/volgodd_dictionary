@@ -1,13 +1,13 @@
-import  { useEffect } from 'react';
 import ActionButton from 'components/buttons/action-button/ActionButton';
 import DataEntryButton from 'components/buttons/data-entry-button/DataEntryButton';
 import { OVERLAY_TYPES } from 'common/constants';
-import styles from './SearchOverlay.module.scss';
-import useDataStore from 'store/dataStore';
-import useOverlayStore from 'store/overlayStore';
-import { useState } from 'react';
 import type { Word } from 'types/data-types';
 import { getNonNullable } from 'types/utils';
+import styles from './SearchOverlay.module.scss';
+import useDataStore from 'store/dataStore';
+import { useEffect } from 'react';
+import useOverlayStore from 'store/overlayStore';
+import { useState } from 'react';
 
 const { ADD_WORD } = OVERLAY_TYPES;
 
@@ -65,6 +65,7 @@ const SearchOverlay = () => {
               mainCellData={sortedItem.foreign}
               secondaryCellData={sortedItem.native}
               key={sortedItem.id}
+              wordId={sortedItem.id}
             />
           );
         })}

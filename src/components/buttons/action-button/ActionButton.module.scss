@@ -1,4 +1,5 @@
-@import '../../../css/variables.scss';
+@import 'css/variables.scss';
+@import 'css/breakpoints.scss';
 
 .button {
   font-family: $fontRoboto;
@@ -14,4 +15,12 @@
   margin: auto;
   display: block;
   cursor: pointer;
+
+  @include for-phone-600 {
+    max-width: $clusterSizeX9;
+  }
+
+  @include for-phone-370 {
+    font-size: $fontSize10;
+  }
 }

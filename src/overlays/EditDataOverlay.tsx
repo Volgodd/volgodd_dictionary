@@ -33,6 +33,8 @@ const EditDataOverlay = () => {
     shallow
   );
 
+  console.log(overlayMetadata);
+
   const operatingWord = findObjectById(wordData, overlayMetadata);
   const { id, foreign, native, themeIdList, examples } = operatingWord;
   const wordIndex = findObjectIndex(wordData, overlayMetadata);
