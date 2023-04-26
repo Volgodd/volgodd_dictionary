@@ -39,7 +39,8 @@
       display: none;
     }
   }
-  .label {
+
+  .labelDom {
     width: 100%;
     padding-inline: $clusterSize;
     font-size: $fontSize12;
@@ -50,7 +51,7 @@
     font-weight: bold;
   }
 
- .select {
+ .selectDom {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
