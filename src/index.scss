@@ -1,4 +1,4 @@
-@import './css/variables.scss';
+@import 'css/variables.scss';
 @import 'css/breakpoints.scss';
 
 body,
@@ -16,7 +16,12 @@ html {
   max-height: 100vh;
   margin: auto;
   aspect-ratio: 9/16;
-  padding: $clusterSizeX05 0 $clusterSize 0;
+  padding: 0;
+
+  overflow-y: hidden;
+
+  //styles for Sаfari
+  width: $clusterSizeX10 * 4;
 }
 
 * {
@@ -86,4 +91,10 @@ html {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: $colorWhite;
+}
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }

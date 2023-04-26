@@ -10,11 +10,6 @@
   &_mainPage {
     grid-template-columns: 1fr $clusterSizeX4;
   }
-
-  > div,
-  button {
-    justify-self: center;
-  }
 }
 
 .backButton.active {
@@ -27,6 +22,13 @@
   color: $colorWhite;
   margin-left: $clusterSize;
 
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;  
+  -webkit-box-orient: vertical;
+  line-break: anywhere;
+  overflow: hidden;
+
   @include for-phone-447 {
     font-size: $fontSize20;
   }
@@ -38,4 +40,11 @@
   &_padded {
     padding-left: $clusterSize;
   }
+}
+
+
+.headerTextContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }

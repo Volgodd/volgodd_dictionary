@@ -32,7 +32,11 @@ const Header: React.FC<HeaderProps> = ({ title, themeId }) => {
           />
         </div>
       )}
+
+    <div className={styles.headerTextContainer}>
       <h2 className={clsx(styles.headerText, isMainPage && styles.headerText_padded)}>{title}</h2>
+    </div>
+
       {!isMainPage && (
         <div>
           <MiniButton

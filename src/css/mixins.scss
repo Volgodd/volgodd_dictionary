@@ -10,11 +10,6 @@
   position: relative;
   padding-inline: $clusterSizeX2;
 
-  // styles for Safari
-  max-width: $clusterSizeX10 * 4;
-  max-height: 100vh;
-  margin: 0 auto;
-
   @include for-phone-370 {
     padding-inline: $clusterSize;
   }
