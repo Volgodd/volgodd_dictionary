@@ -1,4 +1,5 @@
-@import '../../css/variables.scss';
+@import 'css/variables.scss';
+@import 'css/breakpoints.scss';
 
 .selectMenu {
   display: flex;
@@ -6,8 +7,39 @@
   align-items: center;
   background-color: $colorGray75;
   border-radius: $borderRadius05;
+  position: relative;
 
-  > label {
+
+  &::after,  &::before  {
+    content: '';
+    width: 0.2rem;
+    height: 0.8rem;
+    background-color: $colorWhite;
+    position: absolute;
+    top: 65%;
+    right: 10%;
+   
+  }
+
+  &::before {
+    transform: rotate(45deg);
+    top: 60.4%;
+    right: 3.9%;
+  }
+  
+  &::after {
+    transform: rotate(-45deg);
+    top: 60.4%;
+    right: 5.19%;
+
+  }
+
+  @include for-phone-447 {
+    &::before, &::after {
+      display: none;
+    }
+  }
+  .label {
     width: 100%;
     padding-inline: $clusterSize;
     font-size: $fontSize12;
@@ -18,9 +50,14 @@
     font-weight: bold;
   }
 
-  > select {
-    font-size: $fontSize14;
-    flex-grow: 1;
-    width: 100%;
-  }
+ .select {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  line-break: anywhere;
+  padding-right: $clusterSizeX2;
+ }
+ 
 }
