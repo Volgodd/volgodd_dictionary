@@ -21,3 +21,20 @@
   flex-grow: 1;
   overflow-y: auto;
 }
+
+@mixin pages-learn {
+  @content;
+
+  display: grid;
+  height: 100%;
+  grid-template-columns: 1fr;
+  grid-template-rows: min-content auto;
+  position: relative;
+  padding-inline: 2rem;
+  justify-content: center;
+
+  // styles for Safari
+  max-width: $clusterSizeX10 * 4;
+  max-height: 100vh;
+  margin: 0 auto;
+}

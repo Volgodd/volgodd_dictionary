@@ -1,8 +1,9 @@
 type InputProps = {
   customValue?: string
   onChangeF?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  required?: boolean
 } 
-const Input: React.FC<InputProps> = ({customValue, onChangeF} ) => {
+const Input: React.FC<InputProps> = ({customValue, onChangeF, required=true} ) => {
 
   return (
     <input
@@ -10,7 +11,7 @@ const Input: React.FC<InputProps> = ({customValue, onChangeF} ) => {
       className="inputElement"
       onChange={onChangeF}
       value={customValue}
-      required
+      required={required}
       autoFocus
     />
   );

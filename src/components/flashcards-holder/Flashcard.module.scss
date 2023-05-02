@@ -25,7 +25,7 @@
   flex-wrap: wrap;
   font-size: $fontSize16 * 2;
 
-  > div {
+  .firstLineWrapper, .secondLineWrapper {
     height: $clusterSizeX10;
     display: flex;
     align-items: center;
@@ -35,11 +35,11 @@
 .buttonContainer {
   display: flex;
   width: 100%;
-  margin: $clusterSize;
-  margin-top: $clusterSizeX2;
+  flex-direction: column;
+  gap: 2rem;
 }
 
-.native {
+.secondLine {
   display: none;
   font-size: $fontSize24;
 
@@ -48,7 +48,7 @@
   }
 }
 
-.nativeWrapper {
+.secondLineWrapper {
   width: 100%;
   display: flex;
   justify-content: center;

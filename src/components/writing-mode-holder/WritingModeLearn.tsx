@@ -31,7 +31,7 @@ const {themesForLearnMode, translationFirst} = useLearnModeStore(
   const [currentWord, setCurrentWord] = useState<Word>();
   const [userTyping, setUserTyping] = useState<string | undefined>('');
   const [answerIsCorrect, setAnswerIsCorrect] = useState<boolean>(true)
-  
+
   useEffect(() => {
     const newThemeIdArr = themesForLearnMode ? themesForLearnMode.map((theme) => theme.id) : [];
 
@@ -55,7 +55,7 @@ const isTypingCorrect = () => {
   const clearedUserTyping = splitedString(userTyping);
   const clearedNative = splitedString(currentWord?.native);
   const clearedForeign = splitedString(currentWord?.foreign);
-
+ 
   if(translationFirst && clearedUserTyping === clearedForeign) {
     return true
   } 
@@ -65,7 +65,9 @@ const isTypingCorrect = () => {
   } else return false
 }
 
-const checkUserInput = () => {
+const checkUserInput = (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  
   isTypingCorrect() ? correctUserAnswerF() : incorrectUserAnswerF();
 }
 
@@ -95,28 +97,30 @@ const checkUserInput = () => {
     <>
       <Header />
       {wordListArr.length !== 0 && (
-        <div className={clsx(styles.flashcardWrapper, !answerIsCorrect &&'active')}>
-          <div className={styles.mainContent}>
-            <div>{translationFirst ? currentWord?.native : currentWord?.foreign}</div>
-            <span className={styles.spanElement}>Type the translation below:</span>
-            <Input onChangeF={(e: React.ChangeEvent<HTMLInputElement>)=> setUserTyping(e.target.value)} customValue={userTyping}/>
-          </div>
-            <div className={styles.nativeWrapper}>
-              <MiniButton
-              title={'click here to see a tip'}
-                onClickF={() => setTranslateVisibility(!translateVisibility)}
-                type={'visibilityIcon'}
-                additionalStyles={addActiveClass()}
-                bigger={true}
-              />
-              <div className={clsx(styles.native, translateVisibility &&'active')}>
-                {translationFirst ? currentWord?.foreign : currentWord?.native}
-              </div>
+        <form onSubmit={checkUserInput}>
+          <div className={clsx(styles.flashcardWrapper, !answerIsCorrect &&'active')}>
+            <div className={styles.mainContent}>
+              <div className={styles.firstLineWrapper}>
+                <span className={styles.firstLine}>{translationFirst ? currentWord?.native : currentWord?.foreign}</span>
+                </div>
+              <span className={styles.spanElement}>Type the translation below:</span>
+              <Input onChangeF={(e: React.ChangeEvent<HTMLInputElement>)=> setUserTyping(e.target.value)} customValue={userTyping} />
             </div>
-            <LearnButton name={'check'} onClickF={()=> checkUserInput()
-            }/>
-          </div>
-
+              <div className={styles.secondLineWrapper}>
+                <MiniButton
+                title={'click here to see a tip'}
+                  onClickF={() => setTranslateVisibility(!translateVisibility)}
+                  type={'visibilityIcon'}
+                  additionalStyles={addActiveClass()}
+                  bigger={true}
+                />
+                <div className={clsx(styles.secondLine, translateVisibility &&'active')}>
+                  {translationFirst ? currentWord?.foreign : currentWord?.native}
+                </div>
+              </div>
+              <LearnButton name={'check'}/>
+            </div>
+        </form>
       )}
 
       {wordListArr.length === 0 && (

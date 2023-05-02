@@ -70,15 +70,17 @@ const Flashcard = () => {
       {wordListArr.length !== 0 && (
         <div className={styles.flashcardWrapper}>
           <div className={styles.mainContent}>
-            <div>{translationFirst ? currentWord?.native : currentWord?.foreign}</div>
-            <div className={styles.nativeWrapper}>
+            <div className={styles.firstLineWrapper}>
+              <span>{translationFirst ? currentWord?.native : currentWord?.foreign}</span>
+              </div>
+            <div className={styles.secondLineWrapper}>
               <MiniButton
                 onClickF={() => setTranslateVisibility(!translateVisibility)}
                 type={'visibilityIcon'}
                 additionalStyles={addActiveClass()}
                 bigger={true}
               />
-              <div className={clsx(styles.native, translateVisibility && 'active')}>
+              <div className={clsx(styles.secondLine, translateVisibility && 'active')}>
                 {translationFirst ? currentWord?.foreign : currentWord?.native}
               </div>
             </div>
