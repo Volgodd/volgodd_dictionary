@@ -1,4 +1,4 @@
-@import '../../css/variables.scss';
+@import 'css/variables.scss';
 
 .flashcardWrapper {
   position: relative;
@@ -29,17 +29,16 @@
   flex-wrap: wrap;
   font-size: $fontSize16 * 2;
 
-  > div {
+  .firstLineWrapper, .secondLineWrapper {
     height: $clusterSizeX10;
     display: flex;
     align-items: center;
   }
 
-  > span {
+  .spanElement {
     font-size: 1rem;
     opacity: 0.5;
 }
-  
 }
 
 .buttonContainer {
@@ -49,7 +48,7 @@
   margin-top: $clusterSizeX2;
 }
 
-.native {
+.secondLine {
   display: none;
   font-size: $fontSize24;
   opacity: 0.5;
@@ -59,7 +58,7 @@
   }
 }
 
-.nativeWrapper {
+.secondLineWrapper {
   width: 100%;
   display: flex;
   justify-content: center;
