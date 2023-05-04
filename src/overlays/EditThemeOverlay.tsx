@@ -43,8 +43,6 @@ const EditThemeOverlay = () => {
 
   const dialogRef = useRef<HTMLDialogElement>(null);
 
-  console.log(dialogRef.current);
-
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
