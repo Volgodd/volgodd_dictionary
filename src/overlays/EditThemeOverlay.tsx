@@ -1,15 +1,15 @@
 import { deleteThemeAction, editThemeAction } from 'data/api';
+import { useRef, useState } from 'react';
 
 import ActionButton from 'components/buttons/action-button/ActionButton';
+import Input from 'components/input/Input';
 import { findObjectIndex } from 'common/utils';
 import { getNonNullable } from 'types/utils';
 import { shallow } from 'zustand/shallow';
 import styles from './EditThemeOverlay.module.scss';
 import useDataStore from 'store/dataStore';
 import useOverlayStore from 'store/overlayStore';
-import { useState } from 'react';
 import useUserStorage from 'store/userStore';
-import Input from 'components/input/Input';
 
 // eslint-disable-line no-alert
 /* eslint-disable no-restricted-globals */
@@ -25,7 +25,7 @@ const EditThemeOverlay = () => {
 
   const jwt = useUserStorage((state) => getNonNullable(state.jwt));
 
-  const { wordData, themeData, setThemeData } = useDataStore(
+  const { themeData, setThemeData } = useDataStore(
     (state) => ({
       wordData: getNonNullable(state.wordData),
       setWordData: state.setWordData,
@@ -41,7 +41,9 @@ const EditThemeOverlay = () => {
 
   const [theme, setTheme] = useState<string>(themeName);
 
-  // const { themeIdList } = wordData;
+  const dialogRef = useRef<HTMLDialogElement>(null);
+
+  console.log(dialogRef.current);
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -76,16 +78,20 @@ const EditThemeOverlay = () => {
   };
 
   const deleteTheme = () => {
-    const alertMessage =
-      'Are your sure you want to delete theme? All words in current theme will be deleted';
-    if (confirm(alertMessage) === true) {
-      deleteThemeAction({ jwt, id: themeId }).then(() => {
-        const themeDataCopy = [...themeData];
-        themeDataCopy.splice(themeIndex, 1);
-        setThemeData(themeDataCopy);
-        closeOverlay();
-      });
-    }
+    deleteThemeAction({ jwt, id: themeId }).then(() => {
+      const themeDataCopy = [...themeData];
+      themeDataCopy.splice(themeIndex, 1);
+      setThemeData(themeDataCopy);
+      dialogRef.current && dialogRef.current.close();
+      closeOverlay();
+    });
+
+    console.log('theme deleted');
+  };
+
+  const openModal = () => {
+    console.log('show M');
+    dialogRef.current && dialogRef.current.showModal();
   };
 
   return (
@@ -93,7 +99,7 @@ const EditThemeOverlay = () => {
       <form onSubmit={submitHandler} className={styles.addThemeInterface}>
         <div className={styles.addThemeInterfaceRow}>
           <Input
-            onChangeF={(e:  React.ChangeEvent<HTMLInputElement>) =>  setTheme(e.target.value)}
+            onChangeF={(e: React.ChangeEvent<HTMLInputElement>) => setTheme(e.target.value)}
             customValue={theme}
           />
         </div>
@@ -101,13 +107,31 @@ const EditThemeOverlay = () => {
           <ActionButton name="Save" additionalStyles={styles.button} />
         </div>
       </form>
-      <div className={styles.deleteButtonWrapper}>
+      <div className={styles.redButtonWrapper}>
         <ActionButton
           name="Delete"
-          additionalStyles={styles.deleteButton}
-          onClickF={() => deleteTheme()}
+          additionalStyles={styles.redButton}
+          onClickF={() => openModal()}
         />
       </div>
+      {/* dialog был отдельным компонентом, но при этом пропадал ::backdrop и top-layer, позиционирование сбивалось */}
+      <dialog ref={dialogRef} className={styles.dialog}>
+        <div className={styles.dialogWrapper}>
+          <div className={styles.dialogText}>
+            Are your sure you want to delete theme? All words in current theme will be deleted
+          </div>
+          <ActionButton
+            name="Yes"
+            additionalStyles={styles.button}
+            onClickF={() => deleteTheme()}
+          />
+          <ActionButton
+            name="Cancel"
+            additionalStyles={styles.redButton}
+            onClickF={() => dialogRef.current?.close()}
+          />
+        </div>
+      </dialog>
     </>
   );
 };

@@ -110,3 +110,40 @@
 .colorOrange {
   background-color: $colorAccent2;
 }
+
+.redButton {
+  background-color: #df3030;
+}
+
+.button {
+  padding-inline: $clusterSizeX2 * 1.4;
+}
+
+.redButtonWrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.dialogWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  font-size: $fontSize16;
+}
+
+dialog::backdrop {
+  background-color: black;
+  opacity: 0.6;
+}
+
+.dialogText {
+  max-width: 30rem;
+  text-align: center;
+}
+
+.dialog {
+  background-color: $colorGray75;
+  color: $colorWhite;
+}

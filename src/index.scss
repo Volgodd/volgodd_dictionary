@@ -8,6 +8,9 @@ html {
   background-color: $colorGray50;
   padding: 0;
   margin: 0;
+
+  //styles for Opera
+  height: 100%;
 }
 
 #root {
@@ -17,6 +20,9 @@ html {
   margin: auto;
   aspect-ratio: 9/16;
   padding: 0;
+
+  //styles for Opera
+  height: 100%;
 
   //styles for Sаfari
   width: $clusterSizeX10 * 4;
@@ -51,7 +57,6 @@ html {
     /* also works for firefox! */
     filter: none; /* u need this for firefox */
     // box-shadow: 0 0 0 100px $colorGray75 inset;
-  
   }
 
   &::placeholder {

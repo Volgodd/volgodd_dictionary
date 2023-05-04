@@ -2,6 +2,9 @@
 @import 'css/breakpoints.scss';
 
 .button {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
   font-family: $fontRoboto;
   background-color: $colorAccent1;
   height: $clusterSizeX3;

@@ -1,3 +1,6 @@
+import { useRef, useState } from 'react';
+
+import ActionButton from '../action-button/ActionButton';
 import type { DataId } from 'types/data-types';
 import MiniButton from '../mini-button/MiniButton';
 import { OVERLAY_TYPES } from 'common/constants';
@@ -9,7 +12,6 @@ import { shallow } from 'zustand/shallow';
 import styles from './DataEntryButton.module.scss';
 import useDataStore from 'store/dataStore';
 import useOverlayStore from 'store/overlayStore';
-import { useState } from 'react';
 import useUserStorage from 'store/userStore';
 
 // eslint-disable-line no-alert
@@ -35,6 +37,8 @@ const DataEntryButton: React.FC<DataEntryButtonProps> = ({
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const openOverlay = useOverlayStore((state) => state.openOverlay);
   const { EDIT_WORD } = OVERLAY_TYPES;
+
+  const dialogRef = useRef<HTMLDialogElement>(null);
 
   const jwt = useUserStorage((state) => getNonNullable(state.jwt));
 
@@ -63,17 +67,18 @@ const DataEntryButton: React.FC<DataEntryButtonProps> = ({
   };
 
   const deleteWord = (wordId: DataId) => {
-    const alertMessage = 'Are your sure you want to delete word?';
+    deleteWordAction({ jwt, id: wordId }).then((data) => {
+      const wordArrayIndex = findObjectIndex(wordData, wordId);
+      const modifiedWordData = [...wordData];
+      modifiedWordData.splice(wordArrayIndex, 1);
+      setWordData(modifiedWordData);
+      console.log('word deleted', wordId);
+    });
+  };
 
-    if (confirm(alertMessage) === true) {
-      deleteWordAction({ jwt, id: wordId }).then((data) => {
-        const wordArrayIndex = findObjectIndex(wordData, wordId);
-        const modifiedWordData = [...wordData];
-        modifiedWordData.splice(wordArrayIndex, 1);
-        setWordData(modifiedWordData);
-        console.log('word deleted', wordId);
-      });
-    }
+  const openModal = () => {
+    console.log('show M');
+    dialogRef.current && dialogRef.current.showModal();
   };
 
   const getColor = (color: string): string => {
@@ -102,13 +107,30 @@ const DataEntryButton: React.FC<DataEntryButtonProps> = ({
               type={'penIcon'}
               onClickF={() => openOverlay({ overlayType: EDIT_WORD, overlayMetadata: wordId })}
             />
-            <MiniButton type="deleteIcon" onClickF={() => wordId && deleteWord(wordId)} />
+            <MiniButton type="deleteIcon" onClickF={() => openModal()} />
           </div>
           <div className={styles.description}>
             {examplesExist() ? expandAreaText : 'Examples not found'}
           </div>
         </div>
       )}
+      <dialog ref={dialogRef} className={styles.dialog}>
+        <div className={styles.dialogWrapper}>
+          <div className={styles.dialogText}>
+            Are your sure you want to delete theme? All words in current theme will be deleted
+          </div>
+          <ActionButton
+            name="Yes"
+            additionalStyles={styles.button}
+            onClickF={() => wordId && deleteWord(wordId)}
+          />
+          <ActionButton
+            name="Cancel"
+            additionalStyles={styles.redButton}
+            onClickF={() => dialogRef.current?.close()}
+          />
+        </div>
+      </dialog>
     </div>
   );
 };
