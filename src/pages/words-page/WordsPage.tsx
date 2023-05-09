@@ -6,10 +6,10 @@ import Footer from 'components/footer/Footer';
 import Header from 'components/header/Header';
 import clsx from 'clsx';
 import { findObjectIndex } from 'common/utils';
+import { getNonNullable } from 'types/utils';
 import { shallow } from 'zustand/shallow';
 import styles from './WordsPage.module.scss';
 import useDataStore from 'store/dataStore';
-import { getNonNullable } from 'types/utils';
 
 const WordsPage = () => {
   const navigate = useNavigate();
@@ -44,7 +44,6 @@ const WordsPage = () => {
               if (!themeIdUrlParam && themeIdList.length === 0) {
                 return true;
               }
-              //????
 
               if (themeIdList.indexOf(themeId) > -1) {
                 return true;

@@ -16,11 +16,12 @@ import useUserStorage from 'store/userStore';
 const EditDataOverlay = () => {
   const jwt = useUserStorage((state) => getNonNullable(state.jwt));
 
-  const { wordData, setWordData, themeData } = useDataStore(
+  const { wordData, setWordData, themeData, setThemeData } = useDataStore(
     (state) => ({
       wordData: getNonNullable(state.wordData),
       setWordData: state.setWordData,
-      themeData: getNonNullable(state.themeData)
+      themeData: getNonNullable(state.themeData),
+      setThemeData: state.setThemeData
     }),
     shallow
   );
@@ -69,6 +70,7 @@ const EditDataOverlay = () => {
       const wordDataCopy = [...wordData];
       wordDataCopy.splice(wordIndex, 1, data);
       setWordData(wordDataCopy);
+      setThemeData(themeData);
       closeOverlay();
     });
   };

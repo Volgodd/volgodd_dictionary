@@ -3,9 +3,9 @@
 
 .wrapper {
   margin-bottom: $clusterSize;
-  border-radius: $borderRadius1;
-  background-color: $colorGray75;
   margin-inline: $clusterSize;
+  background-color: $colorGray75;
+  border-radius: $borderRadius1;
 }
 
 .textButton {
@@ -16,12 +16,11 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: flex-start;
   border-radius: $borderRadius1;
   background-color: $colorGray75;
   color: $colorWhite;
   font-family: $fontRoboto;
-  padding: $clusterSize * 1.5;
+  padding-block: $clusterSize * 1.5;
   padding-inline: $clusterSizeX3;
   cursor: pointer;
 
@@ -38,12 +37,10 @@
   &::before {
     top: $clusterSize;
     left: $clusterSize;
-    display: block;
     content: '';
     position: absolute;
     width: $clusterSizeX05;
     height: calc(100% - #{$clusterSizeX2});
-    background-color: var(--bg-color);
     border-radius: $borderRadius05;
   }
 
@@ -66,15 +63,18 @@
   }
 }
 
-.mainCell {
+.mainCell,
+.secondaryCell {
   font-size: $fontSize20;
   font-weight: $fontWeightBold;
   overflow: hidden;
-  text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   line-break: anywhere;
+
+  //тестировать, можно ли безопасно удалить
+  // text-overflow: ellipsis;
 
   @include for-phone-600 {
     font-size: $fontSize16;

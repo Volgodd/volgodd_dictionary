@@ -1,10 +1,9 @@
 import './index.scss';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { DEFAULT_ALERT_OVERLAY_STATE, OVERLAY_TYPES, ROUTES } from './common/constants';
-import { useEffect, useState } from 'react';
+import { OVERLAY_TYPE, ROUTE } from './common/constants';
+import { useNavigate, useParams } from 'react-router-dom';
 
-import AlertOverLay from 'overlays/AlertOverlay';
 import { GlobalContextProvider } from 'providers/GlobalContext';
 import LearnPage from 'pages/learn-page/LearnPage';
 import Overlay from './overlays/Overlay';
@@ -12,13 +11,16 @@ import ThemePage from 'pages/theme-page/ThemePage';
 import WordsPage from 'pages/words-page/WordsPage';
 import { shallow } from 'zustand/shallow';
 import useDataStore from 'store/dataStore';
+import { useEffect } from 'react';
 import useOverlayStore from 'store/overlayStore';
 import useUserStorage from 'store/userStore';
 
-const { MAIN_PAGE, WORDS, LEARN_MODE } = ROUTES;
+const { MAIN_PAGE, WORDS, LEARN_MODE } = ROUTE;
 
 function App() {
-  const [alertOverlay, setAlertOverlay] = useState(DEFAULT_ALERT_OVERLAY_STATE);
+  const { learnModeId } = useParams();
+  // const navigate = useNavigate();
+  console.log(learnModeId);
 
   const jwt = useUserStorage((state) => state.jwt);
 
@@ -41,7 +43,7 @@ function App() {
 
   useEffect(() => {
     if (!jwt) {
-      openOverlay({ overlayType: OVERLAY_TYPES.LOGIN });
+      openOverlay({ overlayType: OVERLAY_TYPE.LOGIN });
     }
   }, [jwt, openOverlay]);
 
@@ -52,24 +54,19 @@ function App() {
   }, [jwt, getAndSetData]);
 
   const globalContextData = {
-    //alertOverlay  сейчас не используется, globalContextData оставлена для примера глобального контекста без zustand
-    alertOverlay,
-    setAlertOverlay
+    // оставлена для примера глобального контекста без zustand
   };
 
   if (jwt && (!wordData || !themeData)) {
     return <div>Loading data</div>;
   }
 
-  // console.log(wordData, themeData);
+  console.log(ROUTE);
 
   return (
     <BrowserRouter>
       <GlobalContextProvider data={globalContextData}>
-        {/* <Link to={MAIN_PAGE}>Main Page</Link>
-        <Link to={ADD_WORD_PAGE}>Add word</Link> */}
         {overlayType && <Overlay />}
-        {alertOverlay.type && <AlertOverLay />}
         {jwt && (
           <Routes>
             <Route path={MAIN_PAGE} element={<ThemePage />} />

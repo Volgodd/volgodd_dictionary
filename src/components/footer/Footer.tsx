@@ -1,9 +1,9 @@
 import ActionButton from '../buttons/action-button/ActionButton';
-import { OVERLAY_TYPES } from 'common/constants';
+import { OVERLAY_TYPE } from 'common/constants';
 import styles from './Footer.module.scss';
 import useOverlayStore from 'store/overlayStore';
 
-const { ADD_WORD, ADD_THEME, LEARN_MODE } = OVERLAY_TYPES;
+const { ADD_WORD, ADD_THEME, LEARN_MODE } = OVERLAY_TYPE;
 
 const Footer = () => {
   const openOverlay = useOverlayStore((state) => state.openOverlay);

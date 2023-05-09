@@ -1,13 +1,12 @@
 import DataEntryButton from 'components/buttons/data-entry-button/DataEntryButton';
 import Footer from 'components/footer/Footer';
 import Header from 'components/header/Header';
-import MetaTags from 'common/MetaTags';
-import { ROUTES } from 'common/constants';
+import { ROUTE } from 'common/constants';
 import styles from './ThemePage.module.scss';
 import useDataStore from 'store/dataStore';
 import { useNavigate } from 'react-router-dom';
 
-const { WORDS } = ROUTES;
+const { WORDS } = ROUTE;
 
 const ThemePage = () => {
   const themeData = useDataStore((state) => state.themeData);
@@ -16,7 +15,6 @@ const ThemePage = () => {
 
   return (
     <div className={styles.main}>
-      <MetaTags />
       <Header title="Suomen - venäjän" />
       <div className={styles.mainContent}>
         {themeData?.map((theme, index) => {
@@ -37,7 +35,6 @@ const ThemePage = () => {
           );
         })}
       </div>
-
       <Footer />
     </div>
   );

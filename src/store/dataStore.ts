@@ -29,7 +29,10 @@ const useDataStore = create<DataStore>((set) => ({
       return { themeData: parsedThemeData };
     });
   },
-  setWordData: (wordData) => set({ wordData }),
+  setWordData: (wordData) => {
+    console.log('set word data', wordData);
+    set({ wordData });
+  },
   resetData: () => set(defaultDataStore)
 }));
 

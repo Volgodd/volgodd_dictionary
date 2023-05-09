@@ -8,10 +8,6 @@ type ActionButtonProps = {
 };
 
 const ActionButton: React.FC<ActionButtonProps> = ({ name, onClickF, additionalStyles }) => {
-  if (!onClickF && !name) {
-    return <input type="submit" className={styles.button} value="Save"></input>;
-  }
-
   return (
     <button onClick={onClickF} className={clsx(styles.button, additionalStyles)}>
       <span>{name}</span>

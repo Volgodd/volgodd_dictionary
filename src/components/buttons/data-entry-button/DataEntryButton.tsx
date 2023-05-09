@@ -3,8 +3,9 @@ import { useRef, useState } from 'react';
 import ActionButton from '../action-button/ActionButton';
 import type { DataId } from 'types/data-types';
 import MiniButton from '../mini-button/MiniButton';
-import { OVERLAY_TYPES } from 'common/constants';
+import { OVERLAY_TYPE } from 'common/constants';
 import clsx from 'clsx';
+import { deleteItemFromArr } from 'data/utils';
 import { deleteWordAction } from 'data/api';
 import { findObjectIndex } from 'common/utils';
 import { getNonNullable } from 'types/utils';
@@ -14,8 +15,23 @@ import useDataStore from 'store/dataStore';
 import useOverlayStore from 'store/overlayStore';
 import useUserStorage from 'store/userStore';
 
-// eslint-disable-line no-alert
-/* eslint-disable no-restricted-globals */
+const { EDIT_WORD } = OVERLAY_TYPE;
+
+enum COLOR {
+  ORANGE = 'orange',
+  MINT = 'mint'
+}
+
+const getColor = (color: string): string => {
+  switch (color) {
+    case COLOR.ORANGE:
+      return styles.textButton_accent2;
+    case COLOR.MINT:
+      return styles.textButton_accent3;
+    default:
+      return styles.textButton_accent1;
+  }
+};
 
 type DataEntryButtonProps = {
   mainCellData: string;
@@ -34,21 +50,21 @@ const DataEntryButton: React.FC<DataEntryButtonProps> = ({
   expandAreaText,
   wordId
 }) => {
-  const [isExpanded, setIsExpanded] = useState<boolean>(false);
-  const openOverlay = useOverlayStore((state) => state.openOverlay);
-  const { EDIT_WORD } = OVERLAY_TYPES;
-
-  const dialogRef = useRef<HTMLDialogElement>(null);
-
   const jwt = useUserStorage((state) => getNonNullable(state.jwt));
-
-  const { wordData, setWordData } = useDataStore(
+  const openOverlay = useOverlayStore((state) => state.openOverlay);
+  const { wordData, setWordData, themeData, setThemeData } = useDataStore(
     (state) => ({
       wordData: getNonNullable(state.wordData),
-      setWordData: getNonNullable(state.setWordData)
+      setWordData: state.setWordData,
+      themeData: getNonNullable(state.themeData),
+      setThemeData: state.setThemeData
     }),
     shallow
   );
+
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+
+  const dialogRef = useRef<HTMLDialogElement>(null);
 
   const onClickHandler = () => {
     if (onClickF) {
@@ -63,33 +79,27 @@ const DataEntryButton: React.FC<DataEntryButtonProps> = ({
   const examplesExist = () => {
     if (expandAreaText && expandAreaText.split(' ').join('').length > 0) {
       return true;
-    } else return false;
-  };
+    }
 
-  const deleteWord = (wordId: DataId) => {
-    deleteWordAction({ jwt, id: wordId }).then((data) => {
-      const wordArrayIndex = findObjectIndex(wordData, wordId);
-      const modifiedWordData = [...wordData];
-      modifiedWordData.splice(wordArrayIndex, 1);
-      setWordData(modifiedWordData);
-      console.log('word deleted', wordId);
-    });
+    return false;
   };
 
   const openModal = () => {
-    console.log('show M');
     dialogRef.current && dialogRef.current.showModal();
   };
 
-  const getColor = (color: string): string => {
-    switch (color) {
-      case 'orange':
-        return styles.textButton_accent2;
-      case 'mint':
-        return styles.textButton_accent3;
-      default:
-        return styles.textButton_accent1;
-    }
+  const deleteWord = (wordId: DataId) => {
+    deleteWordAction({ jwt, id: wordId })
+      .then((data) => {
+        const wordArrayIndex = findObjectIndex(wordData, wordId);
+        const modifiedWordData = deleteItemFromArr(wordData, wordArrayIndex);
+
+        setWordData(modifiedWordData);
+        setThemeData(themeData);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -104,7 +114,7 @@ const DataEntryButton: React.FC<DataEntryButtonProps> = ({
         <div className={styles.wordUi}>
           <div className={styles.buttonContainer}>
             <MiniButton
-              type={'penIcon'}
+              type="penIcon"
               onClickF={() => openOverlay({ overlayType: EDIT_WORD, overlayMetadata: wordId })}
             />
             <MiniButton type="deleteIcon" onClickF={() => openModal()} />
@@ -116,9 +126,7 @@ const DataEntryButton: React.FC<DataEntryButtonProps> = ({
       )}
       <dialog ref={dialogRef} className={styles.dialog}>
         <div className={styles.dialogWrapper}>
-          <div className={styles.dialogText}>
-            Are your sure you want to delete theme? All words in current theme will be deleted
-          </div>
+          <div className={styles.dialogText}>Are your sure you want to delete word?</div>
           <ActionButton
             name="Yes"
             additionalStyles={styles.button}

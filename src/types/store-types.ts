@@ -1,6 +1,6 @@
 import type { JWTType, ParsedTheme, RawTheme, Word } from './data-types';
 
-import type { OVERLAY_TYPES } from 'common/constants';
+import type { OVERLAY_TYPE } from 'common/constants';
 
 export type DataStore = {
   wordData: Word[] | undefined;
@@ -19,7 +19,7 @@ export type UserStore = {
   clearJwt: () => void;
 };
 
-type OverlayType = OVERLAY_TYPES | undefined;
+type OverlayType = OVERLAY_TYPE | undefined;
 type OverlayMetadata = string | undefined;
 
 type OpenOverlayProps = {
@@ -38,8 +38,8 @@ export type OverlayStore = {
 
 export type LearnModeStore = {
   themesForLearnMode: ParsedTheme[];
-  translationFirst: boolean
+  translationFirst: boolean;
   resetLearnModeStore: () => void;
-  setThemesForLearnMode: (themesForLearnMode: ParsedTheme[] ) => void;
-  setTranslationFirst: (arg: boolean) => void
+  setThemesForLearnMode: (themesForLearnMode: ParsedTheme[]) => void;
+  setTranslationFirst: (arg: boolean) => void;
 };

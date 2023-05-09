@@ -1,12 +1,12 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import MiniButton from 'components/buttons/mini-button/MiniButton';
-import { OVERLAY_TYPES } from 'common/constants';
+import { OVERLAY_TYPE } from 'common/constants';
 import clsx from 'clsx';
 import styles from './Header.module.scss';
 import useOverlayStore from 'store/overlayStore';
 
-const { SEARCH, EDIT_THEME } = OVERLAY_TYPES;
+const { SEARCH, EDIT_THEME } = OVERLAY_TYPE;
 
 type HeaderProps = {
   title?: string;
@@ -17,6 +17,7 @@ const Header: React.FC<HeaderProps> = ({ title, themeId }) => {
 
   let navigate = useNavigate();
   const urlLocation = useLocation();
+
   const { pathname } = urlLocation;
 
   const isMainPage = pathname === '/';
@@ -33,9 +34,9 @@ const Header: React.FC<HeaderProps> = ({ title, themeId }) => {
         </div>
       )}
 
-    <div className={styles.headerTextContainer}>
-      <h2 className={clsx(styles.headerText, isMainPage && styles.headerText_padded)}>{title}</h2>
-    </div>
+      <div className={styles.headerTextContainer}>
+        <h2 className={clsx(styles.headerText, isMainPage && styles.headerText_padded)}>{title}</h2>
+      </div>
 
       {!isMainPage && (
         <div>

@@ -42,3 +42,17 @@ export const parseThemeData = ({
 
   return themeDataWithInjections;
 };
+
+export const deleteItemFromArr = <T extends Array<any>>(dataArr: T, index: number): T => {
+  let part1 = [];
+  let part2 = [];
+
+  if (index === 0) {
+    part1 = dataArr.slice(1, dataArr.length);
+  } else {
+    part1 = dataArr.slice(0, index);
+    part2 = dataArr.slice(index + 1, dataArr.length);
+  }
+
+  return [...part1, ...part2] as T;
+};

@@ -1,3 +1,4 @@
+import type { DataId, Word } from 'types/data-types';
 import { useEffect, useState } from 'react';
 
 import Header from 'components/header/Header';
@@ -5,27 +6,27 @@ import LearnButton from 'components/buttons/learn-button/LearnButton';
 import MiniButton from 'components/buttons/mini-button/MiniButton';
 import { chooseRandomWord } from './utils';
 import clsx from 'clsx';
+import { getNonNullable } from 'types/utils';
+import { shallow } from 'zustand/shallow';
 import styles from './Flashcard.module.scss';
 import useDataStore from 'store/dataStore';
 import useLearnModeStore from 'store/learnModeStore';
-import type { DataId, Word } from 'types/data-types';
-import { getNonNullable } from 'types/utils';
-import { shallow } from 'zustand/shallow';
 
 const Flashcard = () => {
-  const {themesForLearnMode, translationFirst} = useLearnModeStore( 
+  const { themesForLearnMode, translationFirst } = useLearnModeStore(
     (state) => ({
       themesForLearnMode: state.themesForLearnMode,
       translationFirst: state.translationFirst
-    }), shallow
-    );
+    }),
+    shallow
+  );
 
   const wordData = useDataStore((state) => getNonNullable(state.wordData));
 
   const [translateVisibility, setTranslateVisibility] = useState<boolean>(false);
   const [themeIdArr, setThemeIdArr] = useState<DataId[]>([]);
   const [wordListArr, setWordListArr] = useState<Word[]>([]);
-  const [currentWord, setCurrentWord] = useState<Word>();
+  const [currentWord, setCurrentWord] = useState<Word | undefined>();
 
   useEffect(() => {
     const newThemeIdArr = themesForLearnMode ? themesForLearnMode.map((theme) => theme.id) : [];
@@ -59,10 +60,10 @@ const Flashcard = () => {
   };
 
   const addActiveClass = () => {
-    if(translateVisibility) {
-      return 'active'
+    if (translateVisibility) {
+      return 'active';
     }
-  }
+  };
 
   return (
     <>
@@ -72,7 +73,7 @@ const Flashcard = () => {
           <div className={styles.mainContent}>
             <div className={styles.firstLineWrapper}>
               <span>{translationFirst ? currentWord?.native : currentWord?.foreign}</span>
-              </div>
+            </div>
             <div className={styles.secondLineWrapper}>
               <MiniButton
                 onClickF={() => setTranslateVisibility(!translateVisibility)}
