@@ -147,3 +147,17 @@ dialog::backdrop {
   background-color: $colorGray75;
   color: $colorWhite;
 }
+
+.accordionContent[aria-hidden='false'] {
+  grid-template-rows: 1fr;
+}
+
+.accordionContent {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 500ms;
+}
+
+.overflowClipper {
+  overflow: hidden;
+}

@@ -62,7 +62,7 @@ const DataEntryButton: React.FC<DataEntryButtonProps> = ({
     shallow
   );
 
-  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const [isHidden, setIsHidden] = useState<boolean>(true);
 
   const dialogRef = useRef<HTMLDialogElement>(null);
 
@@ -70,7 +70,7 @@ const DataEntryButton: React.FC<DataEntryButtonProps> = ({
     if (onClickF) {
       onClickF();
     } else {
-      setIsExpanded(!isExpanded);
+      setIsHidden(!isHidden);
     }
   };
   //else здесь нужен потому, что в if нет return, следовательно, выполнение ф не прерывается, если if false, и isExpanded менялось бы всегда
@@ -110,20 +110,22 @@ const DataEntryButton: React.FC<DataEntryButtonProps> = ({
         <span className={styles.mainCell}>{mainCellData}</span>
         <span className={styles.secondaryCell}>{secondaryCellData}</span>
       </button>
-      {isExpanded && (
-        <div className={styles.wordUi}>
-          <div className={styles.buttonContainer}>
-            <MiniButton
-              type="penIcon"
-              onClickF={() => openOverlay({ overlayType: EDIT_WORD, overlayMetadata: wordId })}
-            />
-            <MiniButton type="deleteIcon" onClickF={() => openModal()} />
-          </div>
-          <div className={styles.description}>
-            {examplesExist() ? expandAreaText : 'Examples not found'}
+      <div className={styles.accordionContent} aria-hidden={isHidden}>
+        <div className={styles.overflowClipper}>
+          <div className={styles.wordUi}>
+            <div className={styles.buttonContainer}>
+              <MiniButton
+                type="penIcon"
+                onClickF={() => openOverlay({ overlayType: EDIT_WORD, overlayMetadata: wordId })}
+              />
+              <MiniButton type="deleteIcon" onClickF={() => openModal()} />
+            </div>
+            <div className={styles.description}>
+              {examplesExist() ? expandAreaText : 'Examples not found'}
+            </div>
           </div>
         </div>
-      )}
+      </div>
       <dialog ref={dialogRef} className={styles.dialog}>
         <div className={styles.dialogWrapper}>
           <div className={styles.dialogText}>Are your sure you want to delete word?</div>
