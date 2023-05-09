@@ -1,13 +1,14 @@
+import type { DataId } from 'types/data-types';
 import clsx from 'clsx';
 import styles from './InputThemeChoice.module.scss';
 import { useState } from 'react';
-import type { DataId } from 'types/data-types';
 
 type InputThemeChoiceProps = {
-  value: string
-   id: DataId
-   onChangeF: (checked: boolean) => void
-}
+  value: string;
+  id: DataId;
+  onChangeF: (checked: boolean) => void;
+};
+
 const InputThemeChoice: React.FC<InputThemeChoiceProps> = ({ value, id, onChangeF }) => {
   const [isChecked, setIsChecked] = useState<boolean>(false);
 
@@ -19,7 +20,7 @@ const InputThemeChoice: React.FC<InputThemeChoiceProps> = ({ value, id, onChange
 
   return (
     <div className={clsx(styles.inputWrapper, isChecked && styles.inputWrapper_active)}>
-      <input type="checkbox" value={value} id={id} name={id} onChange={checkboxHandler}/>
+      <input type="checkbox" value={value} id={id} name={id} onChange={checkboxHandler} />
       <label htmlFor={id}>
         <span className={styles.labelSpan}> {value} </span>
       </label>

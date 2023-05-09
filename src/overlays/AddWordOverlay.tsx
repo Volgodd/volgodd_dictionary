@@ -14,6 +14,7 @@ import { useEffect } from 'react';
 import useOverlayStore from 'store/overlayStore';
 import { useState } from 'react';
 import useUserStorage from 'store/userStore';
+import { parseThemeData } from 'data/utils';
 
 const AddWordOverlay = () => {
   const jwt = useUserStorage((state) => getNonNullable(state.jwt));
@@ -33,11 +34,12 @@ const AddWordOverlay = () => {
     }
   }, [overlayMetadata, setAddWordData]);
 
-  const { wordData, setWordData, themeData } = useDataStore(
+  const { wordData, setWordData, themeData, setThemeData } = useDataStore(
     (state) => ({
       wordData: getNonNullable(state.wordData),
       setWordData: state.setWordData,
-      themeData: getNonNullable(state.themeData)
+      themeData: getNonNullable(state.themeData),
+      setThemeData: state.setThemeData
     }),
     shallow
   );
@@ -64,6 +66,9 @@ const AddWordOverlay = () => {
       console.log('word added', data);
       const newWordData = [data, ...wordData];
       setWordData(newWordData);
+
+      setThemeData(themeData);
+
       closeOverlay();
       setAddWordData('');
     });

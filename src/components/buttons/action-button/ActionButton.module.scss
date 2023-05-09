@@ -2,9 +2,6 @@
 @import 'css/breakpoints.scss';
 
 .button {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
   font-family: $fontRoboto;
   background-color: $colorAccent1;
   height: $clusterSizeX3;
@@ -16,7 +13,6 @@
   font-size: $fontSize12;
   border: none;
   margin: auto;
-  display: block;
   cursor: pointer;
 
   @include for-phone-600 {

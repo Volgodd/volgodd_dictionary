@@ -56,10 +56,6 @@ export const stringToSubstring = (rawString: string, word: string, index: number
   }
 };
 
-const getDaysInMilliseconds = (numberOfDays: number | undefined = 1): number => {
-  return 86400000 * numberOfDays;
-};
-
 export const jwtIsExpired = (jwt: JWTType | null): JWTType | null => {
   // console.log('jwtIsExpired() raw JWT', jwt);
   if (jwt) {
@@ -67,11 +63,6 @@ export const jwtIsExpired = (jwt: JWTType | null): JWTType | null => {
     const jwtExpiryDate = decodedJWT.exp * 1000;
     // const currentDate = 1679574874 * 1000;
     const currentDate = Date.now();
-    console.log(
-      { jwtExpiryDate, currentDate },
-      'expiry is less than current by',
-      jwtExpiryDate - currentDate
-    );
 
     if (jwtExpiryDate - currentDate < 0) {
       return null;
