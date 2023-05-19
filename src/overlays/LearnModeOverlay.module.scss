@@ -1,4 +1,4 @@
-@import '../css/variables.scss';
+@import 'css/variables.scss';
 
 .formWrapper {
   display: flex;
@@ -63,7 +63,6 @@
 .toggleContainer {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
   gap: $clusterSize;
   margin-block: $clusterSizeX2;
 

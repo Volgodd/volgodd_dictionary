@@ -13,6 +13,7 @@ import useDataStore from 'store/dataStore';
 import useLearnModeStore from 'store/learnModeStore';
 
 const Flashcard = () => {
+  const wordData = useDataStore((state) => getNonNullable(state.wordData));
   const { themesForLearnMode, translationFirst } = useLearnModeStore(
     (state) => ({
       themesForLearnMode: state.themesForLearnMode,
@@ -20,8 +21,6 @@ const Flashcard = () => {
     }),
     shallow
   );
-
-  const wordData = useDataStore((state) => getNonNullable(state.wordData));
 
   const [translateVisibility, setTranslateVisibility] = useState<boolean>(false);
   const [themeIdArr, setThemeIdArr] = useState<DataId[]>([]);
@@ -59,15 +58,9 @@ const Flashcard = () => {
     setTranslateVisibility(false);
   };
 
-  const addActiveClass = () => {
-    if (translateVisibility) {
-      return 'active';
-    }
-  };
-
   return (
     <>
-      <Header />
+      <Header title="Flashcards mode" />
       {wordListArr.length !== 0 && (
         <div className={styles.flashcardWrapper}>
           <div className={styles.mainContent}>
@@ -77,8 +70,8 @@ const Flashcard = () => {
             <div className={styles.secondLineWrapper}>
               <MiniButton
                 onClickF={() => setTranslateVisibility(!translateVisibility)}
-                type={'visibilityIcon'}
-                additionalStyles={addActiveClass()}
+                type="visibilityIcon"
+                additionalStyles={translateVisibility ? 'active' : undefined}
                 bigger={true}
               />
               <div className={clsx(styles.secondLine, translateVisibility && 'active')}>
@@ -87,8 +80,8 @@ const Flashcard = () => {
             </div>
           </div>
           <div className={styles.buttonContainer}>
-            <LearnButton name={'Still learning'} onClickF={dontKnowButtonF} />
-            <LearnButton name={'Know'} onClickF={knowButtonF} />
+            <LearnButton name="Still learning" onClickF={dontKnowButtonF} />
+            <LearnButton name="Know" onClickF={knowButtonF} />
           </div>
         </div>
       )}

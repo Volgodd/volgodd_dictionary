@@ -1,50 +1,40 @@
-@import '../../css/variables.scss';
+@import 'css/variables.scss';
+@import 'css/mixins.scss';
 
 .flashcardWrapper {
-  position: relative;
-  margin: $clusterSize;
-  border-radius: $borderRadius1;
-  background-color: $colorGray75;
+  @include learn-modes-wrapper;
+
   padding: $clusterSizeX2;
-  color: $colorWhite;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: fit-content;
+  grid-template-rows: auto $clusterSizeX7;
 }
 
 .mainContent {
-  position: relative;
-  display: flex;
-  width: 100%;
-  align-items: center;
-  text-align: center;
-  flex-direction: column;
-  gap: $clusterSize;
-  flex-wrap: wrap;
-  font-size: $fontSize16 * 2;
+  font-size: $fontSize16;
+  display: grid;
+  justify-items: center;
+  grid-auto-rows: minmax(auto, $clusterSize * 17) minmax(auto, $clusterSizeX10);
+}
 
-  .firstLineWrapper, .secondLineWrapper {
-    height: $clusterSizeX10;
-    display: flex;
-    align-items: center;
-  }
+.firstLineWrapper,
+.secondLineWrapper {
+  margin-bottom: $clusterSize;
+  overflow-y: scroll;
 }
 
 .buttonContainer {
   display: flex;
   width: 100%;
   flex-direction: column;
-  gap: 2rem;
+  gap: $clusterSize;
 }
 
 .secondLine {
   display: none;
-  font-size: $fontSize24;
+  font-size: $fontSize14;
+  overflow-y: scroll;
 
   &:global(.active) {
-    display: flex;
+    display: block;
   }
 }
 
@@ -55,11 +45,9 @@
 }
 
 .visibilityButton {
-  width: $clusterSizeX4;
-  height: $clusterSizeX4;
+  @include learn-modes-visibilityButton;
 }
 
 .learntWrapper {
-  text-align: center;
-  color: $colorWhite;
+  @include learn-modes-learntWrapper;
 }

@@ -76,6 +76,7 @@ const LearnModeOverlay = () => {
           {themeData.map((theme) => {
             const { name, id } = theme;
             const themeIndex = findObjectIndex(themeData, id);
+
             return (
               <InputThemeChoice
                 value={name}
