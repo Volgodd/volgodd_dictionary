@@ -25,14 +25,14 @@ const SelectMenu: React.FC<SelectMenuProps> = ({
 
   return (
     <div className={clsx(styles.selectMenu, additionalStyles)}>
-      <label className={styles.labelDom} htmlFor="theme">
+      <label className={styles.label} htmlFor="theme">
         Theme:
       </label>
       <select
         name="theme"
         id="theme"
         onChange={(e) => onSelect(e.target.value)}
-        className={clsx('inputElement', styles.selectDom)}
+        className={clsx('inputElement', styles.select)}
         defaultValue={defaultValue}>
         {data.map((entry, index) => {
           const { value, text } = entry;

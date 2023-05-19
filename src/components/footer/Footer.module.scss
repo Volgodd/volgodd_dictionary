@@ -1,17 +1,7 @@
 @import 'css/variables.scss';
 
-.footerWrapper {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;  
-  padding-block-end: $clusterSize;
-}
-
 .footerContent {
   display: flex;
   gap: $clusterSizeX05;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
+  padding-block-end: $clusterSize;
 }

@@ -96,7 +96,7 @@ const WritingModeLearn = () => {
 
   return (
     <>
-      <Header />
+      <Header title="Writing mode" />
       {wordListArr.length > 0 && (
         <form onSubmit={checkUserInput}>
           <div className={clsx(styles.flashcardWrapper, !answerIsCorrect && 'active')}>

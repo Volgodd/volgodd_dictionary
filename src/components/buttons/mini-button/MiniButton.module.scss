@@ -1,4 +1,4 @@
-@import '../../../css/variables.scss';
+@import 'css/variables.scss';
 
 .miniButtonContainer {
   display: flex;
@@ -20,7 +20,7 @@
   height: $clusterSizeX3;
   border: none;
   border-radius: $borderRadius1;
-  padding: $clusterSize / 1.5;
+  padding: calc($clusterSize / 1.5);
   fill: $colorWhite;
 
   margin: 0;
@@ -38,6 +38,6 @@
 }
 
 .bigger {
-  width: $clusterSizeX5;
-  height: $clusterSizeX5;
+  width: $clusterSizeX4;
+  height: $clusterSizeX4;
 }

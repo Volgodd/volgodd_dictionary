@@ -9,12 +9,10 @@ const Footer = () => {
   const openOverlay = useOverlayStore((state) => state.openOverlay);
 
   return (
-    <div className={styles.footerWrapper}>
-      <div className={styles.footerContent}>
-        <ActionButton name="Add a theme" onClickF={() => openOverlay({ overlayType: ADD_THEME })} />
-        <ActionButton name="Learn mode" onClickF={() => openOverlay({ overlayType: LEARN_MODE })} />
-        <ActionButton name="Add a word" onClickF={() => openOverlay({ overlayType: ADD_WORD })} />
-      </div>
+    <div className={styles.footerContent}>
+      <ActionButton name="Add a theme" onClickF={() => openOverlay({ overlayType: ADD_THEME })} />
+      <ActionButton name="Learn mode" onClickF={() => openOverlay({ overlayType: LEARN_MODE })} />
+      <ActionButton name="Add a word" onClickF={() => openOverlay({ overlayType: ADD_WORD })} />
     </div>
   );
 };

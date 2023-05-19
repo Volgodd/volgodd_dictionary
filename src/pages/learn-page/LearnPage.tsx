@@ -13,8 +13,6 @@ const LearnPage = () => {
   const { learnModeId } = useParams();
   const navigate = useNavigate();
 
-  console.log(learnModeId);
-
   const themesForLearnMode = useLearnModeStore((state) => state.themesForLearnMode);
 
   useEffect(() => {

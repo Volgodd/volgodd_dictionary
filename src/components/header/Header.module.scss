@@ -1,14 +1,17 @@
-@import '../../css/variables.scss';
+@import 'css/variables.scss';
 @import 'css/breakpoints.scss';
 
 .wrapper {
   display: inline-grid;
   grid-template-columns: $clusterSizeX4 1fr $clusterSizeX4 $clusterSizeX4;
-  width: 100%;
   align-items: center;
 
   &_mainPage {
     grid-template-columns: 1fr $clusterSizeX4;
+  }
+
+  &_learnPage {
+    grid-template-columns: $clusterSizeX4 1fr $clusterSizeX4;
   }
 }
 
@@ -41,10 +44,4 @@
   &_padded {
     padding-left: $clusterSize;
   }
-}
-
-.headerTextContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
 }

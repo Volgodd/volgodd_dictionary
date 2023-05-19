@@ -11,28 +11,41 @@ import VisibilityIcon from 'icons/VisibilityIcon';
 import clsx from 'clsx';
 import styles from './MiniButton.module.scss';
 
+enum BUTTON_TYPE {
+  BUFFER = 'buffer',
+  DICTIONARY = 'dictionary',
+  CHANGE_COLOR = 'changeColor',
+  SEARCH_ICON = 'searchIcon',
+  CLOSE_ICON = 'closeIcon',
+  DELETE_ICON = 'deleteIcon',
+  BACK_ICON = 'backIcon',
+  SETTINGS_ICON = 'settingsIcon',
+  VISIBILITY_ICON = 'visibilityIcon',
+  PEN_ICON = 'penIcon'
+}
+
 const getButtonIcon = (type: string) => {
   switch (type) {
-    case 'buffer':
+    case BUTTON_TYPE.BUFFER:
       return <BufferIcon />;
-    case 'dictionary':
+    case BUTTON_TYPE.DICTIONARY:
       return <DictionaryIcon />;
-    case 'changeColor':
+    case BUTTON_TYPE.CHANGE_COLOR:
       return <ChangeColorIcon />;
-    case 'searchIcon':
+    case BUTTON_TYPE.SEARCH_ICON:
       return <SearchIcon />;
-    case 'closeIcon':
+    case BUTTON_TYPE.CLOSE_ICON:
       return <CloseIcon />;
-    case 'deleteIcon':
+    case BUTTON_TYPE.DELETE_ICON:
       return <DeleteIcon />;
-    case 'backIcon':
+    case BUTTON_TYPE.BACK_ICON:
       return <BackArrowIcon />;
-    case 'settingsIcon':
+    case BUTTON_TYPE.SETTINGS_ICON:
       return <SettingsIcon />;
-    case 'visibilityIcon':
+    case BUTTON_TYPE.VISIBILITY_ICON:
       return <VisibilityIcon />;
-    case 'penIcon':
-     return <PenIcon />;
+    case BUTTON_TYPE.PEN_ICON:
+      return <PenIcon />;
   }
 };
 
@@ -42,7 +55,7 @@ type MiniButtonProps = {
   onClickF: () => void;
   transparent?: boolean;
   bigger?: boolean;
-  title?: string
+  title?: string;
 };
 
 const MiniButton: React.FC<MiniButtonProps> = ({
@@ -50,7 +63,8 @@ const MiniButton: React.FC<MiniButtonProps> = ({
   additionalStyles,
   onClickF,
   transparent = false,
-  bigger = false, title
+  bigger = false,
+  title
 }) => {
   return (
     <div className={clsx(styles.miniButtonContainer, additionalStyles)} title={title}>

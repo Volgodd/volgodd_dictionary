@@ -1,4 +1,4 @@
-@import '../../../css/variables.scss';
+@import 'css/variables.scss';
 @import 'css/breakpoints.scss';
 
 .wrapper {
@@ -11,11 +11,12 @@
 .textButton {
   position: relative;
   width: 100%;
-  height: $clusterSizeX7;
+  min-height: $clusterSizeX7;
   border: none;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 0.5rem;
   border-radius: $borderRadius1;
   background-color: $colorGray75;
   color: $colorWhite;
@@ -25,9 +26,8 @@
   cursor: pointer;
 
   @include for-phone-600 {
-    height: $clusterSizeX5;
+    min-height: $clusterSizeX5;
     justify-content: space-evenly;
-    padding: 0 $clusterSizeX3 0 $clusterSizeX3;
   }
 
   &:hover {
@@ -65,16 +65,16 @@
 
 .mainCell,
 .secondaryCell {
-  font-size: $fontSize20;
   font-weight: $fontWeightBold;
   overflow: hidden;
   display: -webkit-box;
-  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
-  line-break: anywhere;
+  text-align: justify;
+  text-overflow: ellipsis;
+}
 
-  //тестировать, можно ли безопасно удалить
-  // text-overflow: ellipsis;
+.mainCell {
+  font-size: $fontSize20;
 
   @include for-phone-600 {
     font-size: $fontSize16;
@@ -84,6 +84,12 @@
 .secondaryCell {
   font-size: $fontSize14;
   opacity: $opacity60;
+  -webkit-line-clamp: 7;
+
+  @include for-phone-600 {
+    font-size: $fontSize14;
+    -webkit-line-clamp: 1;
+  }
 }
 
 .wordUi {
@@ -92,7 +98,6 @@
 
 .buttonContainer {
   border-top: solid 1px $colorGray25;
-  margin-bottom: $clusterSizeX2;
   display: flex;
   justify-content: flex-end;
 }
@@ -155,7 +160,7 @@ dialog::backdrop {
 .accordionContent {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 500ms;
+  transition: grid-template-rows 300ms;
 }
 
 .overflowClipper {

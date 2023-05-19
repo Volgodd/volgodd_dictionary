@@ -2,15 +2,12 @@
 @import 'css/breakpoints.scss';
 
 .selectMenu {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   background-color: $colorGray75;
   border-radius: $borderRadius05;
   position: relative;
 
-
-  &::after,  &::before  {
+  &::after,
+  &::before {
     content: '';
     width: 0.2rem;
     height: 0.8rem;
@@ -18,7 +15,6 @@
     position: absolute;
     top: 65%;
     right: 10%;
-   
   }
 
   &::before {
@@ -26,39 +22,34 @@
     top: 60.4%;
     right: 3.9%;
   }
-  
+
   &::after {
     transform: rotate(-45deg);
     top: 60.4%;
     right: 5.19%;
-
   }
 
   @include for-phone-447 {
-    &::before, &::after {
+    &::before,
+    &::after {
       display: none;
     }
   }
 
-  .labelDom {
-    width: 100%;
+  .label {
     padding-inline: $clusterSize;
-    font-size: $fontSize12;
     line-height: $clusterSizeX2;
-    height: $clusterSizeX2;
     text-transform: uppercase;
     color: $colorGray45;
     font-weight: bold;
   }
 
- .selectDom {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-  line-break: anywhere;
-  padding-right: $clusterSizeX2;
- }
- 
+  .select {
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    line-break: anywhere;
+    padding-right: $clusterSizeX2;
+  }
 }

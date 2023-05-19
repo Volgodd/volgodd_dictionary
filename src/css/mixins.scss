@@ -22,19 +22,27 @@
   overflow-y: auto;
 }
 
-@mixin pages-learn {
+@mixin learn-modes-wrapper {
   @content;
 
+  margin: $clusterSize;
+  border-radius: $borderRadius1;
+  background-color: $colorGray75;
+  color: $colorWhite;
   display: grid;
-  height: 100%;
-  grid-template-columns: 1fr;
-  grid-template-rows: min-content auto;
-  position: relative;
-  padding-inline: 2rem;
-  justify-content: center;
 
-  // styles for Safari
-  max-width: $clusterSizeX10 * 4;
-  max-height: 100vh;
-  margin: 0 auto;
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: none;
+  }
+}
+
+@mixin learn-modes-visibilityButton {
+  width: $clusterSizeX4;
+  height: $clusterSizeX4;
+}
+
+@mixin learn-modes-learntWrapper {
+  text-align: center;
+  color: $colorWhite;
 }

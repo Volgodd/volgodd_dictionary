@@ -1,17 +1,14 @@
-@import '../../css/variables.scss';
+@import 'css/variables.scss';
 
 .inputWrapper {
   display: flex;
-  align-items: center;
   height: $clusterSizeX5;
   font-size: $fontSize14;
   color: $colorWhite;
   background-color: $colorGray75;
-  overflow: hidden;
   border-radius: $clusterSize;
   font-family: $fontRoboto;
   font-weight: $fontWeightBold;
-  overflow-wrap: anywhere;
 
   &_active {
     background-color: $colorAccent1;
@@ -22,12 +19,11 @@
     opacity: 0;
   }
 
-  > label {
+  .label {
     display: flex;
     width: 100%;
     height: 100%;
-    padding: $clusterSize/3;
-    overflow: hidden;
+    padding: calc($clusterSize / 3);
     justify-content: center;
     align-items: center;
   }
@@ -37,27 +33,7 @@
   }
 }
 
-.addThemeInterface {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-auto-columns: $clusterSizeX4;
-  grid-gap: $clusterSize;
-  margin-bottom: $clusterSize;
-}
-
-.addThemeInterfaceRow {
-  height: $clusterSizeX4;
-  width: 100%;
-  display: grid;
-
-  &_withButton {
-    grid-template-columns: 1fr $clusterSizeX4;
-    grid-gap: $clusterSize;
-  }
-}
-
 .labelSpan {
-  padding: $clusterSize/3;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;

@@ -2,7 +2,6 @@ import './index.scss';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { OVERLAY_TYPE, ROUTE } from './common/constants';
-import { useNavigate, useParams } from 'react-router-dom';
 
 import { GlobalContextProvider } from 'providers/GlobalContext';
 import LearnPage from 'pages/learn-page/LearnPage';
@@ -18,12 +17,7 @@ import useUserStorage from 'store/userStore';
 const { MAIN_PAGE, WORDS, LEARN_MODE } = ROUTE;
 
 function App() {
-  const { learnModeId } = useParams();
-  // const navigate = useNavigate();
-  console.log(learnModeId);
-
   const jwt = useUserStorage((state) => state.jwt);
-
   const { openOverlay, overlayType } = useOverlayStore(
     (state) => ({
       openOverlay: state.openOverlay,
@@ -60,8 +54,6 @@ function App() {
   if (jwt && (!wordData || !themeData)) {
     return <div>Loading data</div>;
   }
-
-  console.log(ROUTE);
 
   return (
     <BrowserRouter>
