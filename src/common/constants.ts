@@ -1,3 +1,5 @@
+export const PATH_TO_SUBFOLDER = process.env.REACT_APP_BASE_URL || '';
+
 export const SERVER_URL = 'http://16.170.48.235:1337';
 export const THEME_ENDPOINT = '/volgodd-dictionary-themes-fis';
 export const WORD_ENDPOINT = '/volgodd-dictionary-words-fis';

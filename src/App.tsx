@@ -1,7 +1,7 @@
 import './index.scss';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { OVERLAY_TYPE, ROUTE } from './common/constants';
+import { OVERLAY_TYPE, PATH_TO_SUBFOLDER, ROUTE } from './common/constants';
 
 import { GlobalContextProvider } from 'providers/GlobalContext';
 import LearnPage from 'pages/learn-page/LearnPage';
@@ -56,7 +56,7 @@ function App() {
   }
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={PATH_TO_SUBFOLDER}>
       <GlobalContextProvider data={globalContextData}>
         {overlayType && <Overlay />}
         {jwt && (
